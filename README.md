@@ -89,14 +89,17 @@ Automate the weekly process of collecting team updates, drafting OKR status chan
 
 ### MT — Mike Taylor (Facilitator / Demo)
 
-**3 demo projects** showing what's possible — used during the guided build session.
+**5 demo projects** showing what's possible — used during the guided build session.
 
-| File | What it is |
-|------|-----------|
-| `nps_and_descriptions_only.csv` | NPS survey data with scores and open-ended subscriber descriptions |
-| `index.html` | Landing page for "Learn Claude Code in One Day" |
-| `hoboken-hidden-gems.html` | Interactive local guide to Hoboken with map, filters, and recommendations |
-| `example_prompts.md` | 3 prompts — NPS dashboard, landing page modification, vacation guide builder |
+| File | Project | What it is |
+|------|---------|-----------|
+| `nps_and_descriptions_only.csv` | NPS Dashboard | NPS survey data with scores and open-ended subscriber descriptions |
+| `every-landing.html` | Landing Page | Landing page for "Learn Claude Code in One Day" |
+| `hoboken-hidden-gems.html` | Hidden Gems Guide | Interactive local guide to Hoboken with map, filters, and recommendations |
+| `therapists-db.js` | Therapist Directory | JavaScript database of 132 therapist records (specialties, insurance, bios, etc.) |
+| `therapists-index.html` | Therapist Directory | Search/browse page for finding family counselors in New York |
+| `therapists-provider.html` | Therapist Directory | Individual therapist detail page |
+| `example_prompts.md` | All | 5 prompts — NPS dashboard, landing page mod, vacation guide, directory feature, workforce analysis |
 
 ---
 

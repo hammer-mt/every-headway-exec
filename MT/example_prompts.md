@@ -79,3 +79,56 @@ Here's what I need:
 
 Generate realistic, specific, useful recommendations — not generic tourist advice. The goal is something that feels like it was made by a local who really knows the city.
 ```
+
+---
+
+## 4. Therapist Directory — Add a Feature
+
+**What this does:** Takes an existing therapist search page and adds a new feature — showing how Claude can work with real multi-file web projects (HTML + a JavaScript database of 132 providers).
+
+**The prompt:**
+
+```
+I have a therapist directory built with three files:
+- therapists-index.html — the main search/browse page for finding family counselors in New York
+- therapists-provider.html — the individual provider detail page
+- therapists-db.js — a JavaScript file containing data for 132 therapists (names, specialties, insurance accepted, locations, bios, therapy methods, etc.)
+
+I'd like you to make the following changes to the directory:
+
+1. Add a "Compare Therapists" feature — let users select 2-3 therapists from the search results and see them side-by-side in a comparison view showing: specialties, therapy methods, insurance accepted, years of experience, and availability. Add a subtle checkbox or "Compare" button to each therapist card, and a floating comparison bar at the bottom when therapists are selected.
+
+2. Add a "Best Match" sorting option that considers multiple factors: years of experience, number of specialties relevant to family counseling, number of insurance plans accepted, and whether they offer virtual sessions. Show a match score on each card when this sort is active.
+
+3. Keep all existing styling and functionality intact — just add these new features on top.
+
+Return the updated therapists-index.html file.
+```
+
+---
+
+## 5. Therapist Database Analysis
+
+**What this does:** Analyzes the therapist database to surface workforce insights — the kind of analysis that would normally require SQL queries or a data team.
+
+**The prompt:**
+
+```
+I have a file called therapists-db.js that contains a JavaScript array of 132 therapist records from Headway's provider network in New York. Each therapist record includes: name, license type, location, years of experience, specialties, therapy methods, care types (individual, couples, family), ages served, languages spoken, insurance plans accepted, whether they offer virtual sessions, and their bio.
+
+Please analyze this dataset and produce a comprehensive workforce insights report covering:
+
+1. **Network Composition** — Break down the provider network by license type (LCSW, LMHC, PhD, PsyD, etc.), years of experience distribution, and care type availability. What's our mix?
+
+2. **Specialty Coverage** — Which specialties are most and least represented? Are there gaps? For example, how many therapists list "Substance use / addiction" vs "Anxiety"? Create a ranked list.
+
+3. **Insurance Coverage** — Which insurance plans have the most in-network providers? Which plans have the fewest? Flag any plans with critically low coverage (fewer than 10 providers).
+
+4. **Access & Diversity** — What languages are available beyond English? How many providers offer virtual sessions? What age groups are underserved?
+
+5. **Competitive Insights** — Based on the bios and therapy methods, what therapeutic approaches are trending in our network (e.g., CBT, DBT, EMDR, psychodynamic)? Which approaches might we want to recruit more of?
+
+6. **Recommendations** — Based on the gaps you find, recommend 5 specific recruiting priorities (e.g., "Recruit 3+ Spanish-speaking LMFTs specializing in family therapy who accept Medicaid").
+
+Format this as a clean executive summary I could share with our clinical leadership team. Include actual numbers and percentages, not just generalizations.
+```
