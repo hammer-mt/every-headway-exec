@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provider | Headway</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1a1a1a;
+      background: #dde8f0;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; }
+
+    :root {
+      --green-dark: #166534;
+      --green-mid: #16a34a;
+      --green-light: #dcfce7;
+      --cream: #fef9f0;
+      --bg-light: #f7f7f5;
+      --bg-footer: #eef0eb;
+      --text-primary: #1a1a1a;
+      --text-secondary: #6b7280;
+      --border-color: #e5e7eb;
+      --card-bg: #f0f5f8;
+    }
+
+    .font-serif { font-family: Georgia, 'Times New Roman', Times, serif; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      border-bottom: 1px solid var(--border-color);
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+    .navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      font-size: 15px;
+    }
+    .navbar-links a:hover { color: var(--green-dark); }
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-outline {
+      padding: 10px 20px;
+      border: 1.5px solid var(--text-primary);
+      border-radius: 999px;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .btn-primary {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 999px;
+      background: var(--green-dark);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .provider-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .back-link:hover { color: var(--green-dark); }
+
+    /* ===== HERO CARD ===== */
+    .provider-hero {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 24px;
+    }
+    .hero-top {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+    .hero-avatar {
+      width: 180px;
+      height: 200px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 48px;
+    }
+    .hero-info h1 {
+      font-family: Georgia, serif;
+      font-size: 36px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
+    .hero-experience {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .hero-details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .hero-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+    }
+    .hero-detail-icon {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-detail-icon svg { width: 20px; height: 20px; }
+
+    /* ===== TWO COLUMN LAYOUT ===== */
+    .provider-content {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ===== LEFT COLUMN CARDS ===== */
+    .info-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+    .info-card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .info-card p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+    .info-card h2.font-serif {
+      font-weight: 400;
+      font-size: 22px;
+    }
+
+    /* About me details */
+    .about-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .about-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .about-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .about-icon svg { width: 20px; height: 20px; }
+    .about-label {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .about-value {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RIGHT COLUMN - BOOKING ===== */
+    .booking-sidebar {
+      position: sticky;
+      top: 88px;
+    }
+    .booking-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .booking-card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .booking-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .booking-meta svg { width: 16px; height: 16px; }
+
+    /* Calendar */
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .calendar-nav {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .calendar-day-header {
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding-bottom: 4px;
+    }
+    .calendar-day-header strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+    .time-slot {
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 13px;
+      background: #fff;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .time-slot:hover {
+      border-color: var(--green-dark);
+      background: var(--green-light);
+    }
+    .time-slot.selected {
+      border-color: var(--green-dark);
+      background: var(--green-light);
+    }
+    .btn-book {
+      width: 100%;
+      padding: 14px;
+      background: var(--text-primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+    .btn-book:hover { background: #333; }
+
+    /* Price estimate card */
+    .estimate-card {
+      background: var(--green-light);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .estimate-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .estimate-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .btn-add-insurance {
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--bg-footer);
+      padding: 64px 0 40px;
+      margin-top: 48px;
+    }
+    .footer .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+    .footer-col h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 4px 0;
+    }
+    .footer-col a:hover { color: var(--green-dark); }
+    .footer-bottom {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 32px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 32px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .footer-social {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+    }
+    .footer-crisis a { color: var(--text-primary); text-decoration: underline; }
+    .footer-crisis strong { font-weight: 700; }
+    .footer-legal a {
+      display: block;
+      padding: 2px 0;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .navbar { padding: 12px 16px; }
+      .navbar-links { display: none; }
+      .hero-top { flex-direction: column; }
+      .hero-avatar { width: 120px; height: 140px; font-size: 36px; }
+      .provider-content { grid-template-columns: 1fr; }
+      .booking-sidebar { position: static; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
+        <rect width="32" height="24" rx="6" fill="#166534" y="8"/>
+        <rect width="22" height="16" rx="4" fill="#16a34a" x="5" y="2"/>
+      </svg>
+      Headway
+    </a>
+    <div class="navbar-links">
+      <a href="index.html">Find care</a>
+      <a href="#">For providers</a>
+      <a href="#">For health plans</a>
+      <a href="#">Company</a>
+    </div>
+    <div class="navbar-actions">
+      <button class="btn-outline">Log in</button>
+      <button class="btn-primary">Join as a provider</button>
+    </div>
+  </nav>
+
+  <!-- ===== PROVIDER PAGE ===== -->
+  <div class="provider-page">
+    <a href="index.html" class="back-link">&larr; Back to search results</a>
+
+    <!-- Hero Card -->
+    <div class="provider-hero">
+      <div class="hero-top">
+        <div class="hero-avatar" id="providerAvatar">--</div>
+        <div class="hero-info">
+          <h1 id="providerName" class="font-serif">Loading...</h1>
+          <div class="hero-subtitle" id="providerRole"></div>
+          <div class="hero-experience" id="providerExperience"></div>
+          <div class="hero-details">
+            <div class="hero-detail">
+              <div class="hero-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <span id="providerLocation">Virtual</span>
+            </div>
+            <div class="hero-detail">
+              <div class="hero-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <span id="providerSpecialtiesSummary"></span>
+            </div>
+            <div class="hero-detail">
+              <div class="hero-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <span id="providerCareTypes"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two column layout -->
+    <div class="provider-content">
+      <!-- LEFT COLUMN -->
+      <div class="left-column">
+        <div class="info-card">
+          <h2>Great to meet you!</h2>
+          <p id="providerBio"></p>
+        </div>
+
+        <div class="info-card">
+          <h2>My approach to therapy</h2>
+          <p id="providerApproach"></p>
+        </div>
+
+        <div class="info-card">
+          <h2>What you can expect from me</h2>
+          <p id="providerExpectation"></p>
+        </div>
+
+        <div class="info-card">
+          <h2>About me</h2>
+          <div class="about-list">
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <div class="about-label">I identify as</div>
+                <div class="about-value" id="providerIdentity"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <div class="about-label">My style is</div>
+                <div class="about-value" id="providerStyle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h2>Qualification and insurance</h2>
+          <div class="about-list">
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <div>
+                <div class="about-label">Years of experience</div>
+                <div class="about-value" id="providerYears"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 10 3 12 0v-5"/></svg>
+              </div>
+              <div>
+                <div class="about-label">Training</div>
+                <div class="about-value" id="providerTraining"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div>
+                <div class="about-label">License type</div>
+                <div class="about-value" id="providerLicense"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="about-label">Licensed in</div>
+                <div class="about-value" id="providerLicensedIn"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              </div>
+              <div>
+                <div class="about-label">Insurance accepted</div>
+                <div class="about-value" id="providerInsurance"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h2>Care details</h2>
+          <div class="about-list">
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <div>
+                <div class="about-label">Top specialties</div>
+                <div class="about-value" id="providerTopSpec"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <div>
+                <div class="about-label">More specialties</div>
+                <div class="about-value" id="providerMoreSpec"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+              </div>
+              <div>
+                <div class="about-label">Therapy methods</div>
+                <div class="about-value" id="providerMethods"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <div class="about-label">Care types</div>
+                <div class="about-value" id="providerCareTypesFull"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <div class="about-label">Ages served</div>
+                <div class="about-value" id="providerAges"></div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div>
+                <div class="about-label">Languages</div>
+                <div class="about-value" id="providerLanguages"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN - BOOKING -->
+      <div class="booking-sidebar">
+        <div class="booking-card">
+          <h2>Book session</h2>
+          <div class="booking-meta">
+            <span>EST timezone</span>
+            <span>&bull;</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>60 min session</span>
+          </div>
+          <div id="calendarContainer"></div>
+          <button class="btn-book" id="bookBtn">Book session</button>
+        </div>
+
+        <div class="estimate-card">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Get an instant price estimate
+          </h3>
+          <p>Add your insurance now to get an estimate of your session cost.</p>
+        </div>
+        <button class="btn-add-insurance">Add insurance</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">
+            <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
+              <rect width="32" height="24" rx="6" fill="#166534" y="8"/>
+              <rect width="22" height="16" rx="4" fill="#16a34a" x="5" y="2"/>
+            </svg>
+            Headway
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Find care</h4>
+          <a href="index.html">Therapists</a>
+          <a href="#">Psychiatrists</a>
+          <a href="#">By specialty</a>
+          <a href="#">Virtual therapy</a>
+        </div>
+        <div class="footer-col">
+          <h4>Providers</h4>
+          <a href="#">Join Headway</a>
+          <a href="#">Provider portal</a>
+          <a href="#">Refer provider</a>
+          <a href="#">Provider resources</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About us</a>
+          <a href="#">Blog</a>
+          <a href="#">Press</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="#">Help center</a>
+          <a href="#">Contact us</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>
+          <div>&copy; 2026 Therapymatch, Inc.</div>
+          <div class="footer-social">
+            <a href="#">&#9679;</a>
+            <a href="#">&#10005;</a>
+            <a href="#">in</a>
+          </div>
+        </div>
+        <div class="footer-crisis">
+          <p>If you're experiencing emotional distress, the resources below provide free and confidential support 24/7. <strong>If this is an emergency, call 911.</strong></p>
+          <p style="margin-top:12px"><a href="#">Suicide Prevention Lifeline</a><br>Call or text 988</p>
+          <p style="margin-top:12px"><a href="#">Crisis Text Line</a><br>Text HOME to 741741</p>
+        </div>
+        <div class="footer-legal">
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Supplemental Payment Terms</a>
+          <a href="#">HIPAA Notice of Privacy Practices</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="therapists.js"></script>
+  <script>
+    // Get provider ID from URL params
+    const params = new URLSearchParams(window.location.search);
+    const providerId = params.get('id');
+
+    const t = THERAPISTS_DATA.find(t => t.id === providerId);
+    if (!t) {
+      document.querySelector('.provider-page').innerHTML = '<h2 style="text-align:center;padding:64px 0;">Provider not found. <a href="index.html" style="color:#166534;">Go back</a></h2>';
+    } else {
+      // Page title
+      document.title = `${t.name} - ${t.licenseType.split(' (')[0]} | Headway`;
+
+      // Hero
+      document.getElementById('providerAvatar').textContent = t.initials;
+      document.getElementById('providerAvatar').style.background = t.avatarGradient;
+      document.getElementById('providerName').textContent = t.name;
+      document.getElementById('providerRole').textContent = `${t.role} (${t.pronouns})`;
+      document.getElementById('providerExperience').textContent = `${t.yearsOfExperience} years of experience`;
+      document.getElementById('providerLocation').textContent = t.virtual ? 'Virtual' : t.location;
+      document.getElementById('providerSpecialtiesSummary').textContent = t.specialties.slice(0, 3).join(', ');
+      document.getElementById('providerCareTypes').textContent = t.careTypes.join(', ');
+
+      // Left column cards
+      document.getElementById('providerBio').textContent = t.bio;
+      document.getElementById('providerApproach').textContent = t.approach;
+      document.getElementById('providerExpectation').textContent = t.expectation;
+      document.getElementById('providerIdentity').textContent = t.identity;
+      document.getElementById('providerStyle').textContent = t.style.join(', ');
+      document.getElementById('providerYears').textContent = `${t.yearsOfExperience} years of experience`;
+      document.getElementById('providerTraining').textContent = t.training;
+      document.getElementById('providerLicense').textContent = t.licenseType + (t.licensedIn ? ` (${t.licensedIn})` : '');
+      document.getElementById('providerLicensedIn').textContent = t.licensedIn;
+      document.getElementById('providerInsurance').textContent = t.insurance.join(', ');
+      document.getElementById('providerTopSpec').textContent = t.specialties.slice(0, 3).join(', ');
+      document.getElementById('providerMoreSpec').textContent = (t.moreSpecialties || t.specialties.slice(3)).join(', ');
+      document.getElementById('providerMethods').textContent = t.therapyMethods.join(', ');
+      document.getElementById('providerCareTypesFull').textContent = t.careTypes.join(', ');
+      document.getElementById('providerAges').textContent = t.agesServed.join(', ');
+      document.getElementById('providerLanguages').textContent = t.languages.join(', ');
+
+      // Build calendar
+      const slots = t.availableSlots;
+      const days = Object.keys(slots);
+      let calendarHTML = '<div class="calendar-header"><button class="calendar-nav">&lsaquo;</button>';
+      calendarHTML += '<div style="display:flex;gap:24px;">';
+      days.forEach(day => {
+        const parts = day.split(' ');
+        calendarHTML += `<div style="text-align:center"><div class="calendar-day-header"><strong>${parts[0]}</strong>${parts[1]} ${parts[2]}</div></div>`;
+      });
+      calendarHTML += '</div><button class="calendar-nav">&rsaquo;</button></div>';
+
+      // Time slots grid
+      const maxSlots = Math.max(...days.map(d => slots[d].length));
+      calendarHTML += '<div class="calendar-days">';
+      for (let i = 0; i < maxSlots; i++) {
+        days.forEach(day => {
+          if (slots[day][i]) {
+            calendarHTML += `<button class="time-slot" onclick="selectSlot(this)">${slots[day][i]} &#128247;</button>`;
+          } else {
+            calendarHTML += '<div></div>';
+          }
+        });
+      }
+      calendarHTML += '</div>';
+      document.getElementById('calendarContainer').innerHTML = calendarHTML;
+
+      // Book button
+      const firstDay = days[0];
+      document.getElementById('bookBtn').textContent = `Book session for ${firstDay}`;
+    }
+
+    function selectSlot(el) {
+      document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  </script>
+
+</body>
+</html>
