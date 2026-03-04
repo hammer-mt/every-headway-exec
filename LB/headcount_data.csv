@@ -1,0 +1,60 @@
+Employee_ID,Name,Department,Sub_Team,Level,Location,Start_Date,Manager,Gender,Ethnicity,Performance_Rating,Engagement_Score,Flight_Risk,Tenure_Months
+E-2001,Marcus Chen,Engineering,Leadership,M3,New York NY,2021-03-15,Andrew Adams,Male,Asian,Exceeds Expectations,92,Low,59
+E-2002,Danielle Okafor,Engineering,Platform,M2,Remote - US,2021-08-02,Marcus Chen,Female,Black,Exceeds Expectations,88,Low,55
+E-2003,Jenna Whitfield,Product,Leadership,M3,New York NY,2020-11-10,Andrew Adams,Female,White,Exceeds Expectations,90,Low,63
+E-2005,Dr. Samira Hassan,Clinical Ops,Leadership,M3,Remote - US,2021-05-03,Andrew Adams,Female,Middle Eastern,Exceeds Expectations,85,Low,58
+E-2006,Derek Holloway,Sales,Leadership,M2,New York NY,2022-04-11,Andrew Adams,Male,White,Meets Expectations,78,Medium,47
+E-2007,Lorraine Buhannic,People,Leadership,M3,New York NY,2022-06-01,Andrew Adams,Female,White,Exceeds Expectations,91,Low,45
+E-2008,Karen Fleischer,Legal & Compliance,Leadership,M2,New York NY,2021-09-20,Andrew Adams,Female,White,Meets Expectations,82,Low,54
+E-2009,Tomás Rivera,Engineering,Backend,IC5,Remote - US,2021-06-14,James Callahan,Male,Hispanic,Exceeds Expectations,87,Low,57
+E-2010,Priya Subramanian,Engineering,Frontend,IC5,New York NY,2022-02-07,Marcus Chen,Female,Asian,Exceeds Expectations,91,Low,49
+E-2011,Kevin Oduya,Engineering,Backend,IC4,Remote - US,2022-08-15,James Callahan,Male,Black,Meets Expectations,76,Medium,43
+E-2012,Emily Tran,Product,Provider Experience,IC4,New York NY,2022-03-21,Jenna Whitfield,Female,Asian,Exceeds Expectations,89,Low,47
+E-2013,James Callahan,Engineering,Backend,M1,Remote - US,2021-11-08,Danielle Okafor,Male,White,Meets Expectations,74,Medium,52
+E-2014,Aisha Johnson,Data Science,Analytics,IC4,Remote - US,2022-05-16,Raj Patel,Female,Black,Exceeds Expectations,93,Low,46
+E-2015,Michael Borrelli,Sales,Enterprise,IC3,New York NY,2022-09-01,Derek Holloway,Male,White,Meets Expectations,71,High,42
+E-2016,Natasha Volkov,Design,Product Design,IC4,New York NY,2022-07-11,Jenna Whitfield,Female,White,Exceeds Expectations,88,Low,44
+E-2017,Chris Nakamura,Engineering,Platform,IC4,Remote - US,2021-10-25,Danielle Okafor,Male,Asian,Meets Expectations,79,Low,53
+E-2018,Sofia Gutierrez,Clinical Ops,Provider Network,IC3,Remote - US,2022-01-10,Dr. Samira Hassan,Female,Hispanic,Meets Expectations,81,Low,50
+E-2019,Brandon Williams,People,HRBP,IC3,New York NY,2022-11-14,Lorraine Buhannic,Male,Black,Meets Expectations,77,Medium,40
+E-2020,Rachel Kim,RevOps,Analytics,IC3,New York NY,2022-06-20,Derek Holloway,Female,Asian,Exceeds Expectations,86,Low,45
+E-2021,David Mensah,Legal & Compliance,Compliance,IC3,Remote - US,2022-04-04,Karen Fleischer,Male,Black,Meets Expectations,80,Low,47
+E-2022,Lauren Fitzpatrick,People,Recruiting,IC3,New York NY,2022-08-22,Lorraine Buhannic,Female,White,Exceeds Expectations,84,Low,43
+E-2023,Omar Abdallah,Engineering,Insurance Integrations,IC4,Remote - US,2022-10-03,James Callahan,Male,Middle Eastern,Exceeds Expectations,86,Low,41
+E-2024,Jessica Park,Product,Growth,IC3,New York NY,2023-01-09,Jenna Whitfield,Female,Asian,Meets Expectations,75,Medium,38
+E-2025,Andre Thompson,Sales,SDR,IC1,New York NY,2023-02-13,Derek Holloway,Male,Black,Meets Expectations,68,High,37
+E-2026,Maya Singh,Data Science,Analytics,IC2,Remote - US,2022-12-05,Raj Patel,Female,Asian,Meets Expectations,82,Low,39
+E-2027,Tyler Washington,Engineering,Frontend,IC2,Remote - US,2023-03-20,Priya Subramanian,Male,Black,Meets Expectations,73,Medium,36
+E-2028,Hannah Liu,Clinical Ops,Quality,IC2,Remote - US,2022-09-12,Dr. Samira Hassan,Female,Asian,Exceeds Expectations,87,Low,42
+E-2029,Corey Adams,G&A,Finance,IC3,New York NY,2022-07-18,Andrew Adams,Male,White,Meets Expectations,79,Low,44
+E-2030,Diana Morales,Marketing,Content,IC3,New York NY,2022-11-28,Andrew Adams,Female,Hispanic,Meets Expectations,76,Medium,40
+E-2031,Ethan Choi,Engineering,Backend,IC2,Remote - US,2023-04-10,James Callahan,Male,Asian,Developing,70,Medium,35
+E-2032,Jasmine Brooks,People,Recruiting,IC2,New York NY,2023-01-23,Lauren Fitzpatrick,Female,Black,Meets Expectations,83,Low,38
+E-2033,Patrick O'Neill,Sales,Account Management,IC3,New York NY,2022-10-17,Derek Holloway,Male,White,Meets Expectations,74,Medium,41
+E-2034,Alicia Ramirez,Engineering,ML Infrastructure,IC4,New York NY,2021-07-19,Danielle Okafor,Female,Hispanic,Exceeds Expectations,90,Low,56
+E-2035,Nathan Brooks,IT,Systems,IC3,Remote - US,2022-05-30,Andrew Adams,Male,White,Meets Expectations,77,Low,46
+E-2036,Sarah Goldstein,People,Total Rewards,IC2,New York NY,2023-02-27,Lorraine Buhannic,Female,White,Meets Expectations,81,Low,37
+E-2037,Wei Zhang,Engineering,ML Infrastructure,IC4,Remote - US,2022-08-08,Danielle Okafor,Male,Asian,Exceeds Expectations,88,Medium,43
+E-2038,Catherine Bell,Clinical Ops,Provider Ops,IC1,Remote - US,2023-05-15,Sofia Gutierrez,Female,White,Meets Expectations,72,Low,34
+E-2039,Ryan Murphy,Sales,Solutions Engineering,IC3,New York NY,2022-12-12,Derek Holloway,Male,White,Meets Expectations,75,Low,39
+E-2040,Gabrielle Foster,People,L&D,IC3,New York NY,2023-03-06,Lorraine Buhannic,Female,Black,Meets Expectations,84,Low,36
+E-2041,Raj Patel,Data Science,Leadership,M2,Remote - US,2022-01-18,Marcus Chen,Male,Asian,Exceeds Expectations,86,Low,50
+E-2042,Sasha Petrov,Engineering,Backend,IC3,Remote - US,2023-06-12,James Callahan,Male,White,Meets Expectations,78,Low,33
+E-2043,Destiny Howard,Clinical Ops,Credentialing,IC2,Remote - US,2023-04-24,Sofia Gutierrez,Female,Black,Meets Expectations,80,Low,35
+E-2044,Marco DiStefano,Sales,Enterprise,IC3,New York NY,2023-01-30,Derek Holloway,Male,White,Developing,67,High,38
+E-2045,Nina Chakraborty,Engineering,Frontend,IC3,New York NY,2022-11-07,Priya Subramanian,Female,Asian,Exceeds Expectations,89,Low,40
+E-2046,Jordan Ellis,Product,Platform,IC3,Remote - US,2023-07-17,Jenna Whitfield,Non-binary,White,Meets Expectations,81,Low,32
+E-2047,Amara Diallo,Clinical Ops,Provider Network,IC2,Remote - US,2023-05-08,Dr. Samira Hassan,Female,Black,Meets Expectations,78,Low,34
+E-2048,Luke Henderson,Engineering,Platform,IC3,Remote - US,2023-02-20,Danielle Okafor,Male,White,Meets Expectations,76,Low,37
+E-2049,Grace Takahashi,G&A,Finance,IC2,New York NY,2023-08-14,Corey Adams,Female,Asian,Meets Expectations,83,Low,31
+E-2050,Carlos Mendez,Engineering,Insurance Integrations,IC3,Remote - US,2023-03-27,James Callahan,Male,Hispanic,Meets Expectations,80,Low,36
+E-2051,Tabitha Grant,People,People Ops,IC1,New York NY,2023-09-11,Brandon Williams,Female,Black,Meets Expectations,79,Low,30
+E-2052,Daniel Larsson,Engineering,Backend,IC4,Remote - US,2022-06-06,James Callahan,Male,White,Exceeds Expectations,85,Low,45
+E-2053,Priscilla Okafor,Marketing,Demand Gen,IC2,New York NY,2023-06-26,Diana Morales,Female,Black,Meets Expectations,77,Low,33
+E-2054,Anthony Russo,Sales,SDR,IC1,New York NY,2023-10-02,Andre Thompson,Male,White,Developing,65,High,29
+E-2055,Mei-Ling Wu,Data Science,ML,IC3,Remote - US,2023-04-03,Raj Patel,Female,Asian,Meets Expectations,84,Low,35
+E-2056,Trevor Barnes,IT,Security,IC2,Remote - US,2023-07-31,Nathan Brooks,Male,White,Meets Expectations,76,Low,32
+E-2057,Khadija Osman,Clinical Ops,Quality,IC3,Remote - US,2022-10-24,Dr. Samira Hassan,Female,Middle Eastern,Exceeds Expectations,88,Low,41
+E-2058,Sam Whitaker,Engineering,Frontend,IC2,New York NY,2023-11-13,Priya Subramanian,Male,White,Meets Expectations,74,Low,28
+E-2059,Danielle Brown,Legal & Compliance,Legal,IC2,New York NY,2023-08-07,Karen Fleischer,Female,Black,Meets Expectations,81,Low,31
+E-2060,Ian McCaffrey,Engineering,Platform,IC4,Remote - US,2022-03-14,Danielle Okafor,Male,White,Meets Expectations,72,High,48

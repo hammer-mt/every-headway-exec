@@ -1,0 +1,91 @@
+Month,Department,Applications,Phone_Screens,Onsites,Offers,Acceptances,Time_to_Fill_Days,Source
+2025-09,Engineering,342,48,18,6,4,42,LinkedIn
+2025-09,Engineering,128,15,5,2,2,38,Referral
+2025-09,Engineering,89,8,3,1,0,51,Careers Page
+2025-09,Product,145,22,8,3,2,35,LinkedIn
+2025-09,Product,52,10,4,2,2,28,Referral
+2025-09,Product,67,6,2,0,0,,Careers Page
+2025-09,Clinical Ops,98,18,7,3,2,33,LinkedIn
+2025-09,Clinical Ops,34,8,3,1,1,25,Referral
+2025-09,Clinical Ops,56,7,2,1,1,40,Careers Page
+2025-09,Sales,112,20,8,3,2,30,LinkedIn
+2025-09,Sales,28,6,2,1,1,22,Referral
+2025-09,Sales,45,5,1,0,0,,Careers Page
+2025-09,G&A,78,12,4,2,1,36,LinkedIn
+2025-09,G&A,22,5,2,1,1,20,Referral
+2025-09,G&A,41,4,1,0,0,,Careers Page
+2025-10,Engineering,310,45,16,5,3,44,LinkedIn
+2025-10,Engineering,135,18,7,3,2,32,Referral
+2025-10,Engineering,95,9,3,1,1,48,Careers Page
+2025-10,Product,130,20,7,2,1,38,LinkedIn
+2025-10,Product,48,9,3,1,1,30,Referral
+2025-10,Product,58,5,2,1,0,45,Careers Page
+2025-10,Clinical Ops,105,20,8,3,3,31,LinkedIn
+2025-10,Clinical Ops,30,7,2,1,1,27,Referral
+2025-10,Clinical Ops,62,8,3,1,0,42,Careers Page
+2025-10,Sales,98,18,6,2,1,34,LinkedIn
+2025-10,Sales,32,7,3,2,2,24,Referral
+2025-10,Sales,38,4,1,1,1,40,Careers Page
+2025-10,G&A,65,10,3,1,1,32,LinkedIn
+2025-10,G&A,18,4,2,1,1,22,Referral
+2025-10,G&A,35,3,1,0,0,,Careers Page
+2025-11,Engineering,288,42,15,5,4,40,LinkedIn
+2025-11,Engineering,142,20,8,3,2,30,Referral
+2025-11,Engineering,82,7,2,1,1,52,Careers Page
+2025-11,Product,118,18,6,2,2,36,LinkedIn
+2025-11,Product,55,11,4,2,1,26,Referral
+2025-11,Product,50,4,1,0,0,,Careers Page
+2025-11,Clinical Ops,88,16,6,2,2,34,LinkedIn
+2025-11,Clinical Ops,28,6,2,1,1,28,Referral
+2025-11,Clinical Ops,48,6,2,1,0,44,Careers Page
+2025-11,Sales,105,19,7,3,2,32,LinkedIn
+2025-11,Sales,35,8,3,1,1,20,Referral
+2025-11,Sales,42,5,2,1,0,38,Careers Page
+2025-11,G&A,72,11,4,2,2,30,LinkedIn
+2025-11,G&A,20,5,2,1,1,18,Referral
+2025-11,G&A,38,4,1,1,1,35,Careers Page
+2025-12,Engineering,195,30,10,3,2,46,LinkedIn
+2025-12,Engineering,108,14,5,2,2,34,Referral
+2025-12,Engineering,60,5,2,1,0,55,Careers Page
+2025-12,Product,85,12,4,1,1,40,LinkedIn
+2025-12,Product,38,7,3,1,1,30,Referral
+2025-12,Product,35,3,1,0,0,,Careers Page
+2025-12,Clinical Ops,72,13,5,2,1,36,LinkedIn
+2025-12,Clinical Ops,22,5,2,1,1,26,Referral
+2025-12,Clinical Ops,40,5,1,0,0,,Careers Page
+2025-12,Sales,78,14,5,2,1,35,LinkedIn
+2025-12,Sales,25,5,2,1,1,22,Referral
+2025-12,Sales,30,3,1,0,0,,Careers Page
+2025-12,G&A,48,7,2,1,0,38,LinkedIn
+2025-12,G&A,15,3,1,1,1,20,Referral
+2025-12,G&A,28,3,1,0,0,,Careers Page
+2026-01,Engineering,325,47,17,6,4,41,LinkedIn
+2026-01,Engineering,140,19,7,3,3,29,Referral
+2026-01,Engineering,92,8,3,1,1,50,Careers Page
+2026-01,Product,138,21,7,3,2,34,LinkedIn
+2026-01,Product,50,10,4,2,2,25,Referral
+2026-01,Product,62,5,2,0,0,,Careers Page
+2026-01,Clinical Ops,95,17,7,3,2,32,LinkedIn
+2026-01,Clinical Ops,32,7,3,1,1,24,Referral
+2026-01,Clinical Ops,55,7,2,1,1,38,Careers Page
+2026-01,Sales,115,21,8,3,2,28,LinkedIn
+2026-01,Sales,30,6,2,1,1,20,Referral
+2026-01,Sales,48,5,2,1,0,36,Careers Page
+2026-01,G&A,70,11,4,2,1,34,LinkedIn
+2026-01,G&A,20,5,2,1,1,19,Referral
+2026-01,G&A,40,4,1,0,0,,Careers Page
+2026-02,Engineering,338,50,19,7,5,39,LinkedIn
+2026-02,Engineering,148,21,8,3,2,28,Referral
+2026-02,Engineering,98,10,4,1,1,47,Careers Page
+2026-02,Product,142,22,8,3,2,33,LinkedIn
+2026-02,Product,55,12,5,2,2,24,Referral
+2026-02,Product,65,6,2,1,0,42,Careers Page
+2026-02,Clinical Ops,102,19,8,3,2,30,LinkedIn
+2026-02,Clinical Ops,35,8,3,1,1,22,Referral
+2026-02,Clinical Ops,58,7,3,1,1,36,Careers Page
+2026-02,Sales,120,22,9,4,3,27,LinkedIn
+2026-02,Sales,33,7,3,1,1,19,Referral
+2026-02,Sales,50,6,2,1,1,34,Careers Page
+2026-02,G&A,75,12,5,2,2,31,LinkedIn
+2026-02,G&A,22,5,2,1,1,18,Referral
+2026-02,G&A,42,4,2,1,0,37,Careers Page

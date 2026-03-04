@@ -1,0 +1,34 @@
+Ticket_ID,Summary,Status,Assignee,Sprint,Story_Points,Labels,Created_Date,Updated_Date,OKR_Link
+HW-1042,Implement self-serve rescheduling for legacy booking system patients,In Progress,Kevin Cho,Sprint 16,8,"patient-experience,booking,migration",2026-02-10,2026-02-27,KR: Launch self-serve appointment rescheduling for 100% of patients
+HW-1043,Migrate remaining 20% of patients off legacy booking system,To Do,Amy Liu,Sprint 16,13,"booking,migration,legacy",2026-02-15,2026-02-15,KR: Launch self-serve appointment rescheduling for 100% of patients
+HW-1051,Build Cigna API integration - eligibility verification endpoint,In Progress,Ravi Sundaram,Sprint 15,8,"insurance,cigna,integration",2026-01-28,2026-02-26,KR: Add 4 new national insurance partners
+HW-1052,Build Cigna API integration - claims submission endpoint,To Do,Ravi Sundaram,Sprint 17,8,"insurance,cigna,integration",2026-01-28,2026-02-05,KR: Add 4 new national insurance partners
+HW-1053,Cigna provider credentialing data sync,To Do,Sarah Okafor,Sprint 17,5,"insurance,cigna,credentialing",2026-02-01,2026-02-01,KR: Add 4 new national insurance partners
+HW-1060,Pre-submission claim validation engine - phase 2 CPT code rules,Done,Priya Mehta,Sprint 14,5,"insurance-ops,claims,validation",2026-01-20,2026-02-21,KR: Reduce claim denial rate from 8% to 4%
+HW-1061,Provider CPT code training module - interactive course builder,In Progress,Derek Williams,Sprint 15,5,"provider-success,training,claims",2026-02-03,2026-02-25,KR: Reduce claim denial rate from 8% to 4%
+HW-1062,Automated prior auth reference attachment for claim submissions,In Progress,Jen Martinez,Sprint 15,5,"insurance-ops,claims,automation",2026-02-05,2026-02-24,KR: Reduce claim denial rate from 8% to 4%
+HW-1070,Implement circuit breakers for Stripe payment gateway,In Progress,Tom Nguyen,Sprint 15,5,"infra,reliability,payments",2026-02-13,2026-02-27,KR: Achieve 99.95% uptime for patient-facing services
+HW-1071,Implement circuit breakers for payer API connections,To Do,Tom Nguyen,Sprint 16,5,"infra,reliability,insurance",2026-02-13,2026-02-13,KR: Achieve 99.95% uptime for patient-facing services
+HW-1072,Add transactional health checks for external service monitoring,Done,Anil Kapoor,Sprint 14,3,"infra,monitoring",2026-02-12,2026-02-20,KR: Achieve 99.95% uptime for patient-facing services
+HW-1073,Evaluate Aurora migration for booking database - POC,In Progress,Tom Nguyen,Sprint 15,3,"infra,database,evaluation",2026-02-18,2026-02-26,KR: Reduce MTTR from 45 min to 20 min
+HW-1074,Build automated DB failover test suite,Done,Anil Kapoor,Sprint 15,5,"infra,testing,database",2026-02-13,2026-02-22,KR: Reduce MTTR from 45 min to 20 min
+HW-1080,Fix insurance eligibility check timeout on high-latency payer connections,In Progress,Rachel Kim,Sprint 16,5,"bug,P0,insurance,eligibility",2026-01-15,2026-02-27,KR: Reduce P0/P1 bug backlog from 34 to under 10
+HW-1081,Fix duplicate appointment creation race condition,To Do,Rachel Kim,Sprint 16,8,"bug,P0,booking,concurrency",2026-01-22,2026-02-20,KR: Reduce P0/P1 bug backlog from 34 to under 10
+HW-1082,Fix provider payment calculation rounding error for split sessions,In Progress,Marcus Lee,Sprint 16,3,"bug,P0,payments,billing",2026-02-01,2026-02-26,KR: Reduce P0/P1 bug backlog from 34 to under 10
+HW-1083,Fix patient record merge failure for pre-2024 migration accounts,To Do,Marcus Lee,Sprint 16,8,"bug,P0,data,migration",2026-02-10,2026-02-10,KR: Reduce P0/P1 bug backlog from 34 to under 10
+HW-1090,Feature flag system - add audit logging and rollback capability,Done,Rachel Kim,Sprint 14,3,"platform,feature-flags,compliance",2026-01-20,2026-02-14,KR: Increase deployment frequency from 2x/week to daily
+HW-1091,Automated HIPAA compliance check in CI/CD pipeline - research spike,In Progress,Rachel Kim,Sprint 15,3,"platform,compliance,cicd",2026-02-17,2026-02-25,KR: Increase deployment frequency from 2x/week to daily
+HW-1100,OKR dashboard - data model design and implementation,In Progress,Omar Hassan,Sprint 15,8,"data,dashboard,okr",2026-01-27,2026-02-24,KR: Launch executive OKR dashboard with real-time data
+HW-1101,OKR dashboard - metric definition alignment with finance/ops,Blocked,Omar Hassan,Sprint 15,3,"data,dashboard,okr,blocked",2026-02-10,2026-02-24,KR: Launch executive OKR dashboard with real-time data
+HW-1102,OKR dashboard - frontend build (React + D3 visualization),To Do,Emily Zhang,Sprint 17,8,"data,dashboard,frontend",2026-02-15,2026-02-15,KR: Launch executive OKR dashboard with real-time data
+HW-1110,Migrate claims processing pipeline to streaming (Kafka),Done,Omar Hassan,Sprint 13,8,"data,pipeline,streaming",2026-01-06,2026-02-07,KR: Reduce data pipeline latency from 24hr to under 4hr
+HW-1111,Migrate session booking pipeline to streaming,Done,Omar Hassan,Sprint 14,5,"data,pipeline,streaming",2026-01-20,2026-02-18,KR: Reduce data pipeline latency from 24hr to under 4hr
+HW-1112,Migrate patient signup pipeline to streaming,Done,Tanya Brooks,Sprint 14,5,"data,pipeline,streaming",2026-01-20,2026-02-19,KR: Reduce data pipeline latency from 24hr to under 4hr
+HW-1113,Negotiate real-time API access with UHC - technical requirements doc,In Progress,Omar Hassan,Sprint 15,2,"data,pipeline,insurance,negotiation",2026-02-10,2026-02-22,KR: Reduce data pipeline latency from 24hr to under 4hr
+HW-1120,Instrument patient journey event: insurance verification callback,In Progress,Tanya Brooks,Sprint 15,3,"data,analytics,instrumentation",2026-02-17,2026-02-25,KR: Instrument top 10 patient journey events for funnel analytics
+HW-1121,Instrument patient journey event: therapist match acceptance,To Do,Tanya Brooks,Sprint 16,3,"data,analytics,instrumentation",2026-02-17,2026-02-17,KR: Instrument top 10 patient journey events for funnel analytics
+HW-1122,Instrument patient journey event: post-session survey completion,To Do,Emily Zhang,Sprint 16,3,"data,analytics,instrumentation",2026-02-17,2026-02-17,KR: Instrument top 10 patient journey events for funnel analytics
+HW-1130,Therapist matching algorithm v3 - patient preference weighting,In Progress,Kevin Cho,Sprint 15,8,"product,matching,algorithm",2026-02-03,2026-02-27,KR: Improve patient 90-day retention from 60% to 72%
+HW-1131,Evening and weekend slot expansion - provider scheduling feature,To Do,Amy Liu,Sprint 16,5,"product,scheduling,retention",2026-02-18,2026-02-18,KR: Improve patient 90-day retention from 60% to 72%
+HW-1140,Oregon Health Plan Medicaid integration - technical implementation,In Progress,Ravi Sundaram,Sprint 15,8,"insurance,medicaid,oregon,integration",2026-02-03,2026-02-26,KR: Launch in 3 new states (CO; NV; OR) by end of Q1
+HW-1141,Oregon provider credentialing - state board documentation gaps followup,In Progress,Sarah Okafor,Sprint 15,2,"credentialing,oregon,provider-ops",2026-02-20,2026-02-27,KR: Launch in 3 new states (CO; NV; OR) by end of Q1

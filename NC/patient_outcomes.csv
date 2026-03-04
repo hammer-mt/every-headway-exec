@@ -1,0 +1,82 @@
+Health_Plan,State,Age_Group,Gender,Diagnosis_Category,Avg_Sessions_to_Improvement,Median_PHQ9_Change,Median_GAD7_Change,Retention_Rate_Pct,N_Patients,Measurement_Period
+Anthem BCBS,New York,18-25,Female,Major Depressive Disorder,7.2,-6.1,-4.8,72.3,1842,Q4 2025
+Anthem BCBS,New York,18-25,Male,Major Depressive Disorder,8.1,-5.4,-4.2,65.7,1204,Q4 2025
+Anthem BCBS,New York,26-35,Female,Major Depressive Disorder,6.8,-6.5,-5.1,74.1,2356,Q4 2025
+Anthem BCBS,New York,26-35,Male,Major Depressive Disorder,7.5,-5.8,-4.5,68.9,1587,Q4 2025
+Anthem BCBS,New York,36-50,Female,Major Depressive Disorder,7.0,-6.3,-4.9,76.5,1923,Q4 2025
+Anthem BCBS,New York,36-50,Male,Major Depressive Disorder,7.8,-5.6,-4.3,70.2,1145,Q4 2025
+Anthem BCBS,New York,51-64,Female,Major Depressive Disorder,8.4,-5.2,-3.8,71.8,687,Q4 2025
+Anthem BCBS,New York,51-64,Male,Major Depressive Disorder,9.1,-4.8,-3.5,66.3,423,Q4 2025
+UnitedHealthcare,California,18-25,Female,Generalized Anxiety Disorder,6.5,-3.9,-5.7,70.8,2104,Q4 2025
+UnitedHealthcare,California,18-25,Male,Generalized Anxiety Disorder,7.3,-3.5,-5.1,63.2,1356,Q4 2025
+UnitedHealthcare,California,26-35,Female,Generalized Anxiety Disorder,6.1,-4.2,-6.0,73.6,2789,Q4 2025
+UnitedHealthcare,California,26-35,Male,Generalized Anxiety Disorder,6.9,-3.7,-5.4,67.4,1845,Q4 2025
+UnitedHealthcare,California,36-50,Female,Generalized Anxiety Disorder,6.4,-4.0,-5.8,75.2,1567,Q4 2025
+UnitedHealthcare,California,36-50,Male,Generalized Anxiety Disorder,7.1,-3.6,-5.2,69.8,1023,Q4 2025
+Aetna,Texas,18-25,Female,Major Depressive Disorder,7.8,-5.7,-4.4,68.5,1432,Q4 2025
+Aetna,Texas,18-25,Male,Major Depressive Disorder,8.5,-5.1,-3.9,61.3,987,Q4 2025
+Aetna,Texas,26-35,Female,Major Depressive Disorder,7.3,-6.0,-4.7,71.2,1876,Q4 2025
+Aetna,Texas,26-35,Male,Major Depressive Disorder,8.0,-5.4,-4.1,65.8,1234,Q4 2025
+Aetna,Texas,36-50,Female,Generalized Anxiety Disorder,6.7,-3.8,-5.5,73.9,1345,Q4 2025
+Aetna,Texas,36-50,Male,Generalized Anxiety Disorder,7.4,-3.4,-4.9,67.1,892,Q4 2025
+Cigna,Florida,18-25,Female,Major Depressive Disorder,7.5,-5.9,-4.6,69.8,1567,Q4 2025
+Cigna,Florida,18-25,Male,Major Depressive Disorder,8.3,-5.2,-4.0,63.5,1045,Q4 2025
+Cigna,Florida,26-35,Female,Generalized Anxiety Disorder,6.3,-4.1,-5.9,72.4,1893,Q4 2025
+Cigna,Florida,26-35,Male,Generalized Anxiety Disorder,7.0,-3.6,-5.3,66.7,1267,Q4 2025
+Cigna,Florida,36-50,Female,Major Depressive Disorder,7.1,-6.2,-4.8,75.3,1456,Q4 2025
+Cigna,Florida,36-50,Male,Major Depressive Disorder,7.9,-5.5,-4.2,69.1,978,Q4 2025
+Cigna,Florida,51-64,Female,Major Depressive Disorder,8.6,-5.0,-3.7,70.5,534,Q4 2025
+Cigna,Florida,51-64,Male,Major Depressive Disorder,9.3,-4.6,-3.3,64.8,367,Q4 2025
+Blue Cross Blue Shield,Illinois,18-25,Female,PTSD,9.2,-4.5,-3.2,66.4,876,Q4 2025
+Blue Cross Blue Shield,Illinois,18-25,Male,PTSD,10.1,-4.0,-2.8,59.7,543,Q4 2025
+Blue Cross Blue Shield,Illinois,26-35,Female,PTSD,8.7,-4.8,-3.5,69.1,1123,Q4 2025
+Blue Cross Blue Shield,Illinois,26-35,Male,PTSD,9.5,-4.3,-3.1,62.5,756,Q4 2025
+Blue Cross Blue Shield,Illinois,36-50,Female,Major Depressive Disorder,7.2,-6.1,-4.7,74.8,1678,Q4 2025
+Blue Cross Blue Shield,Illinois,36-50,Male,Major Depressive Disorder,7.9,-5.5,-4.1,68.3,1098,Q4 2025
+Anthem BCBS,Georgia,18-25,Female,Major Depressive Disorder,7.9,-5.5,-4.3,67.2,1234,Q4 2025
+Anthem BCBS,Georgia,18-25,Male,Major Depressive Disorder,8.7,-4.9,-3.7,60.8,823,Q4 2025
+Anthem BCBS,Georgia,26-35,Female,Generalized Anxiety Disorder,6.6,-3.9,-5.6,71.5,1567,Q4 2025
+Anthem BCBS,Georgia,26-35,Male,Generalized Anxiety Disorder,7.3,-3.5,-5.0,65.2,1034,Q4 2025
+UnitedHealthcare,New York,18-25,Female,Major Depressive Disorder,7.0,-6.3,-5.0,73.1,1987,Q4 2025
+UnitedHealthcare,New York,26-35,Female,Major Depressive Disorder,6.6,-6.7,-5.3,75.8,2543,Q4 2025
+UnitedHealthcare,New York,26-35,Male,Major Depressive Disorder,7.3,-6.0,-4.7,69.5,1678,Q4 2025
+UnitedHealthcare,New York,36-50,Female,Generalized Anxiety Disorder,6.2,-4.1,-5.9,76.1,1456,Q4 2025
+UnitedHealthcare,New York,36-50,Male,Generalized Anxiety Disorder,6.9,-3.7,-5.3,70.4,967,Q4 2025
+Centene Medicaid,Texas,18-25,Female,Major Depressive Disorder,9.1,-4.8,-3.6,58.3,345,Q4 2025
+Centene Medicaid,Texas,18-25,Male,Major Depressive Disorder,10.2,-4.2,-3.1,51.7,213,Q4 2025
+Centene Medicaid,Texas,26-35,Female,Major Depressive Disorder,8.7,-5.1,-3.9,61.5,456,Q4 2025
+Centene Medicaid,Texas,26-35,Male,Major Depressive Disorder,9.5,-4.5,-3.4,55.2,298,Q4 2025
+Centene Medicaid,Florida,18-25,Female,Major Depressive Disorder,9.3,-4.6,-3.4,57.1,312,Q4 2025
+Centene Medicaid,Florida,18-25,Male,Major Depressive Disorder,10.5,-4.0,-2.9,50.3,198,Q4 2025
+Centene Medicaid,Florida,26-35,Female,Generalized Anxiety Disorder,8.4,-3.2,-4.5,59.8,387,Q4 2025
+Aetna,New York,18-25,Female,Generalized Anxiety Disorder,6.4,-4.0,-5.8,71.2,1678,Q4 2025
+Aetna,New York,18-25,Male,Generalized Anxiety Disorder,7.2,-3.6,-5.2,64.5,1123,Q4 2025
+Aetna,New York,26-35,Female,Major Depressive Disorder,6.9,-6.4,-5.0,73.8,2134,Q4 2025
+Aetna,New York,26-35,Male,Major Depressive Disorder,7.6,-5.7,-4.4,67.9,1423,Q4 2025
+UnitedHealthcare,California,18-25,Female,PTSD,9.5,-4.3,-3.0,64.7,756,Q4 2025
+UnitedHealthcare,California,26-35,Female,PTSD,8.9,-4.6,-3.3,67.8,934,Q4 2025
+UnitedHealthcare,California,26-35,Male,PTSD,9.7,-4.1,-2.9,61.2,623,Q4 2025
+Cigna,Texas,18-25,Female,Generalized Anxiety Disorder,6.8,-3.7,-5.4,69.3,1234,Q4 2025
+Cigna,Texas,26-35,Female,Major Depressive Disorder,7.4,-5.9,-4.6,70.8,1567,Q4 2025
+Cigna,Texas,26-35,Male,Major Depressive Disorder,8.1,-5.3,-4.0,64.5,1034,Q4 2025
+Anthem BCBS,California,18-25,Female,Major Depressive Disorder,7.1,-6.0,-4.7,71.5,1789,Q4 2025
+Anthem BCBS,California,26-35,Female,Major Depressive Disorder,6.7,-6.4,-5.0,74.3,2234,Q4 2025
+Anthem BCBS,California,26-35,Male,Major Depressive Disorder,7.4,-5.7,-4.4,68.1,1478,Q4 2025
+Anthem BCBS,California,36-50,Female,Generalized Anxiety Disorder,6.3,-4.0,-5.7,75.6,1345,Q4 2025
+Anthem BCBS,California,36-50,Male,Generalized Anxiety Disorder,7.0,-3.6,-5.1,69.9,892,Q4 2025
+Blue Cross Blue Shield,Pennsylvania,18-25,Female,Major Depressive Disorder,7.3,-5.8,-4.5,70.1,1345,Q4 2025
+Blue Cross Blue Shield,Pennsylvania,26-35,Female,Major Depressive Disorder,6.9,-6.2,-4.9,73.5,1723,Q4 2025
+Blue Cross Blue Shield,Pennsylvania,26-35,Male,Major Depressive Disorder,7.6,-5.6,-4.3,67.4,1145,Q4 2025
+Blue Cross Blue Shield,Pennsylvania,36-50,Female,Generalized Anxiety Disorder,6.5,-3.9,-5.6,74.2,1098,Q4 2025
+Blue Cross Blue Shield,Pennsylvania,36-50,Male,Generalized Anxiety Disorder,7.2,-3.5,-5.0,68.6,734,Q4 2025
+UnitedHealthcare,Texas,18-25,Female,Major Depressive Disorder,7.6,-5.6,-4.3,68.9,1456,Q4 2025
+UnitedHealthcare,Texas,26-35,Female,Major Depressive Disorder,7.1,-6.0,-4.7,72.1,1893,Q4 2025
+UnitedHealthcare,Texas,26-35,Male,Major Depressive Disorder,7.8,-5.4,-4.1,66.3,1256,Q4 2025
+Aetna,California,18-25,Female,Major Depressive Disorder,7.0,-6.1,-4.8,72.0,1567,Q4 2025
+Aetna,California,26-35,Female,Generalized Anxiety Disorder,6.2,-4.1,-5.8,74.5,1978,Q4 2025
+Aetna,California,26-35,Male,Generalized Anxiety Disorder,6.9,-3.7,-5.2,68.1,1312,Q4 2025
+Aetna,Illinois,18-25,Female,Major Depressive Disorder,7.4,-5.7,-4.4,69.8,1123,Q4 2025
+Aetna,Illinois,26-35,Female,Major Depressive Disorder,7.0,-6.1,-4.8,72.9,1456,Q4 2025
+Aetna,Illinois,26-35,Male,Major Depressive Disorder,7.7,-5.5,-4.2,66.7,967,Q4 2025
+Cigna,Georgia,18-25,Female,Generalized Anxiety Disorder,6.9,-3.6,-5.3,68.1,987,Q4 2025
+Cigna,Georgia,26-35,Female,Major Depressive Disorder,7.5,-5.8,-4.5,70.3,1234,Q4 2025

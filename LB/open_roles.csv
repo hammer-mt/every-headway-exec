@@ -1,0 +1,13 @@
+Role_ID,Title,Department,Level,Location,Hiring_Manager,Priority,Skills_Required,Min_Years_Experience,Status,Days_Open
+R-1001,Senior Backend Engineer,Engineering,IC4,Remote - US,Marcus Chen,P0,"Python, Django, PostgreSQL, AWS, distributed systems",5,Active,34
+R-1002,Staff Frontend Engineer,Engineering,IC5,New York NY,Marcus Chen,P0,"React, TypeScript, GraphQL, design systems, performance optimization",7,Active,21
+R-1003,Engineering Manager - Platform,Engineering,M2,Remote - US,Danielle Okafor,P1,"Engineering management, infrastructure, Kubernetes, team building",8,Active,45
+R-1004,Product Manager - Provider Experience,Product,IC4,New York NY,Jenna Whitfield,P0,"Product management, healthcare, user research, SQL, A/B testing",5,Active,12
+R-1005,Senior Data Scientist,Data Science,IC4,Remote - US,Raj Patel,P1,"Python, ML, causal inference, experimentation, healthcare data",4,Active,28
+R-1006,Clinical Operations Manager,Clinical Ops,M1,Remote - US,Dr. Samira Hassan,P0,"Clinical operations, provider network management, credentialing, Salesforce",6,Active,52
+R-1007,Account Executive - Health Plans,Sales,IC3,New York NY,Derek Holloway,P1,"Enterprise sales, health insurance, consultative selling, Salesforce",4,Active,18
+R-1008,Senior Product Designer,Design,IC4,New York NY,Jenna Whitfield,P0,"Figma, user research, design systems, accessibility, healthcare UX",5,Active,9
+R-1009,People Business Partner,People,IC3,New York NY,Lorraine Buhannic,P1,"HRBP, employee relations, coaching, Workday, org design",4,Active,31
+R-1010,Revenue Operations Analyst,RevOps,IC2,Remote - US,Derek Holloway,P2,"Salesforce, SQL, Looker, pipeline analytics, forecasting",2,Active,40
+R-1011,Staff Software Engineer - Insurance Integrations,Engineering,IC5,Remote - US,Marcus Chen,P0,"Python, EDI 837/835, healthcare claims, API design, FHIR",7,Active,60
+R-1012,Senior Compliance Analyst,Legal & Compliance,IC3,Remote - US,Karen Fleischer,P1,"Healthcare compliance, HIPAA, state licensing, audit management",4,Active,15

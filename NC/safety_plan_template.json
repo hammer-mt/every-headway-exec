@@ -1,0 +1,251 @@
+{
+  "safety_plan_metadata": {
+    "version": "2.0",
+    "template_name": "Headway Safety Plan — Stanley-Brown Model",
+    "description": "Structured safety plan based on the Stanley-Brown Safety Planning Intervention. Designed for collaborative completion between patient and provider during a therapy session. All fields should be reviewed and updated periodically.",
+    "created_date": null,
+    "last_updated": null,
+    "provider_id": null,
+    "patient_id": null,
+    "review_frequency_days": 30,
+    "status": "active"
+  },
+  "patient_info": {
+    "first_name": "Maya",
+    "last_name": "Torres",
+    "date_of_birth": "1994-06-12",
+    "preferred_name": "Maya",
+    "primary_diagnosis": "Major Depressive Disorder, Recurrent, Moderate (F33.1)",
+    "secondary_diagnosis": "Generalized Anxiety Disorder (F41.1)",
+    "current_medications": [
+      {
+        "name": "Sertraline",
+        "dosage": "100mg",
+        "frequency": "Once daily",
+        "prescriber": "Dr. Anish Patel"
+      }
+    ]
+  },
+  "step_1_warning_signs": {
+    "instructions": "List the thoughts, feelings, moods, images, situations, or behaviors that indicate a crisis may be developing. These are the personal cues that tell you it's time to use this safety plan.",
+    "warning_signs": [
+      {
+        "description": "Feeling like a burden to my family and friends",
+        "category": "thought"
+      },
+      {
+        "description": "Withdrawing from text messages and social plans for more than 2 days",
+        "category": "behavior"
+      },
+      {
+        "description": "Difficulty getting out of bed combined with not eating",
+        "category": "behavior"
+      },
+      {
+        "description": "Intrusive images of giving up or disappearing",
+        "category": "image"
+      },
+      {
+        "description": "Sudden sense of calm after a long period of intense distress (potential resolve to act)",
+        "category": "mood"
+      },
+      {
+        "description": "Increased alcohol use — more than 2 drinks in a sitting",
+        "category": "behavior"
+      }
+    ]
+  },
+  "step_2_coping_strategies": {
+    "instructions": "List activities you can do on your own to take your mind off problems or help you feel better, without contacting another person. These should be things you can do independently.",
+    "strategies": [
+      {
+        "activity": "Go for a walk in the neighborhood, at least 15 minutes",
+        "category": "physical",
+        "effectiveness_rating": 4,
+        "notes": "Works best in daylight; bring headphones with calming playlist"
+      },
+      {
+        "activity": "Box breathing exercise — 4 counts in, 4 hold, 4 out, 4 hold — repeat 5 cycles",
+        "category": "breathing",
+        "effectiveness_rating": 3,
+        "notes": "Can do anywhere; sometimes need to do 8-10 cycles"
+      },
+      {
+        "activity": "Write in journal using the 3-column thought record",
+        "category": "cognitive",
+        "effectiveness_rating": 4,
+        "notes": "Journal is in nightstand drawer; use the CBT template Dr. Kim provided"
+      },
+      {
+        "activity": "Play guitar for 20+ minutes",
+        "category": "engagement",
+        "effectiveness_rating": 5,
+        "notes": "Most effective coping strategy; keeps hands and mind occupied"
+      },
+      {
+        "activity": "Cold water on wrists and face (grounding technique)",
+        "category": "sensory",
+        "effectiveness_rating": 3,
+        "notes": "Helpful for acute distress; follow with breathing exercise"
+      },
+      {
+        "activity": "Watch comfort show (Great British Bake Off) — max 2 episodes",
+        "category": "distraction",
+        "effectiveness_rating": 3,
+        "notes": "Set a timer; avoid doom-scrolling on phone afterward"
+      }
+    ]
+  },
+  "step_3_social_contacts_for_distraction": {
+    "instructions": "List people and social settings that can help provide distraction from a crisis. You do not need to disclose that you are in crisis. The goal is to be around others.",
+    "contacts": [
+      {
+        "name": "Lucia Torres (sister)",
+        "phone": "555-312-7845",
+        "relationship": "sibling",
+        "best_way_to_reach": "phone call or text",
+        "notes": "Usually available evenings and weekends; can suggest getting coffee or going on a walk"
+      },
+      {
+        "name": "Dev Khatri (close friend)",
+        "phone": "555-408-2196",
+        "relationship": "friend",
+        "best_way_to_reach": "text first, then call",
+        "notes": "Lives nearby; good for spontaneous hangouts; knows about treatment generally"
+      },
+      {
+        "name": "Community yoga class at Bend Studio",
+        "phone": "555-628-3340",
+        "relationship": "social_setting",
+        "best_way_to_reach": "drop-in; Tuesday/Thursday 6pm, Saturday 9am",
+        "notes": "No need to talk; just being around people helps; $15 drop-in"
+      }
+    ]
+  },
+  "step_4_people_to_ask_for_help": {
+    "instructions": "List people you can tell that you are in crisis and ask for help. These are trusted individuals who know about your mental health and can provide support.",
+    "trusted_contacts": [
+      {
+        "name": "Lucia Torres (sister)",
+        "phone": "555-312-7845",
+        "relationship": "sibling",
+        "knows_about_safety_plan": true,
+        "notes": "Has a copy of this safety plan; knows to help remove access to alcohol and drive to ER if needed"
+      },
+      {
+        "name": "Roberto Torres (father)",
+        "phone": "555-312-5501",
+        "relationship": "parent",
+        "knows_about_safety_plan": true,
+        "notes": "Aware of diagnosis and treatment; can come to apartment within 30 minutes"
+      },
+      {
+        "name": "Dr. Sarah Kim (therapist)",
+        "phone": "555-917-4420",
+        "relationship": "therapist",
+        "knows_about_safety_plan": true,
+        "notes": "Available during business hours M-F 9am-5pm; has voicemail for after-hours with callback within 2 hours on weekdays"
+      },
+      {
+        "name": "Dr. Anish Patel (psychiatrist)",
+        "phone": "555-917-8830",
+        "relationship": "psychiatrist",
+        "knows_about_safety_plan": true,
+        "notes": "For medication concerns or if symptoms are escalating rapidly; office has after-hours on-call coverage"
+      }
+    ]
+  },
+  "step_5_professional_and_crisis_resources": {
+    "instructions": "These are professional resources available 24/7 for crisis support. You can contact them at any time.",
+    "crisis_resources": [
+      {
+        "name": "988 Suicide & Crisis Lifeline",
+        "phone": "988",
+        "text": "Text 988",
+        "chat_url": "https://988lifeline.org/chat/",
+        "hours": "24/7",
+        "description": "Free, confidential support for people in distress. Call or text 988."
+      },
+      {
+        "name": "Crisis Text Line",
+        "phone": null,
+        "text": "Text HOME to 741741",
+        "chat_url": "https://www.crisistextline.org/",
+        "hours": "24/7",
+        "description": "Free text-based crisis support with trained counselors."
+      },
+      {
+        "name": "Local Emergency Services",
+        "phone": "911",
+        "text": null,
+        "chat_url": null,
+        "hours": "24/7",
+        "description": "For immediate life-threatening emergencies."
+      },
+      {
+        "name": "Nearest Emergency Department",
+        "facility_name": "Mount Sinai West Emergency Department",
+        "address": "1000 10th Avenue, New York, NY 10019",
+        "phone": "212-523-6800",
+        "hours": "24/7",
+        "notes": "15-minute drive or 25-minute subway from apartment; sister Lucia can drive"
+      }
+    ]
+  },
+  "step_6_environmental_safety": {
+    "instructions": "Steps to make the environment safer by reducing access to lethal means. These steps should be taken proactively, not just during a crisis.",
+    "safety_steps": [
+      {
+        "action": "Remove alcohol from apartment and ask Lucia to hold it",
+        "status": "completed",
+        "date_completed": "2026-01-15",
+        "responsible_person": "Maya and Lucia",
+        "notes": "Lucia stores wine/spirits at her place; Maya will tell Lucia before purchasing any alcohol"
+      },
+      {
+        "action": "Store medications in a timed lock box (Kitchen Safe)",
+        "status": "completed",
+        "date_completed": "2026-01-20",
+        "responsible_person": "Maya",
+        "notes": "Kitchen Safe set to dispense one day's dose at a time; extra medication stored at Dad's house"
+      },
+      {
+        "action": "Remove or secure sharp objects in bathroom",
+        "status": "completed",
+        "date_completed": "2026-01-15",
+        "responsible_person": "Maya",
+        "notes": "Switched to electric razor; box cutter moved to Lucia's apartment"
+      },
+      {
+        "action": "Keep phone charged and nearby at night",
+        "status": "ongoing",
+        "date_completed": null,
+        "responsible_person": "Maya",
+        "notes": "Charging station on nightstand; safety plan saved as phone lock screen favorites"
+      }
+    ]
+  },
+  "reasons_for_living": {
+    "instructions": "List the things that are most important to you and that give you reasons to keep going. Review these when warning signs appear.",
+    "reasons": [
+      "My sister Lucia — she depends on me and I depend on her; we promised to always be there for each other",
+      "My goal of finishing my MFA in creative writing — I have one semester left and I want to see my thesis through",
+      "My guitar and songwriting — I haven't shared my songs yet and I want to perform at an open mic",
+      "My cat Pepper — she needs me and greets me every morning",
+      "The progress I've already made in therapy — I don't want to lose what I've built",
+      "Wanting to travel to Oaxaca with my dad like we've planned since I was a kid"
+    ]
+  },
+  "provider_notes": {
+    "clinical_observations": "Maya collaboratively developed this plan during session on 2026-01-10. She was engaged and identified coping strategies with specificity. Primary lethal means concern is medication overdose and alcohol — both have been addressed with means restriction. Sister Lucia is a strong protective factor. Plan should be reviewed at each session and updated as needed. Maya has a laminated copy in her wallet and digital copy on her phone.",
+    "risk_level_at_creation": "moderate",
+    "last_review_date": "2026-02-14",
+    "next_review_date": "2026-03-14",
+    "plan_modifications_log": [
+      {
+        "date": "2026-02-14",
+        "modification": "Added Dev Khatri as social contact; updated coping strategy effectiveness ratings based on past month's experience; confirmed all means restriction steps still in place"
+      }
+    ]
+  }
+}

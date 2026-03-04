@@ -1,0 +1,5 @@
+Quarter,Total_Revenue,Revenue_Growth_Pct,Total_Claims,Claim_Approval_Rate,Avg_Days_to_Payment,Provider_NPS,Patient_NPS,New_Payer_Partnerships,Churn_Rate_Pct
+Q1 2025,92450000,18.2,284600,91.8,27.4,62,71,2,3.2
+Q2 2025,98720000,6.8,302400,92.1,26.8,64,72,1,2.9
+Q3 2025,106840000,8.2,327500,92.4,26.1,65,73,1,2.7
+Q4 2025,114280000,7.0,348900,92.8,25.5,67,74,1,2.5

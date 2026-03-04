@@ -1,0 +1,21 @@
+Role_Title,Market,Percentile_25,Percentile_50,Percentile_75,Percentile_90,Sample_Size,Survey_Date
+Senior Software Engineer,National,165000,190000,215000,245000,2450,2025-11-01
+Staff Software Engineer,National,205000,240000,275000,310000,1180,2025-11-01
+Engineering Manager,National,195000,225000,260000,295000,890,2025-11-01
+Senior Engineering Manager,National,235000,270000,310000,350000,520,2025-11-01
+VP of Engineering,National,290000,340000,395000,450000,210,2025-11-01
+Product Manager,National,135000,158000,182000,210000,1850,2025-11-01
+Senior Product Manager,National,165000,192000,220000,250000,1320,2025-11-01
+Director of Product,National,210000,245000,285000,325000,480,2025-11-01
+Senior Product Designer,National,145000,170000,198000,225000,980,2025-11-01
+Data Scientist,National,130000,152000,178000,205000,1650,2025-11-01
+Senior Data Scientist,National,160000,188000,218000,250000,1100,2025-11-01
+Clinical Operations Manager,National,120000,142000,168000,195000,420,2025-11-01
+Director of Clinical Operations,National,155000,182000,212000,245000,280,2025-11-01
+Account Executive - Healthcare,National,95000,115000,138000,165000,750,2025-11-01
+Senior Account Executive - Healthcare,National,120000,145000,172000,200000,480,2025-11-01
+People Business Partner,National,110000,130000,152000,175000,1200,2025-11-01
+Compliance Analyst - Healthcare,National,95000,112000,132000,155000,580,2025-11-01
+Revenue Operations Analyst,National,85000,102000,122000,145000,920,2025-11-01
+Machine Learning Engineer,National,175000,205000,238000,275000,890,2025-11-01
+DevOps Engineer,National,145000,170000,198000,228000,1350,2025-11-01

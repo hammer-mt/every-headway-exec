@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Discover Hoboken's hidden gems - a local's guide to the best restaurants, bars, parks, and family activities that tourists don't know about." />
+  <meta name="theme-color" content="#8B4513" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>" />
+  <title>Hoboken Hidden Gems | A Local's Guide to the Mile Square City</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* CSS Variables for vintage color palette */
+    :root {
+      --color-primary: #8B4513;
+      --color-primary-light: #A0522D;
+      --color-primary-dark: #5D2E0C;
+      --color-accent: #2F4F4F;
+      --color-accent-warm: #CD853F;
+      --color-background: #FAF8F5;
+      --color-background-warm: #F5F0E6;
+      --color-background-cream: #FDF8E8;
+      --color-text: #3C3C3C;
+      --color-text-light: #5C5C5C;
+      --color-border: #D4C4A8;
+      --color-border-dark: #B8A88A;
+
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Crimson Text', Georgia, serif;
+      --font-accent: 'Caveat', cursive;
+
+      --shadow-soft: 0 2px 8px rgba(139, 69, 19, 0.1);
+      --shadow-medium: 0 4px 12px rgba(139, 69, 19, 0.15);
+      --shadow-strong: 0 6px 20px rgba(139, 69, 19, 0.2);
+
+      --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--color-background);
+      color: var(--color-text);
+      line-height: 1.6;
+      background-image:
+        linear-gradient(to bottom, rgba(139, 69, 19, 0.02), rgba(139, 69, 19, 0.04)),
+        var(--paper-texture);
+      background-blend-mode: multiply;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(to bottom, var(--color-background-warm), var(--color-background));
+      padding: 1rem 1.5rem;
+      border-bottom: 3px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      background-image:
+        linear-gradient(to bottom, var(--color-background-warm), var(--color-background)),
+        var(--paper-texture);
+      background-blend-mode: overlay;
+    }
+
+    .header::before, .header::after {
+      content: "\2726";
+      position: absolute;
+      font-size: 1rem;
+      color: var(--color-border-dark);
+      opacity: 0.6;
+    }
+    .header::before { top: 0.5rem; left: 1rem; }
+    .header::after { top: 0.5rem; right: 1rem; }
+
+    .header h1 {
+      font-size: 1.75rem;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+      display: inline-block;
+      position: relative;
+    }
+
+    .header h1::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--color-accent-warm), transparent);
+    }
+
+    .header .subtitle {
+      font-family: var(--font-accent);
+      font-size: 1.15rem;
+      color: var(--color-text-light);
+      margin-top: 0.25rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* Map container */
+    .map-container {
+      flex: 1;
+      position: relative;
+      min-height: 500px;
+    }
+
+    .map-container .leaflet-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--color-background-warm);
+    }
+
+    .leaflet-tile-pane {
+      filter: sepia(15%) saturate(90%) brightness(102%);
+    }
+
+    .leaflet-control-zoom {
+      border: 2px solid var(--color-border) !important;
+      border-radius: 4px !important;
+      box-shadow: var(--shadow-soft) !important;
+    }
+    .leaflet-control-zoom a {
+      background-color: var(--color-background) !important;
+      color: var(--color-primary) !important;
+      font-family: var(--font-heading) !important;
+    }
+    .leaflet-control-zoom a:hover {
+      background-color: var(--color-background-warm) !important;
+    }
+
+    .leaflet-control-attribution {
+      background: var(--color-background) !important;
+      font-family: var(--font-body) !important;
+      font-size: 0.7rem !important;
+      color: var(--color-text-light) !important;
+    }
+
+    .leaflet-popup-content-wrapper {
+      background: var(--color-background);
+      border-radius: 4px;
+      box-shadow: var(--shadow-medium);
+      border: 1px solid var(--color-border);
+    }
+    .leaflet-popup-content {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      margin: 12px 16px;
+    }
+    .leaflet-popup-tip {
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+    }
+
+    /* Custom gem markers */
+    .custom-gem-marker { background: transparent; border: none; }
+
+    .gem-marker-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+      transition: transform 0.2s ease;
+    }
+    .gem-marker-container:hover { transform: scale(1.1); }
+
+    .gem-marker-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--marker-color, var(--color-primary));
+      border: 3px solid var(--color-background);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .gem-marker-pin {
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 12px solid var(--marker-color, var(--color-primary));
+      margin-top: -2px;
+    }
+
+    /* Controls */
+    .controls {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .search-bar {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+    .search-bar::before {
+      content: "\1F50D";
+      position: absolute;
+      left: 0.875rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      border: 2px solid var(--color-border);
+      border-radius: 6px;
+      background: var(--color-background-cream);
+      color: var(--color-text);
+      box-shadow: var(--shadow-soft), inset 0 1px 3px rgba(139, 69, 19, 0.05);
+      transition: all 0.2s ease;
+    }
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-medium), inset 0 1px 3px rgba(139, 69, 19, 0.05);
+      background: var(--color-background);
+    }
+    .search-bar input::placeholder {
+      color: var(--color-text-light);
+      font-style: italic;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      background: var(--color-background-cream);
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .filter-btn {
+      padding: 0.5rem 0.875rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover {
+      background: var(--color-background-warm);
+      color: var(--color-primary);
+    }
+    .filter-btn.active {
+      background: var(--color-primary);
+      color: var(--color-background);
+      border-color: var(--color-primary-dark);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Popup card */
+    .popup-card { max-width: 280px; padding: 0.25rem; }
+    .popup-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid var(--color-border);
+      padding-bottom: 0.5rem;
+      position: relative;
+    }
+    .popup-card h3::after {
+      content: "\25C6";
+      position: absolute;
+      bottom: -0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.5rem;
+      color: var(--color-border-dark);
+      background: var(--color-background);
+      padding: 0 0.5rem;
+    }
+    .popup-card .tagline {
+      font-family: var(--font-accent);
+      font-size: 1.1rem;
+      color: var(--color-accent);
+      margin-bottom: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .popup-card .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background: var(--color-background-warm);
+      border-radius: 4px;
+    }
+    .popup-card .gem-score { font-weight: 600; color: var(--color-accent-warm); }
+    .popup-card .read-more {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
+      color: var(--color-background);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(93, 46, 12, 0.2);
+    }
+    .popup-card .read-more:hover {
+      background: linear-gradient(to bottom, var(--color-primary-light), var(--color-primary));
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(93, 46, 12, 0.25);
+    }
+    .popup-card .popup-details {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-top: 0.5rem;
+      border-left: 2px solid var(--color-border);
+      padding-left: 0.75rem;
+    }
+    .popup-card .popup-details .hours { font-style: italic; margin-bottom: 0.25rem; }
+    .popup-card .popup-details .address { margin: 0; }
+
+    /* Detail overlay */
+    .detail-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .detail-overlay.visible { opacity: 1; visibility: visible; }
+
+    /* Detail panel */
+    .detail-panel {
+      position: fixed;
+      top: 0; right: 0;
+      width: 420px;
+      max-width: 100%;
+      height: 100vh;
+      background: var(--color-background);
+      box-shadow: -6px 0 30px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      overflow-y: auto;
+      padding: 2rem;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.03), transparent 20px),
+        var(--paper-texture);
+      background-blend-mode: multiply;
+      border-left: 1px solid var(--color-border);
+    }
+    .detail-panel.open { transform: translateX(0); }
+
+    .detail-panel .close-btn {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: var(--color-background-warm);
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      width: 2.5rem; height: 2.5rem;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--color-text-light);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .detail-panel .close-btn:hover {
+      background: var(--color-primary);
+      color: var(--color-background);
+      border-color: var(--color-primary);
+    }
+
+    .detail-panel h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      padding-right: 3rem;
+      border-bottom: 2px solid var(--color-border);
+      padding-bottom: 0.75rem;
+    }
+
+    .detail-panel .tagline {
+      font-family: var(--font-accent);
+      color: var(--color-accent);
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .detail-panel .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--color-background-warm);
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--color-border);
+    }
+    .detail-panel .detail-meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+    .detail-panel .detail-meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-text-light);
+    }
+    .detail-panel .detail-meta-value { font-weight: 600; color: var(--color-primary); }
+
+    .detail-panel .detail-info {
+      margin-bottom: 1.5rem;
+      padding: 0.75rem 0;
+      border-top: 1px dashed var(--color-border);
+      border-bottom: 1px dashed var(--color-border);
+    }
+    .detail-panel .detail-info p { margin: 0.25rem 0; font-size: 0.95rem; }
+    .detail-panel .detail-info strong { color: var(--color-primary); }
+
+    .detail-panel .review {
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+      text-align: justify;
+      text-indent: 1.5rem;
+    }
+    .detail-panel .review::first-letter {
+      float: left;
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      line-height: 0.8;
+      padding-right: 0.5rem;
+      padding-top: 0.25rem;
+      color: var(--color-primary);
+    }
+
+    .detail-panel .insider-tips {
+      background: var(--color-background-cream);
+      padding: 1.25rem;
+      border-radius: 6px;
+      border-left: 4px solid var(--color-accent-warm);
+      box-shadow: var(--shadow-soft);
+      margin-top: 1rem;
+    }
+    .detail-panel .insider-tips h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      color: var(--color-accent-warm);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .detail-panel .insider-tips h4::before { content: "\2605"; }
+    .detail-panel .insider-tips ul { list-style-type: none; padding-left: 0; }
+    .detail-panel .insider-tips li {
+      padding: 0.4rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      border-bottom: 1px dashed var(--color-border);
+    }
+    .detail-panel .insider-tips li:last-child { border-bottom: none; }
+    .detail-panel .insider-tips li::before {
+      content: "\2192";
+      position: absolute;
+      left: 0;
+      color: var(--color-accent-warm);
+      font-weight: bold;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header { padding: 0.875rem 1rem; }
+      .header h1 { font-size: 1.4rem; }
+      .header h1::after { display: none; }
+      .header::before, .header::after { display: none; }
+      .header .subtitle { font-size: 1rem; }
+      .controls { flex-direction: column; gap: 0.5rem; }
+      .search-bar { width: 100%; }
+      .search-bar input { padding: 0.625rem 1rem 0.625rem 2.25rem; font-size: 0.95rem; }
+      .filter-bar { width: 100%; justify-content: flex-start; padding: 0.375rem; gap: 0.375rem; }
+      .filter-btn { padding: 0.375rem 0.625rem; font-size: 0.8rem; }
+      .detail-panel { width: 100%; padding: 1.5rem; padding-top: 1rem; }
+      .detail-panel h2 { font-size: 1.35rem; padding-right: 2.5rem; }
+      .detail-panel .tagline { font-size: 1.15rem; }
+      .detail-panel .review { text-align: left; text-indent: 0; line-height: 1.75; }
+      .detail-panel .review::first-letter { font-size: 2.75rem; }
+      .popup-card { max-width: 250px; }
+      .popup-card h3 { font-size: 1rem; }
+      .popup-card .tagline { font-size: 1rem; }
+      .popup-card .meta { gap: 0.5rem; font-size: 0.8rem; }
+      .gem-marker-icon { width: 32px; height: 32px; font-size: 14px; }
+    }
+
+    @media (max-width: 480px) {
+      .header { padding: 0.625rem 0.875rem; }
+      .header h1 { font-size: 1.25rem; }
+      .header .subtitle { font-size: 0.95rem; }
+      .controls { top: 0.5rem; left: 0.5rem; right: 0.5rem; }
+      .filter-bar {
+        overflow-x: auto; flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      }
+      .filter-bar::-webkit-scrollbar { display: none; }
+      .filter-btn { white-space: nowrap; flex-shrink: 0; padding: 0.35rem 0.5rem; font-size: 0.75rem; }
+      .detail-panel { padding: 1.25rem; }
+      .detail-panel .close-btn { width: 2rem; height: 2rem; font-size: 1rem; top: 0.75rem; right: 0.75rem; }
+      .detail-panel h2 { font-size: 1.25rem; }
+      .detail-panel .detail-meta { padding: 0.75rem; gap: 0.75rem; }
+      .detail-panel .insider-tips { padding: 1rem; }
+      .map-container { min-height: calc(100vh - 80px); }
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      .header { padding: 0.5rem 1rem; }
+      .header .subtitle { display: none; }
+      .controls { flex-direction: row; align-items: center; }
+      .search-bar { flex: 1; max-width: 300px; }
+      .filter-bar { flex: 0 0 auto; }
+    }
+
+    @media (min-width: 1400px) {
+      .header h1 { font-size: 2rem; }
+      .header .subtitle { font-size: 1.25rem; }
+      .detail-panel { width: 480px; }
+      .popup-card { max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>Hoboken Hidden Gems</h1>
+      <p class="subtitle">A local's guide to the Mile Square City</p>
+    </header>
+    <main class="map-container">
+      <div class="controls">
+        <div class="search-bar">
+          <input type="text" id="search-input" placeholder="Search hidden gems..." aria-label="Search hidden gems" />
+        </div>
+        <div class="filter-bar" id="filter-bar"></div>
+      </div>
+      <div id="map" class="leaflet-container"></div>
+    </main>
+    <div class="detail-overlay" id="detail-overlay"></div>
+    <div class="detail-panel" id="detail-panel"></div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <script>
+    // ── Places data ──
+    const places = [
+      {"id":"fiores-deli","name":"Fiore's House of Quality","category":"restaurant","address":"414 Adams St, Hoboken, NJ 07030","coordinates":{"lat":40.7427,"lng":-74.0383},"gemScore":10,"priceRange":"$","hours":"Mon-Sat 8am-6pm, Closed Sun","familyFriendly":true,"editorialReview":"Fiore\u2019s isn\u2019t just a deli\u2014it\u2019s a living piece of Hoboken history that\u2019s been hand-pulling fresh mozzarella since 1913. The roast beef special (roast beef, house-made mutz, and gravy on a fresh roll) is legendary, but here\u2019s the catch: it\u2019s only available on Thursdays and Saturdays, and locals guard this secret fiercely. The mutz is made fresh daily in small batches, and watching the cheese-makers work through the shop window is worth the visit alone. Skip the tourist sandwich shops on Washington Street\u2014this is where Hoboken really eats.","insiderTips":["Thursday and Saturday only for the roast beef special\u2014arrive before 11am or it sells out","Get the fresh mozzarella to go\u2014it\u2019s incomparable to anything at a grocery store","Cash only, there\u2019s an ATM nearby"],"keywords":["italian","deli","mozzarella","sandwiches","lunch","authentic","historic","cash only"],"whyItsAGem":"Century-old deli with hand-pulled mozzarella that locals would riot to protect"},
+      {"id":"la-isla","name":"La Isla Restaurant","category":"restaurant","address":"104 Washington St, Hoboken, NJ 07030","coordinates":{"lat":40.7365,"lng":-74.0292},"gemScore":9,"priceRange":"$$","hours":"Daily 11am-10pm","familyFriendly":true,"editorialReview":"La Isla is Hoboken\u2019s Cuban soul, a cozy spot where the Bistec de Palmilla sizzles and the black beans are made with the kind of patience that fast-casual chains have forgotten. The decor is charmingly dated\u2014think Havana grandma\u2019s living room\u2014and that\u2019s exactly the point. While newer restaurants chase trends, La Isla has been serving the same beloved recipes for decades. The Arroz Chino Cubano (Cuban-Chinese fried rice) is a fusion dish that sounds odd but tastes like destiny. No reservations, just show up and be ready to wait like a local.","insiderTips":["The Cuban sandwich here rivals anything in Miami","Lunch specials are a steal\u2014get the ropa vieja platter","Bring cash for faster service, though cards accepted"],"keywords":["cuban","latin","caribbean","dinner","lunch","family","authentic"],"whyItsAGem":"Hoboken\u2019s Cuban kitchen, unchanged and unrushed for decades"},
+      {"id":"ali-babas","name":"Ali Baba Restaurant","category":"restaurant","address":"912 Washington St, Hoboken, NJ 07030","coordinates":{"lat":40.7490,"lng":-74.0280},"gemScore":8,"priceRange":"$","hours":"Daily 11am-11pm","familyFriendly":true,"editorialReview":"In a city where $20 barely buys a mediocre salad, Ali Baba is a revelation. The falafel sandwich ($10) is crispy-centered perfection wrapped in warm pita, and the spinach pie ($5.50) is the kind of snack you\u2019ll find yourself craving at odd hours. The space is no-frills\u2014fluorescent lights, simple tables\u2014but that\u2019s because all the effort goes into the food. Hoboken\u2019s Middle Eastern community has kept this place packed for years, and the Turkish coffee served in traditional cups is worth the visit alone. This is immigrant cooking at its finest: generous, honest, and priced for real people.","insiderTips":["The lamb shawarma platter is huge\u2014easily shareable for two","Get the hummus made fresh, not the pre-packaged stuff","Grab a baklava for dessert\u2014they make it in-house"],"keywords":["middle eastern","halal","falafel","budget","lunch","vegetarian friendly"],"whyItsAGem":"Authentic Middle Eastern cooking at prices that haven\u2019t forgotten working people exist"},
+      {"id":"leos-grandevous","name":"Leo\u2019s Grandevous","category":"restaurant","address":"200 Grand St, Hoboken, NJ 07030","coordinates":{"lat":40.7414,"lng":-74.0340},"gemScore":9,"priceRange":"$$","hours":"Tue-Sun 4pm-10pm, Closed Mon","familyFriendly":true,"editorialReview":"Leo\u2019s has been feeding Hoboken since 1939, and walking through its doors feels like stepping into a time when Italian-American restaurants didn\u2019t need to be \u2018elevated\u2019 or \u2018reimagined.\u2019 The red sauce here is the platonic ideal\u2014rich, tomatoey, and made by people who\u2019ve been perfecting it for three generations. The dining room is gloriously unchanged: red checkered tablecloths, photos of the old neighborhood, and a bar where regulars have their own seats. This isn\u2019t a restaurant for Instagram; it\u2019s a restaurant for eating until you need to undo your belt, surrounded by people who\u2019ve been doing the same thing for decades.","insiderTips":["Tuesday is the quietest night\u2014perfect for a leisurely dinner","The veal parmigiana is enormous and legendary","Make reservations for weekend dinners\u2014locals fill this place fast"],"keywords":["italian","red sauce","classic","old school","dinner","historic","family style"],"whyItsAGem":"Red sauce Italian the way your great-grandmother made it, if she were from Hoboken in 1939"},
+      {"id":"grand-vin","name":"Grand Vin","category":"restaurant","address":"61 6th St, Hoboken, NJ 07030","coordinates":{"lat":40.7430,"lng":-74.0312},"gemScore":8,"priceRange":"$$$","hours":"Daily 5pm-10pm","familyFriendly":false,"editorialReview":"Grand Vin is Hoboken\u2019s answer to the question \u2018where do I take someone I\u2019m trying to impress?\u2019 Tucked away from Washington Street\u2019s chaos, this wine-focused Italian spot feels like a secret even to longtime residents. The baked eggplant appetizer is silky perfection, and the pappardelle with scallops walks the line between comforting and refined. The wine list is extensive without being pretentious\u2014the sommelier actually wants to help you find something good, not show off. Come here for date night, anniversary dinner, or when you need to feel like an adult who has their life together.","insiderTips":["Ask for a table in the back corner\u2014most romantic spot in Hoboken","Let the sommelier pick your wine, but give them a price range","The desserts are made in-house and worth saving room for"],"keywords":["wine","italian","date night","romantic","upscale","dinner"],"whyItsAGem":"The quiet, sophisticated date spot locals keep to themselves"},
+      {"id":"hoboken-hot-bagels","name":"Hoboken Hot Bagels","category":"restaurant","address":"1020 Washington St, Hoboken, NJ 07030","coordinates":{"lat":40.7512,"lng":-74.0274},"gemScore":8,"priceRange":"$","hours":"Daily 5am-4pm","familyFriendly":true,"editorialReview":"Since 1983, Hoboken Hot Bagels has been the reason people in this town can get through Monday mornings. The bagels are boiled and baked on-site, emerging hot and chewy with that perfect combination of crispy exterior and soft interior that chain bagel shops can only dream about. This is a no-nonsense operation: you get in line, you order, you eat the best bagel in Hudson County. The cream cheese schmear is generous without being excessive, and the egg sandwiches are assembled by people who understand that breakfast is sacred. On weekends, the line snakes out the door\u2014and nobody minds.","insiderTips":["Arrive before 8am on weekends to beat the crowds","The everything bagel with scallion cream cheese is the local standard","Cash speeds things up, but cards work too"],"keywords":["bagels","breakfast","brunch","morning","coffee","casual","takeout"],"whyItsAGem":"The original Hoboken bagel shop, still making them right after 40+ years"},
+      {"id":"dullboy","name":"dullboy","category":"bar","address":"364 Grove St, Hoboken, NJ 07030","coordinates":{"lat":40.7360,"lng":-74.0435},"gemScore":9,"priceRange":"$$","hours":"Mon-Thu 5pm-12am, Fri-Sat 5pm-2am, Sun 4pm-11pm","familyFriendly":false,"editorialReview":"Named after the Shining quote (\u2018all work and no play makes Jack a dull boy\u2019), this craft cocktail bar is the antidote to Hoboken\u2019s bro-bar scene. The lighting is low, the cocktails are inventive without being ridiculous, and the bartenders actually know their craft. The menu changes seasonally, but they\u2019re happy to make classics or customize something based on your preferences. The space is intimate\u2014this isn\u2019t where you bring 15 friends for someone\u2019s birthday. It\u2019s where you bring one person you want to talk to, or where you sit alone at the bar and remember that drinking can be an art form, not just a means to an end.","insiderTips":["Sit at the bar and tell them what flavors you like\u2014trust the bartender","They have non-alcoholic cocktails that are actually good","Early evening on weekdays is quiet and perfect for conversation"],"keywords":["cocktails","craft drinks","speakeasy","date night","quiet","intimate"],"whyItsAGem":"A craft cocktail bar that treats drinking like the art form it can be"},
+      {"id":"farside-tavern","name":"Farside Tavern","category":"bar","address":"535 Washington St, Hoboken, NJ 07030","coordinates":{"lat":40.7422,"lng":-74.0290},"gemScore":8,"priceRange":"$","hours":"Daily 11am-2am","familyFriendly":false,"editorialReview":"Farside Tavern is the real deal: a dive bar that hasn\u2019t been \u2018reimagined\u2019 or given Edison bulbs and $18 cocktails. The booths are worn in, the jukebox plays whatever you want, and the bartenders have been pouring drinks here long enough to know when you need another one without asking. This is where locals go when they want to escape the polished Washington Street scene\u2014where Hoboken\u2019s service industry workers drink after their shifts, where conversations get loud and honest, and where a cheap beer is still a cheap beer. No craft cocktails, no small plates, no pretense.","insiderTips":["Check out the jukebox\u2014surprisingly good selection","The back booth is the most private spot in the place","Happy hour specials are legitimately cheap"],"keywords":["dive bar","cheap drinks","jukebox","late night","casual","locals"],"whyItsAGem":"An honest-to-god dive bar that hasn\u2019t sold its soul"},
+      {"id":"the-shannon","name":"The Shannon","category":"bar","address":"112 1st St, Hoboken, NJ 07030","coordinates":{"lat":40.7360,"lng":-74.0295},"gemScore":8,"priceRange":"$$","hours":"Daily 4pm-2am","familyFriendly":false,"editorialReview":"The Shannon looks like a standard Irish pub from the outside\u2014and that\u2019s exactly the disguise it wants. Walk past the front bar area with its Guinness taps and traditional decor, and you\u2019ll discover Hoboken\u2019s best-kept nightlife secret: a hidden back room with a full dance floor that transforms into a hip-hop club on weekends. It\u2019s the speakeasy concept done right\u2014genuinely hidden, not just dimly lit with a password. The front stays chill for those who want a proper pint; the back gets wild for those who came to dance. Very few bars can serve both crowds this well.","insiderTips":["The back room doesn\u2019t open until late\u2014arrive after 10pm on weekends","No cover charge most nights, unlike the clubs","The front room is actually a great place to start the night with a quiet drink"],"keywords":["irish pub","dancing","nightclub","hidden","hip hop","late night"],"whyItsAGem":"An Irish pub in the front, a hidden dance club in the back"},
+      {"id":"belo-bar","name":"Belo Bar","category":"bar","address":"54 Newark St, Hoboken, NJ 07030","coordinates":{"lat":40.7368,"lng":-74.0286},"gemScore":7,"priceRange":"$$","hours":"Mon-Fri 11:30am-2am, Sat-Sun 10am-2am","familyFriendly":false,"editorialReview":"Self-proclaimed as \u2018The Best Kept Secret in Hoboken,\u2019 Belo Bar earns that tagline by being genuinely hard to find and genuinely worth finding. This American bistro-bar hybrid sits on a quiet corner away from the Washington Street madness, serving solid pub food alongside a rotating craft beer selection. The crowd skews local and slightly older\u2014these are people who\u2019ve aged out of $7 shots but still want somewhere to watch the game. The patio seating in warmer months is prime real estate for people-watching without the chaos. Nothing revolutionary, just everything done right.","insiderTips":["The brunch is underrated\u2014fewer crowds than Washington Street spots","Their burger is a sleeper hit\u2014ask for it medium","Thursday trivia nights draw a good crowd"],"keywords":["american","bistro","sports bar","brunch","patio","casual"],"whyItsAGem":"The low-key neighborhood bar that Washington Street forgot to ruin"},
+      {"id":"ale-house","name":"The Ale House","category":"bar","address":"70 Hudson St, Hoboken, NJ 07030","coordinates":{"lat":40.7355,"lng":-74.0283},"gemScore":7,"priceRange":"$","hours":"Daily 12pm-2am","familyFriendly":false,"editorialReview":"The Ale House is Hoboken\u2019s unofficial dog bar, and honestly, that alone makes it special. While most Hoboken bars barely tolerate our four-legged friends, the Ale House actively welcomes them\u2014you\u2019ll often see more dogs than humans during afternoon hours. The beer selection is solid, the staff is friendly, and there\u2019s free pool, darts, and shuffleboard to keep you entertained. They don\u2019t serve food, but they don\u2019t mind if you order delivery to the bar. It\u2019s the kind of unpretentious neighborhood spot that every city needs but few cities have anymore.","insiderTips":["Bring your dog! Seriously, this is one of the most dog-friendly bars in town","No food menu, but they allow delivery from nearby restaurants","Shuffleboard games can get competitive on weekend afternoons"],"keywords":["dog friendly","beer","pool","darts","games","casual","pets"],"whyItsAGem":"The dog-friendly bar where humans are also welcome"},
+      {"id":"elysian-park","name":"Elysian Park","category":"park","address":"1001 Hudson St, Hoboken, NJ 07030","coordinates":{"lat":40.7510,"lng":-74.0257},"gemScore":9,"priceRange":"free","hours":"Daily 6am-10pm","familyFriendly":true,"editorialReview":"Elysian Park is where baseball was supposedly first played in 1846, but more importantly, it\u2019s where Hoboken slows down. While tourists crowd the waterfront piers for skyline views, locals come here for the actual park experience: mature trees providing real shade, a peaceful pond, playground equipment that kids actually use, and basketball courts with regular pickup games. The historical marker about baseball is nice, but the real magic is on any given Saturday morning when the park fills with families, dogs, joggers, and people reading actual books. It\u2019s one of Hoboken\u2019s oldest parks, and it feels like it\u2014in the best way.","insiderTips":["The basketball courts have good pickup games on weekend mornings","Bring a blanket for the grassy areas\u2014perfect for reading or picnicking","The pond is peaceful but no swimming or fishing"],"keywords":["baseball history","playground","basketball","walking","historic","family","quiet"],"whyItsAGem":"The birthplace of baseball, and still Hoboken\u2019s most peaceful green space"},
+      {"id":"maxwell-place-park","name":"Maxwell Place Park","category":"park","address":"1100 Maxwell Ln, Hoboken, NJ 07030","coordinates":{"lat":40.7488,"lng":-74.0235},"gemScore":8,"priceRange":"free","hours":"Daily 6am-10pm","familyFriendly":true,"editorialReview":"Maxwell Place Park is what happens when waterfront development actually gets it right. While it lacks the name recognition of Pier A or Pier C, this northern gem delivers the same skyline views with a fraction of the crowds. The playground area is thoughtfully designed, the green spaces are actually spacious enough to spread out, and the seating areas along the water are perfect for staring at Manhattan while contemplating life choices. The mixed residential area around it means the park feels like a neighborhood spot rather than a destination\u2014which is exactly why locals love it.","insiderTips":["Sunset views here rival Pier A with fewer people","The playground gets shade in the late afternoon\u2014perfect timing for kids","Combine with a walk to Pier C for a solid waterfront loop"],"keywords":["waterfront","playground","views","nyc skyline","quiet","family","relaxing"],"whyItsAGem":"Waterfront park with million-dollar views and zero tourist crowds"},
+      {"id":"sybils-cave","name":"Sybil\u2019s Cave","category":"park","address":"Frank Sinatra Dr, Hoboken, NJ 07030","coordinates":{"lat":40.7475,"lng":-74.0248},"gemScore":9,"priceRange":"free","hours":"Daily dawn-dusk","familyFriendly":true,"editorialReview":"Hidden in plain sight along the Hoboken waterfront, Sybil\u2019s Cave is a genuine historical oddity that most residents walk past without noticing. The Stevens family carved this Gothic-style grotto in 1832, and it became a fashionable destination for its natural spring water\u2014visitors would come by the thousands to take the waters. The cave fell into disrepair for over a century but was beautifully restored and reopened in 2018. There\u2019s no spring water anymore, but the atmosphere remains magical: a stone arch framing a dark tunnel, tucked into the cliff below Stevens Institute. It\u2019s the kind of place that makes you realize Hoboken has layers most people never discover.","insiderTips":["Visit at dusk for atmospheric lighting","The path to it from Castle Point can be easy to miss\u2014look for the stone archway","Combine with a walk through Stevens campus for a full historical tour"],"keywords":["historic","hidden","cave","gothic","waterfront","unique","photography"],"whyItsAGem":"A 19th-century Gothic grotto hiding in plain sight on the waterfront"},
+      {"id":"stevens-park","name":"Stevens Park","category":"park","address":"River St & 5th St, Hoboken, NJ 07030","coordinates":{"lat":40.7442,"lng":-74.0256},"gemScore":7,"priceRange":"free","hours":"Daily 6am-10pm","familyFriendly":true,"editorialReview":"Stevens Park is the kind of park you discover by accident and return to on purpose. Sitting at the base of Stevens Institute of Technology, it offers a rare combination of grass, trees, and waterfront access without the constant flow of joggers and tourists that dominate the main piers. The park feels slightly hidden because you have to know it\u2019s there\u2014the Stevens campus creates a natural barrier that keeps the crowds at bay. It\u2019s the perfect spot for a quiet lunch, a first date walk, or escaping the claustrophobia of Hoboken\u2019s density without actually leaving town.","insiderTips":["Enter from the waterfront path rather than through campus for easier access","Less crowded than Pier A but equally good views","Great spot to watch boats on the Hudson"],"keywords":["waterfront","quiet","views","stevens","walking","relaxing","picnic"],"whyItsAGem":"The waterfront park that tourists never find because they\u2019re too busy at Pier A"},
+      {"id":"hoboken-cove-boathouse","name":"Hoboken Cove Boathouse","category":"family","address":"1501 Sinatra Dr N, Hoboken, NJ 07030","coordinates":{"lat":40.7538,"lng":-74.0245},"gemScore":10,"priceRange":"free","hours":"Seasonal: Sat-Sun 10am-6pm (May-Oct)","familyFriendly":true,"editorialReview":"In a region where everything costs money, Hoboken Cove Boathouse is a beautiful anomaly: free kayaking and rowing on the Hudson River, run entirely by volunteers who genuinely want you to get out on the water. The program operates from a protected cove in the northern reaches of Hoboken, offering lessons and equipment at no charge. You might wait in line on busy summer weekends, but you\u2019re waiting to kayak past Manhattan for free\u2014perspective matters. This is the kind of community resource that makes Hoboken more than just an expensive bedroom community for NYC workers.","insiderTips":["Arrive early on weekend mornings for shorter wait times","They provide life jackets and basic instruction\u2014no experience needed","Check their Facebook page for weather cancellations before heading out"],"keywords":["kayaking","rowing","free","waterfront","outdoor","summer","volunteer","hudson river"],"whyItsAGem":"Free kayaking on the Hudson, run by volunteers who love getting people on the water"},
+      {"id":"hoboken-historical-museum","name":"Hoboken Historical Museum","category":"family","address":"1301 Hudson St, Hoboken, NJ 07030","coordinates":{"lat":40.7520,"lng":-74.0263},"gemScore":7,"priceRange":"$","hours":"Tue-Thu 2pm-7pm, Sat-Sun 12pm-5pm","familyFriendly":true,"editorialReview":"The Hoboken Historical Museum won\u2019t compete with the Met, and it doesn\u2019t try to. What it offers instead is something more valuable: a deeply local perspective on a city that\u2019s changed dramatically over the past century. The rotating exhibits explore Hoboken\u2019s working-class roots, its immigrant communities, and the transformations that turned it from industrial waterfront to million-dollar condos. For $5 (kids free), you get context for why Hoboken feels the way it does. The museum also runs excellent programs\u2014storytime sessions, art classes, walking tours\u2014that connect families to local history in ways that don\u2019t feel like homework.","insiderTips":["The walking tours are exceptional\u2014check the schedule for themed options","Kids\u2019 programming on weekends is worth checking out","The museum shop has unique Hoboken-themed gifts"],"keywords":["history","museum","local","educational","family","walking tours","affordable"],"whyItsAGem":"Local history museum that explains why Hoboken is Hoboken, not just expensive"},
+      {"id":"fire-department-museum","name":"Hoboken Fire Department Museum","category":"family","address":"213 Bloomfield St, Hoboken, NJ 07030","coordinates":{"lat":40.7402,"lng":-74.0328},"gemScore":8,"priceRange":"free","hours":"By appointment (contact fire dept)","familyFriendly":true,"editorialReview":"Tucked inside a former fire station, this tiny museum is a kid\u2019s dream and a parent\u2019s sanity saver. The star attraction is a beautifully preserved 1932 Ahrens Fox fire engine\u2014gleaming red, impossibly detailed, and yes, kids can sit in the driver\u2019s seat for photos. The museum runs on firefighter pride rather than municipal budgets, which means it\u2019s free but operates by appointment. Call ahead and a firefighter will give you a personal tour, sharing stories about Hoboken\u2019s fire history and answering every question your kid can think of. It\u2019s the kind of experience big cities don\u2019t offer anymore.","insiderTips":["Call ahead to schedule\u2014it\u2019s run by active firefighters when they\u2019re available","Bring your camera for the fire engine photo op","Ask about the building\u2019s history\u2014it\u2019s a former working firehouse"],"keywords":["fire truck","museum","kids","free","firefighters","photo op","unique"],"whyItsAGem":"A free museum run by firefighters, where kids can sit in a vintage fire engine"},
+      {"id":"the-hive","name":"The Hive","category":"family","address":"729 Washington St, Hoboken, NJ 07030","coordinates":{"lat":40.7455,"lng":-74.0286},"gemScore":8,"priceRange":"$","hours":"Mon-Fri 7am-6pm, Sat-Sun 8am-5pm","familyFriendly":true,"editorialReview":"The Hive is what happens when a cafe actually wants families to come\u2014not just tolerates them, but designs the entire space around them. This women-owned spot has gone viral for its cinny rolls (rightfully so), but the real magic is the intentional play space: wooden toys, climbing structures, and areas designed for little ones to explore while parents drink actual good coffee. The atmosphere is warm without being cloying, community-focused without being exclusive. For parents who\u2019ve been side-eyed at \u2018serious\u2019 coffee shops, The Hive feels like permission to exist in public with your children.","insiderTips":["The cinnamon rolls sell out\u2014arrive before 10am on weekends","Weekday mornings are calmer if you want space for kids to play","They host community events\u2014check their Instagram"],"keywords":["cafe","coffee","kids play","cinnamon rolls","family friendly","community","breakfast"],"whyItsAGem":"A cafe that was actually designed for parents to relax while kids play"},
+      {"id":"puppetonia","name":"Puppetonia","category":"family","address":"77 River St, Hoboken, NJ 07030","coordinates":{"lat":40.7358,"lng":-74.0285},"gemScore":9,"priceRange":"$$","hours":"Show times vary - check schedule","familyFriendly":true,"editorialReview":"Puppetonia is Hoboken\u2019s genuine hidden gem for families\u2014a small puppet theater that delivers the kind of imaginative, screen-free entertainment that\u2019s increasingly rare. The shows are interactive and musical, designed to engage kids while sneaking in social skills and educational content. The puppeteers clearly love what they do, and the intimate space means every kid feels like part of the show. In an era of iPad parenting and endless streaming options, Puppetonia offers something radical: live performance, imagination, and the kind of community experience that used to be common in American towns. Your kids will remember this.","insiderTips":["Book tickets in advance\u2014shows sell out, especially weekends","Shows are geared toward ages 2-8, perfect for that range","They host birthday parties if you\u2019re planning ahead"],"keywords":["puppet show","theater","kids","interactive","entertainment","birthday","educational"],"whyItsAGem":"Live puppet theater that reminds you what entertainment was before screens"}
+    ];
+
+    // ── Category config ──
+    const CATEGORY_COLORS = {
+      restaurant: '#8B4513',
+      bar: '#2F4F4F',
+      park: '#228B22',
+      family: '#CD853F'
+    };
+    const CATEGORY_ICONS = {
+      restaurant: '\uD83C\uDF74',
+      bar: '\uD83C\uDF77',
+      park: '\uD83C\uDF33',
+      family: '\u2B50'
+    };
+    const CATEGORY_LABELS = {
+      restaurant: 'Restaurant',
+      bar: 'Bar',
+      park: 'Park',
+      family: 'Family'
+    };
+    const CATEGORIES = [
+      { id: 'all', label: 'All Gems' },
+      { id: 'restaurant', label: 'Restaurants' },
+      { id: 'bar', label: 'Bars' },
+      { id: 'park', label: 'Parks' },
+      { id: 'family', label: 'Family' }
+    ];
+
+    // ── State ──
+    let searchQuery = '';
+    let activeCategory = 'all';
+    let markers = [];
+    let map;
+
+    // ── Map setup ──
+    const MAP_CONFIG = {
+      center: [40.7440, -74.0324],
+      defaultZoom: 15,
+      minZoom: 14,
+      maxZoom: 18,
+      bounds: { north: 40.7580, south: 40.7280, east: -74.0150, west: -74.0500 }
+    };
+    const maxBounds = [
+      [MAP_CONFIG.bounds.south - 0.01, MAP_CONFIG.bounds.west - 0.01],
+      [MAP_CONFIG.bounds.north + 0.01, MAP_CONFIG.bounds.east + 0.01]
+    ];
+
+    function initMap() {
+      map = L.map('map', {
+        center: MAP_CONFIG.center,
+        zoom: MAP_CONFIG.defaultZoom,
+        minZoom: MAP_CONFIG.minZoom,
+        maxZoom: MAP_CONFIG.maxZoom,
+        maxBounds: maxBounds,
+        maxBoundsViscosity: 0.8,
+        scrollWheelZoom: true
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      }).addTo(map);
+
+      renderMarkers(places);
+    }
+
+    // ── Marker helpers ──
+    function createCustomIcon(category) {
+      const color = CATEGORY_COLORS[category] || CATEGORY_COLORS.restaurant;
+      const icon = CATEGORY_ICONS[category] || '\uD83D\uDCCD';
+      return L.divIcon({
+        className: 'custom-gem-marker',
+        html: `<div class="gem-marker-container" style="--marker-color: ${color};"><div class="gem-marker-icon">${icon}</div><div class="gem-marker-pin"></div></div>`,
+        iconSize: [40, 50],
+        iconAnchor: [20, 50],
+        popupAnchor: [0, -45]
+      });
+    }
+
+    function popupHTML(place) {
+      return `<div class="popup-card">
+        <h3>${esc(place.name)}</h3>
+        <p class="tagline">${esc(place.whyItsAGem)}</p>
+        <div class="meta">
+          <span class="gem-score">Gem Score: ${place.gemScore}/10</span>
+          <span class="price">${esc(place.priceRange)}</span>
+          <span class="category">${CATEGORY_LABELS[place.category] || place.category}</span>
+        </div>
+        <div class="popup-details">
+          <p class="hours">${esc(place.hours)}</p>
+          <p class="address">${esc(place.address)}</p>
+        </div>
+        <button class="read-more" data-place-id="${place.id}">Read full review \u2192</button>
+      </div>`;
+    }
+
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    function renderMarkers(filteredPlaces) {
+      // Remove old markers
+      markers.forEach(m => map.removeLayer(m));
+      markers = [];
+
+      filteredPlaces.forEach(place => {
+        const icon = createCustomIcon(place.category);
+        const marker = L.marker([place.coordinates.lat, place.coordinates.lng], { icon })
+          .addTo(map);
+        marker.bindPopup(popupHTML(place), { maxWidth: 300 });
+        marker.on('popupopen', () => {
+          // Attach click handler to "Read full review" button inside popup
+          setTimeout(() => {
+            const btn = document.querySelector(`.read-more[data-place-id="${place.id}"]`);
+            if (btn) btn.addEventListener('click', (e) => { e.preventDefault(); openDetailPanel(place); });
+          }, 0);
+        });
+        markers.push(marker);
+      });
+    }
+
+    // ── Filtering ──
+    function filterPlaces() {
+      const query = searchQuery.toLowerCase().trim();
+      return places.filter(place => {
+        const matchesCategory = activeCategory === 'all' || place.category === activeCategory;
+        if (!query) return matchesCategory;
+        const matchesSearch =
+          place.name.toLowerCase().includes(query) ||
+          place.editorialReview.toLowerCase().includes(query) ||
+          place.whyItsAGem.toLowerCase().includes(query) ||
+          place.keywords.some(k => k.toLowerCase().includes(query));
+        return matchesCategory && matchesSearch;
+      });
+    }
+
+    function applyFilters() {
+      renderMarkers(filterPlaces());
+    }
+
+    // ── Filter bar ──
+    function initFilterBar() {
+      const bar = document.getElementById('filter-bar');
+      CATEGORIES.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn' + (cat.id === activeCategory ? ' active' : '');
+        btn.textContent = cat.label;
+        btn.setAttribute('aria-pressed', cat.id === activeCategory);
+        btn.addEventListener('click', () => {
+          activeCategory = cat.id;
+          bar.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-pressed', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed', 'true');
+          applyFilters();
+        });
+        bar.appendChild(btn);
+      });
+    }
+
+    // ── Search ──
+    function initSearch() {
+      const input = document.getElementById('search-input');
+      input.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        applyFilters();
+      });
+    }
+
+    // ── Detail panel ──
+    function openDetailPanel(place) {
+      const panel = document.getElementById('detail-panel');
+      const overlay = document.getElementById('detail-overlay');
+
+      // Close any open popups
+      map.closePopup();
+
+      let tipsHTML = '';
+      if (place.insiderTips && place.insiderTips.length > 0) {
+        tipsHTML = `<div class="insider-tips">
+          <h4>Insider Tips</h4>
+          <ul>${place.insiderTips.map(tip => `<li>${esc(tip)}</li>`).join('')}</ul>
+        </div>`;
+      }
+
+      let familyHTML = '';
+      if (place.familyFriendly) {
+        familyHTML = `<div class="detail-meta-item">
+          <span class="detail-meta-label">Family</span>
+          <span class="detail-meta-value">Kid-Friendly</span>
+        </div>`;
+      }
+
+      panel.innerHTML = `
+        <button class="close-btn" aria-label="Close detail panel">&times;</button>
+        <h2>${esc(place.name)}</h2>
+        <p class="tagline">${esc(place.whyItsAGem)}</p>
+        <div class="detail-meta">
+          <div class="detail-meta-item">
+            <span class="detail-meta-label">Gem Score</span>
+            <span class="detail-meta-value">${place.gemScore}/10</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="detail-meta-label">Price</span>
+            <span class="detail-meta-value">${esc(place.priceRange)}</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="detail-meta-label">Category</span>
+            <span class="detail-meta-value">${CATEGORY_LABELS[place.category] || place.category}</span>
+          </div>
+          ${familyHTML}
+        </div>
+        <div class="detail-info">
+          <p class="hours"><strong>Hours:</strong> ${esc(place.hours)}</p>
+          <p class="address"><strong>Address:</strong> ${esc(place.address)}</p>
+        </div>
+        <p class="review">${esc(place.editorialReview)}</p>
+        ${tipsHTML}
+      `;
+
+      panel.classList.add('open');
+      overlay.classList.add('visible');
+
+      panel.querySelector('.close-btn').addEventListener('click', closeDetailPanel);
+    }
+
+    function closeDetailPanel() {
+      document.getElementById('detail-panel').classList.remove('open');
+      document.getElementById('detail-overlay').classList.remove('visible');
+    }
+
+    // ── Init ──
+    document.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      initFilterBar();
+      initSearch();
+      document.getElementById('detail-overlay').addEventListener('click', closeDetailPanel);
+    });
+  </script>
+</body>
+</html>

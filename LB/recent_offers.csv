@@ -1,0 +1,16 @@
+Offer_ID,Role,Level,Base_Salary,Equity_Grant,Signing_Bonus,Total_Comp,Candidate_Ask,Accepted,Decline_Reason,Days_to_Decision,Location_Tier
+O-4001,Senior Backend Engineer,IC4,210000,95000,20000,325000,220000 base,Yes,,3,Tier_1
+O-4002,Product Manager,IC3,168000,45000,10000,223000,175000 base,Yes,,5,Tier_1
+O-4003,Senior Data Scientist,IC4,195000,80000,15000,290000,210000 base,No,Accepted competing offer at Anthropic with higher equity,7,Tier_1
+O-4004,Clinical Operations Lead,IC3,138000,35000,10000,183000,145000 base,Yes,,2,Tier_2
+O-4005,Staff Frontend Engineer,IC5,248000,165000,25000,438000,260000 base,No,Wanted director-level title,10,Tier_1
+O-4006,Account Executive,IC3,115000,30000,10000,155000 + commission,120000 base + higher commission,Yes,,4,Tier_1
+O-4007,Senior Software Engineer,IC4,205000,85000,15000,305000,215000 base,Yes,,3,Tier_2
+O-4008,People Business Partner,IC3,142000,38000,10000,190000,150000 base,No,Accepted director-level role at Gusto,6,Tier_1
+O-4009,Revenue Operations Analyst,IC2,108000,22000,5000,135000,115000 base,Yes,,2,Tier_2
+O-4010,Senior Product Designer,IC4,195000,75000,15000,285000,200000 base,Yes,,5,Tier_1
+O-4011,Compliance Analyst,IC3,135000,32000,8000,175000,140000 base,Yes,,3,Tier_2
+O-4012,Engineering Manager,M1,225000,110000,20000,355000,240000 base,No,Wanted M2-level scope and comp,8,Tier_1
+O-4013,Senior Backend Engineer,IC4,198000,90000,15000,303000,205000 base,Yes,,4,Tier_2
+O-4014,Software Engineer II,IC2,148000,28000,8000,184000,155000 base,No,Relocated to lower COL area and took remote role elsewhere,12,Tier_1
+O-4015,Clinical Quality Analyst,IC2,102000,18000,5000,125000,110000 base,Yes,,2,Tier_2

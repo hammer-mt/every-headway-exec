@@ -1,0 +1,11 @@
+Employee_ID,Name,Department,Level,Tenure_Months,Exit_Date,Voluntary,Exit_Reason,Manager,Rehire_Eligible
+E-1901,Alex Drummond,Engineering,IC3,18,2025-09-15,Yes,Accepted offer at FAANG (Google) for significantly higher comp,James Callahan,Yes
+E-1902,Brianna Cole,Sales,IC2,11,2025-10-03,Yes,Relocated to partner's city - no remote option for sales role,Derek Holloway,Yes
+E-1903,Victor Huang,Engineering,IC4,24,2025-10-22,Yes,Joined a Series A startup as co-founder / CTO,Danielle Okafor,Yes
+E-1904,Samantha Birch,Clinical Ops,IC1,8,2025-11-10,No,Performance - did not meet expectations after PIP,Sofia Gutierrez,No
+E-1905,Terrence Jackson,Product,IC3,14,2025-11-28,Yes,Felt limited growth opportunities - joined Stripe as Senior PM,Jenna Whitfield,Yes
+E-1906,Linda Kowalski,G&A,IC2,22,2025-12-15,Yes,Burnout - taking extended sabbatical before next role,Corey Adams,Yes
+E-1907,Rashid Ahmed,Engineering,IC2,10,2026-01-08,Yes,Returned to graduate school for PhD in ML,James Callahan,Yes
+E-1908,Megan O'Brien,People,IC2,13,2026-01-24,Yes,Manager relationship issues - joined Ro as People Partner,Brandon Williams,Yes
+E-1909,Derek Simmons,Sales,IC1,7,2026-02-05,No,Performance - consistently missed quota for 3 consecutive quarters,Derek Holloway,No
+E-1910,Julie Fontaine,Clinical Ops,IC3,20,2026-02-19,Yes,Accepted Clinical Director role at Lyra Health - title and comp upgrade,Dr. Samira Hassan,Yes

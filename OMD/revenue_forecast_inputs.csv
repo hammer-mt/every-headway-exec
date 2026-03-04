@@ -1,0 +1,16 @@
+Month,Payer_Name,Projected_New_Providers,Projected_New_Patients,Avg_Sessions_Per_Patient,Projected_Revenue,Confidence_Level,Key_Assumptions
+2026-01,Aetna,14,680,3.2,6520000,High,Stable rate schedule; seasonal uptick in new patient volume post-holidays; no contract changes expected; historical Jan pattern shows 8-12% volume increase
+2026-01,UnitedHealthcare,18,820,3.0,8340000,High,Continued expansion in TX and FL markets; Medicare Advantage open enrollment completions flowing through; credentialing backlog clearing by mid-Jan
+2026-01,Cigna,12,590,3.1,5480000,Medium,Pending rate negotiation outcome could shift +/- 3%; EAP volume uncertain due to employer renewal cycle; quality bonus attainment likely at 94%
+2026-01,Blue Cross Blue Shield,10,540,3.3,4280000,Medium,Contract renewal terms under discussion; potential rate increase of 1.5-3%; provider directory integration upgrade may improve network visibility
+2026-01,Anthem,8,420,3.1,3380000,High,Recently renewed contract provides rate stability; shared savings model performing well; volume growth aligned with historical trend
+2026-02,Aetna,12,620,3.1,6280000,High,Typical Feb volume slightly below Jan; Medicaid redetermination impacts minimal; commercial plan mix holding steady
+2026-02,UnitedHealthcare,16,780,3.0,8120000,Medium,MA volume dependent on Jan enrollment completions; potential network adequacy review in Q1; directory accuracy compliance at 96.2%
+2026-02,Cigna,11,560,3.1,5320000,Medium,Rate negotiation expected to close by mid-Feb; EAP renewal decisions from major employers pending; telehealth utilization trending up
+2026-02,Blue Cross Blue Shield,9,510,3.2,4150000,Low,Renewal outcome uncertain; BlueCard volume variable; state-specific rider negotiations ongoing for IL and MI
+2026-02,Anthem,7,400,3.1,3260000,High,Stable trajectory; slight seasonal dip expected; high-utilizer shared savings trending positive
+2026-03,Aetna,15,710,3.2,6740000,Medium,Spring volume increase expected; potential Medicaid rate adjustment in NY; new provider onboarding pipeline strong
+2026-03,UnitedHealthcare,20,860,3.1,8680000,Medium,Projected network expansion into GA and NC; credentialing timeline improvements expected; MA supplemental rate review pending
+2026-03,Cigna,13,610,3.1,5640000,Low,Post-negotiation rate impact fully realized; Q1 quality bonus calculation pending; market competition from Lyra and Spring Health in CA
+2026-03,Blue Cross Blue Shield,11,560,3.3,4420000,Low,New contract terms take effect (if renewed); integration requirements may cause temporary claims processing disruption; upside if rate increase secured
+2026-03,Anthem,9,450,3.2,3520000,High,End of Q1 volume historically strong; shared savings reconciliation due; provider satisfaction scores trending positively
