@@ -35,7 +35,7 @@ The goal is something I could present in a board meeting or share with the team 
 **The prompt:**
 
 ```
-I have an HTML file called index.html — it's a landing page for "Learn Claude Code in One Day" by Every. Please open it and make the following changes:
+I have an HTML file called every-landing.html — it's a landing page for "Learn Claude Code in One Day" by Every. Please open it and make the following changes:
 
 1. Add a testimonials section between the Agenda section and the FAQ section. Create 4 fictional but realistic testimonials from past attendees with names, titles, and companies that feel authentic (e.g., a VC, a startup founder, a product leader, a marketing executive). Style it to match the existing dark aesthetic.
 
@@ -47,7 +47,7 @@ I have an HTML file called index.html — it's a landing page for "Learn Claude 
 
 5. Keep all existing content and styling exactly as-is — only add the new elements and fix the responsive issues. Do not change the color scheme, fonts, or any existing copy.
 
-Return the complete updated index.html file.
+Return the complete updated every-landing.html file.
 ```
 
 ---
