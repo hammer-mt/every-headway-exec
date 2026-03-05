@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find family counseling in New York | Headway</title>
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* Headway brand colors */
+    :root {
+      --green-dark: #166534;
+      --green-mid: #16a34a;
+      --green-light: #dcfce7;
+      --cream: #fef9f0;
+      --bg-light: #f7f7f5;
+      --bg-footer: #eef0eb;
+      --text-primary: #1a1a1a;
+      --text-secondary: #6b7280;
+      --border-color: #e5e7eb;
+    }
+
+    /* Typography */
+    .font-serif {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+    }
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+    .navbar-logo svg {
+      width: 32px;
+      height: 32px;
+    }
+    .navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+    .navbar-links a:hover { color: var(--green-dark); }
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-outline {
+      padding: 10px 20px;
+      border: 1.5px solid var(--text-primary);
+      border-radius: 999px;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .btn-primary {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 999px;
+      background: var(--green-dark);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .btn-primary:hover { background: #14532d; }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      padding: 64px 0;
+      background: linear-gradient(to bottom, #fff 0%, var(--bg-light) 100%);
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero-content h2 {
+      font-family: Georgia, serif;
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .hero-content h1 {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    .hero-form {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .form-group label span {
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-left: 4px;
+    }
+    .input-with-icon {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      background: #fff;
+      font-size: 15px;
+      min-width: 160px;
+    }
+    .input-with-icon input {
+      border: none;
+      outline: none;
+      font-size: 15px;
+      width: 100%;
+      font-family: inherit;
+    }
+    .input-with-icon select {
+      border: none;
+      outline: none;
+      font-size: 15px;
+      width: 100%;
+      font-family: inherit;
+      color: var(--text-secondary);
+      background: transparent;
+      -webkit-appearance: none;
+    }
+    .insurance-input {
+      min-width: 280px;
+    }
+    .btn-find {
+      padding: 14px 32px;
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-find:hover { background: #14532d; }
+    .hero-image {
+      width: 100%;
+      height: 340px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #a7c4a0 0%, #6b9b6b 50%, #d4a76a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    /* ===== COST ESTIMATE BANNER ===== */
+    .cost-banner {
+      margin: 0 auto;
+      max-width: 1200px;
+      padding: 0 24px;
+    }
+    .cost-banner-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 32px;
+      background: var(--bg-light);
+      border-radius: 16px;
+      margin-bottom: 48px;
+    }
+    .cost-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .cost-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--green-light), #bbf7d0);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .cost-banner h4 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .cost-banner p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .arrow-link {
+      font-size: 24px;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    /* ===== THERAPIST SECTION ===== */
+    .therapists-section {
+      padding: 0 0 48px;
+    }
+    .therapists-section h3 {
+      font-family: Georgia, serif;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .therapists-intro {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 800px;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    /* ===== SORT BAR ===== */
+    .sort-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    .sort-bar label {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .sort-select {
+      padding: 8px 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #fff;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .sort-select:focus {
+      outline: none;
+      border-color: var(--green-dark);
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    /* Therapist Card */
+    .therapist-card {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .therapist-card.compare-selected {
+      border-color: var(--green-dark);
+      box-shadow: 0 0 0 1px var(--green-dark);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .card-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 24px;
+    }
+    .card-name {
+      font-family: Georgia, serif;
+      font-size: 24px;
+      font-weight: 400;
+    }
+    .card-role {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .card-location {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .card-quote {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+    .card-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .card-detail-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green-dark);
+      margin-top: 1px;
+    }
+    .card-detail-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .card-detail strong {
+      font-weight: 700;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 16px;
+      gap: 12px;
+    }
+    .next-opening {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .free-consult {
+      font-size: 13px;
+      color: var(--green-dark);
+      font-weight: 600;
+    }
+    .btn-view-profile {
+      padding: 10px 20px;
+      background: var(--text-primary);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .btn-view-profile:hover {
+      background: #333;
+    }
+
+    /* ===== COMPARE CHECKBOX ===== */
+    .compare-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      user-select: none;
+    }
+    .compare-toggle input[type="checkbox"] {
+      accent-color: var(--green-dark);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .compare-toggle:hover {
+      color: var(--green-dark);
+    }
+
+    /* ===== MATCH SCORE BADGE ===== */
+    .match-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: none;
+    }
+    .match-badge.visible {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .match-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ===== FLOATING COMPARE BAR ===== */
+    .compare-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 2px solid var(--green-dark);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 200;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .compare-bar.visible {
+      transform: translateY(0);
+    }
+    .compare-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .compare-bar-count {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .compare-bar-avatars {
+      display: flex;
+      gap: 8px;
+    }
+    .compare-bar-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      position: relative;
+    }
+    .compare-bar-avatar .remove-btn {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #fff;
+      font-size: 11px;
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .compare-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-compare {
+      padding: 12px 28px;
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .btn-compare:hover { background: #14532d; }
+    .btn-compare:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+    .btn-clear-compare {
+      padding: 12px 20px;
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .btn-clear-compare:hover {
+      border-color: var(--text-primary);
+      color: var(--text-primary);
+    }
+
+    /* ===== COMPARISON MODAL ===== */
+    .compare-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .compare-overlay.visible {
+      display: flex;
+    }
+    .compare-modal {
+      background: #fff;
+      border-radius: 20px;
+      max-width: 960px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 40px;
+      position: relative;
+    }
+    .compare-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      background: #fff;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .compare-modal-close:hover {
+      background: var(--bg-light);
+      color: var(--text-primary);
+    }
+    .compare-modal h2 {
+      font-family: Georgia, serif;
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 32px;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 16px 20px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .compare-table th {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+      background: var(--bg-light);
+      width: 140px;
+      white-space: nowrap;
+    }
+    .compare-table td {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+    .compare-table tr:last-child th,
+    .compare-table tr:last-child td {
+      border-bottom: none;
+    }
+    .compare-provider-header {
+      text-align: center;
+      padding: 20px 16px;
+      background: var(--bg-light);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .compare-provider-header .compare-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    .compare-provider-header .compare-pname {
+      font-family: Georgia, serif;
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 2px;
+    }
+    .compare-provider-header .compare-prole {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .compare-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--bg-light);
+      border-radius: 6px;
+      font-size: 13px;
+      margin: 2px 4px 2px 0;
+      color: var(--text-primary);
+    }
+    .compare-tag.highlight {
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-weight: 600;
+    }
+    .compare-virtual-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      background: #dbeafe;
+      color: #1e40af;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* ===== PAGINATION ===== */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+    .pagination button {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      font-size: 14px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pagination button.active {
+      background: var(--bg-light);
+      font-weight: 700;
+    }
+    .pagination button:hover:not(.active) {
+      background: #f3f4f6;
+    }
+    .pagination-info {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+    }
+    .pagination-info a {
+      color: var(--text-primary);
+      text-decoration: underline;
+    }
+
+    /* ===== FAQ SECTION ===== */
+    .faq-section {
+      padding: 64px 0;
+    }
+    .faq-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .faq-left h3 {
+      font-family: Georgia, serif;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+    .faq-illustration {
+      width: 260px;
+      height: 200px;
+      background: linear-gradient(135deg, #c2703e 0%, #d4956a 50%, #f5deb3 100%);
+      border-radius: 16px;
+    }
+    .faq-item {
+      border-top: 1px solid var(--border-color);
+      padding: 20px 0;
+    }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 400;
+      text-align: left;
+      cursor: pointer;
+      padding: 0;
+      color: var(--text-primary);
+    }
+    .faq-question:hover { color: var(--green-dark); }
+    .faq-chevron {
+      font-size: 20px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+    .faq-answer {
+      display: none;
+      padding-top: 12px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      padding: 64px 0;
+    }
+    .cta-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 300px;
+    }
+    .cta-image {
+      background: linear-gradient(135deg, #5b7fa6 0%, #7ba3c9 50%, #9fc5e8 100%);
+    }
+    .cta-content {
+      background: var(--cream);
+      padding: 64px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cta-content h3 {
+      font-family: Georgia, serif;
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .cta-content p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .btn-find-match {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--text-primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      width: fit-content;
+    }
+
+    /* ===== FIND A PROVIDER TABS ===== */
+    .provider-tabs-section {
+      padding: 64px 0 32px;
+    }
+    .provider-tabs-section h3 {
+      font-family: Georgia, serif;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 24px;
+    }
+    .tabs {
+      display: flex;
+      gap: 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      padding: 8px 0;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-size: 15px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      color: var(--green-dark);
+      border-bottom-color: var(--green-dark);
+      font-weight: 600;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px 32px;
+    }
+    .tab-content a {
+      font-size: 15px;
+      color: var(--text-primary);
+      padding: 4px 0;
+    }
+    .tab-content a:hover {
+      color: var(--green-dark);
+    }
+
+    /* ===== BREADCRUMBS ===== */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+      border-top: 1px solid var(--border-color);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .breadcrumbs-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .breadcrumbs-nav a {
+      color: var(--text-secondary);
+    }
+    .breadcrumbs-nav a:hover {
+      color: var(--green-dark);
+    }
+    .breadcrumbs-nav span {
+      color: var(--text-secondary);
+    }
+
+    /* ===== DISCLAIMER ===== */
+    .disclaimer {
+      padding: 32px 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--bg-footer);
+      padding: 64px 0 40px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 16px;
+    }
+    .footer-col h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+    .footer-col a {
+      display: block;
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 4px 0;
+    }
+    .footer-col a:hover { color: var(--green-dark); }
+    .footer-bottom {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 32px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 32px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .footer-social {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      font-size: 16px;
+    }
+    .footer-crisis a {
+      color: var(--text-primary);
+      text-decoration: underline;
+    }
+    .footer-crisis strong {
+      font-weight: 700;
+    }
+    .footer-legal a {
+      display: block;
+      padding: 2px 0;
+      color: var(--text-secondary);
+    }
+    .footer-legal a:hover { color: var(--green-dark); }
+
+    /* ===== STICKY BOTTOM BAR ===== */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--border-color);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+    }
+    .sticky-bar.hidden {
+      display: none;
+    }
+    .sticky-bar p {
+      font-size: 15px;
+    }
+    .btn-get-started {
+      padding: 12px 24px;
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .navbar { padding: 12px 16px; }
+      .navbar-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-image { height: 220px; }
+      .hero-content h2 { font-size: 32px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .faq-inner { grid-template-columns: 1fr; }
+      .cta-inner { grid-template-columns: 1fr; }
+      .cta-image { height: 200px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { grid-template-columns: 1fr; }
+      .tab-content.active { grid-template-columns: 1fr 1fr; }
+      .hero-form { flex-direction: column; align-items: stretch; }
+      .insurance-input { min-width: unset; }
+      .compare-bar { padding: 12px 16px; flex-wrap: wrap; gap: 12px; }
+      .compare-modal { padding: 24px; }
+      .compare-table { font-size: 13px; }
+      .compare-table th { width: 100px; }
+    }
+    /* ===== FLASHING BANNER ===== */
+    @keyframes flash-banner {
+      0%, 100% { background: var(--green-dark); color: #fff; }
+      50% { background: #facc15; color: var(--green-dark); }
+    }
+    .flash-banner {
+      animation: flash-banner 1s ease-in-out infinite;
+      text-align: center;
+      padding: 16px 24px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== FLASHING BANNER ===== -->
+  <div class="flash-banner">
+    New year, new you — Book your first therapy session today!
+  </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <a href="#" class="navbar-logo">
+      <svg viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="24" rx="6" fill="#166534" y="8"/>
+        <rect width="22" height="16" rx="4" fill="#16a34a" x="5" y="2"/>
+      </svg>
+      Headway
+    </a>
+    <div class="navbar-links">
+      <a href="#">Find care</a>
+      <a href="#">For providers</a>
+      <a href="#">For health plans</a>
+      <a href="#">Company</a>
+    </div>
+    <div class="navbar-actions">
+      <button class="btn-outline">Log in</button>
+      <button class="btn-primary">Find a therapist</button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <h2>Book family therapy, covered by insurance</h2>
+          <h1>Family therapy and counseling in New York</h1>
+          <div class="hero-form">
+            <div class="form-group">
+              <label>Zip code</label>
+              <div class="input-with-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                <input type="text" value="07097" id="zipInput" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Insurance <span>Optional</span></label>
+              <div class="input-with-icon insurance-input">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                <select id="insuranceSelect">
+                  <option value="">All insurance carriers</option>
+                  <option value="Aetna">Aetna</option>
+                  <option value="Anthem">Anthem Blue Cross and Blue Shield</option>
+                  <option value="Blue Cross Blue Shield">Blue Cross Blue Shield</option>
+                  <option value="Carelon">Carelon Behavioral Health</option>
+                  <option value="Cigna">Cigna</option>
+                  <option value="Highmark">Highmark BlueCross BlueShield</option>
+                  <option value="Humana">Humana</option>
+                  <option value="Magellan">Magellan</option>
+                  <option value="Optum">Optum</option>
+                  <option value="Oscar Health">Oscar Health</option>
+                  <option value="Oxford">Oxford</option>
+                  <option value="United Healthcare">United Healthcare</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn-find" onclick="filterTherapists()">Find care</button>
+          </div>
+        </div>
+        <div class="hero-image">
+          Hero image placeholder
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COST ESTIMATE BANNER ===== -->
+  <div class="cost-banner">
+    <div class="cost-banner-inner">
+      <div class="cost-banner-left">
+        <div class="cost-icon">&#128179;</div>
+        <div>
+          <h4>Get a cost estimate</h4>
+          <p>People with insurance pay as low as $0 per session through Headway</p>
+        </div>
+      </div>
+      <a href="#" class="arrow-link">&rarr;</a>
+    </div>
+  </div>
+
+  <!-- ===== TOP THERAPISTS ===== -->
+  <section class="therapists-section">
+    <div class="container">
+      <h3 class="font-serif">Top family therapists in New York</h3>
+      <p class="therapists-intro">
+        Family challenges affect everyone differently. Headway's network of 2,299 providers across New York delivers personalized talk therapy and medication management for family-related concerns, with sessions as affordable as $0 through insurance.
+      </p>
+
+      <!-- Sort Bar -->
+      <div class="sort-bar">
+        <label>Sort by:</label>
+        <select class="sort-select" id="sortSelect" onchange="applySortAndRender()">
+          <option value="default">Default</option>
+          <option value="best-match">Best Match</option>
+          <option value="experience-desc">Most Experienced</option>
+          <option value="name-asc">Name (A-Z)</option>
+        </select>
+      </div>
+
+      <div class="card-grid" id="cardGrid">
+        <!-- Cards loaded dynamically from therapists-db.js -->
+      </div>
+      <div id="noResults" style="display:none;text-align:center;padding:48px 0;color:#6b7280;">
+        <p style="font-size:18px;margin-bottom:8px;">No therapists found matching your filters.</p>
+        <p style="font-size:14px;">Try changing your insurance selection or clearing the zip code filter.</p>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button class="active">1</button>
+      </div>
+      <div class="pagination-info">
+        Showing 12 of 12 <a href="#">available therapists</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="faq-inner">
+        <div class="faq-left">
+          <h3 class="font-serif">Frequently asked questions</h3>
+          <div class="faq-illustration"></div>
+        </div>
+        <div class="faq-right">
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              What kind of therapy is best for family counseling?
+              <span class="faq-chevron">&#8964;</span>
+            </button>
+            <div class="faq-answer">
+              Family therapy often draws on systemic, cognitive-behavioral, and structural approaches. The best type depends on your family's specific needs and dynamics. A qualified therapist can help determine the most effective approach during an initial consultation.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              How much does family counseling cost in New York?
+              <span class="faq-chevron">&#8964;</span>
+            </button>
+            <div class="faq-answer">
+              The cost of family counseling in New York varies based on your insurance coverage. With insurance through Headway, sessions can cost as low as $0. Without insurance, sessions typically range from $150-$300 per session.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              Is family therapy covered by insurance in New York?
+              <span class="faq-chevron">&#8964;</span>
+            </button>
+            <div class="faq-answer">
+              Yes, many insurance plans cover family therapy in New York. Headway works with major insurance carriers to help make family counseling affordable. Check with your specific plan for details on your coverage.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              How do I choose a family counseling specialist in New York?
+              <span class="faq-chevron">&#8964;</span>
+            </button>
+            <div class="faq-answer">
+              Consider factors like the therapist's specialties, therapeutic approach, availability, and whether they accept your insurance. Reading therapist bios and reviews can help you find a good match for your family's needs.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              How should I prepare for family therapy sessions?
+              <span class="faq-chevron">&#8964;</span>
+            </button>
+            <div class="faq-answer">
+              Come with an open mind and willingness to communicate. It helps to think about your goals for therapy beforehand. Ensure all participating family members are aware of the session and are willing to engage in the process.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              Is family therapy effective?
+              <span class="faq-chevron">&#8964;</span>
+            </button>
+            <div class="faq-answer">
+              Research consistently shows that family therapy is effective for a wide range of issues including communication problems, conflict resolution, behavioral issues, and mental health conditions. The effectiveness often depends on the commitment of all family members involved.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA SECTION ===== -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-image"></div>
+        <div class="cta-content">
+          <h3 class="font-serif">Find the right counselor for your family</h3>
+          <p>Headway makes it easier to find family-focused support — from finding the right provider, to understanding costs, to scheduling with ease.</p>
+          <button class="btn-find-match">Find your match</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FIND A PROVIDER TABS ===== -->
+  <section class="provider-tabs-section">
+    <div class="container">
+      <h3 class="font-serif">Find a provider - your way</h3>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'specialties')">Specialties</button>
+        <button class="tab-btn" onclick="switchTab(event, 'cities')">Cities</button>
+        <button class="tab-btn" onclick="switchTab(event, 'states')">States</button>
+      </div>
+      <div id="specialties" class="tab-content active">
+        <a href="#">ADHD</a>
+        <a href="#">Addiction</a>
+        <a href="#">Anxiety and depression</a>
+        <a href="#">Bipolar disorder</a>
+        <a href="#">Couples</a>
+        <a href="#">Grief and loss</a>
+        <a href="#">LGBTQIA+</a>
+        <a href="#">Maternal mental health</a>
+        <a href="#">OCD</a>
+        <a href="#">PTSD and trauma</a>
+      </div>
+      <div id="cities" class="tab-content">
+        <a href="#">New York City</a>
+        <a href="#">Los Angeles</a>
+        <a href="#">Chicago</a>
+        <a href="#">Houston</a>
+        <a href="#">Phoenix</a>
+        <a href="#">Philadelphia</a>
+        <a href="#">San Antonio</a>
+        <a href="#">San Diego</a>
+      </div>
+      <div id="states" class="tab-content">
+        <a href="#">New York</a>
+        <a href="#">California</a>
+        <a href="#">Texas</a>
+        <a href="#">Florida</a>
+        <a href="#">Illinois</a>
+        <a href="#">Pennsylvania</a>
+        <a href="#">Ohio</a>
+        <a href="#">Georgia</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BREADCRUMBS ===== -->
+  <div class="container">
+    <div class="breadcrumbs">
+      <div class="breadcrumbs-nav">
+        <a href="#">Home</a> <span>&rsaquo;</span>
+        <a href="#">Therapists</a> <span>&rsaquo;</span>
+        <a href="#">New York</a> <span>&rsaquo;</span>
+        <span>Family</span>
+      </div>
+      <div>Last updated February 16, 2026</div>
+    </div>
+  </div>
+
+  <!-- ===== DISCLAIMER ===== -->
+  <div class="container">
+    <div class="disclaimer">
+      <sup>1</sup> Cost may vary based on your location, age, and insurance coverage.
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">
+            <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
+              <rect width="32" height="24" rx="6" fill="#166534" y="8"/>
+              <rect width="22" height="16" rx="4" fill="#16a34a" x="5" y="2"/>
+            </svg>
+            Headway
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Find care</h4>
+          <a href="#">Therapists</a>
+          <a href="#">Psychiatrists</a>
+          <a href="#">By specialty</a>
+          <a href="#">Virtual therapy</a>
+        </div>
+        <div class="footer-col">
+          <h4>Providers</h4>
+          <a href="#">Join Headway</a>
+          <a href="#">Provider portal</a>
+          <a href="#">Refer provider</a>
+          <a href="#">Provider resources</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About us</a>
+          <a href="#">Blog</a>
+          <a href="#">Press</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="#">Help center</a>
+          <a href="#">Contact us</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>
+          <div>&copy; 2026 Therapymatch, Inc.</div>
+          <div class="footer-social">
+            <a href="#" title="Instagram">&#9679;</a>
+            <a href="#" title="X">&#10005;</a>
+            <a href="#" title="LinkedIn">in</a>
+          </div>
+        </div>
+        <div class="footer-crisis">
+          <p>If you're experiencing emotional distress, the resources below provide free and confidential support 24/7. <strong>If this is an emergency, call 911.</strong></p>
+          <p style="margin-top: 12px;"><a href="#">Suicide Prevention Lifeline</a><br>Call or text 988</p>
+          <p style="margin-top: 12px;"><a href="#">Crisis Text Line</a><br>Text HOME to 741741</p>
+        </div>
+        <div class="footer-legal">
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Supplemental Payment Terms</a>
+          <a href="#">HIPAA Notice of Privacy Practices</a>
+          <a href="#">CA Privacy Policy for Business Customers</a>
+          <a href="#">Washington State Consumer Health Data Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== STICKY BOTTOM BAR (hidden when compare bar is visible) ===== -->
+  <div class="sticky-bar" id="stickyBar">
+    <p>Not sure who's the right fit? Filter 2,299 therapists with your preferences</p>
+    <button class="btn-get-started">Get started</button>
+  </div>
+
+  <!-- ===== FLOATING COMPARE BAR ===== -->
+  <div class="compare-bar" id="compareBar">
+    <div class="compare-bar-left">
+      <div class="compare-bar-count" id="compareBarCount">0 selected</div>
+      <div class="compare-bar-avatars" id="compareBarAvatars"></div>
+    </div>
+    <div class="compare-bar-right">
+      <button class="btn-clear-compare" onclick="clearCompare()">Clear all</button>
+      <button class="btn-compare" id="compareBtn" onclick="openCompareModal()" disabled>Compare (select 2-3)</button>
+    </div>
+  </div>
+
+  <!-- ===== COMPARISON MODAL ===== -->
+  <div class="compare-overlay" id="compareOverlay" onclick="if(event.target===this)closeCompareModal()">
+    <div class="compare-modal">
+      <button class="compare-modal-close" onclick="closeCompareModal()">&times;</button>
+      <h2 class="font-serif">Compare therapists</h2>
+      <div id="compareTableContainer"></div>
+    </div>
+  </div>
+
+  <!-- Add padding at bottom so sticky bar doesn't cover content -->
+  <div style="height: 60px;"></div>
+
+  <script src="therapists-db.js"></script>
+  <script>
+    // ===== STATE =====
+    let allTherapists = THERAPISTS_DATA;
+    let filteredTherapists = THERAPISTS_DATA;
+    let compareSet = new Set(); // stores therapist IDs
+    let currentSort = 'default';
+    let matchScores = {}; // therapist id -> score (cached)
+
+    // ===== SVG ICON TEMPLATES =====
+    const icons = {
+      heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+      people: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+      star: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
+    };
+
+    // ===== BEST MATCH SCORING =====
+    // Family counseling relevance keywords
+    const familyKeywords = [
+      'family', 'parenting', 'child', 'adolescent', 'relationship',
+      'couples', 'marriage', 'domestic', 'attachment', 'behavioral',
+      'grief', 'trauma', 'communication', 'conflict'
+    ];
+
+    function calculateMatchScore(t) {
+      let score = 0;
+
+      // Factor 1: Years of experience (max 25 points)
+      // Scale: 0 yrs = 0, 10 yrs = 15, 20+ yrs = 25
+      score += Math.min(25, Math.round((t.yearsOfExperience / 20) * 25));
+
+      // Factor 2: Family-relevant specialties (max 30 points)
+      const allSpecs = [...(t.specialties || []), ...(t.moreSpecialties || [])];
+      let familySpecCount = 0;
+      allSpecs.forEach(spec => {
+        const specLower = spec.toLowerCase();
+        if (familyKeywords.some(kw => specLower.includes(kw))) {
+          familySpecCount++;
+        }
+      });
+      score += Math.min(30, familySpecCount * 10);
+
+      // Factor 3: Insurance plans accepted (max 20 points)
+      // More plans = more accessible
+      const insuranceCount = (t.insurance || []).length;
+      score += Math.min(20, Math.round((insuranceCount / 10) * 20));
+
+      // Factor 4: Virtual sessions available (10 points)
+      if (t.virtual) {
+        score += 10;
+      }
+
+      // Factor 5: Free consultation offered (5 points)
+      if (t.freeConsultation) {
+        score += 5;
+      }
+
+      // Factor 6: Care types include family therapy (10 points)
+      const careTypes = (t.careTypes || []).map(c => c.toLowerCase());
+      if (careTypes.some(c => c.includes('family'))) {
+        score += 10;
+      }
+
+      // Normalize to 0-100
+      return Math.min(100, score);
+    }
+
+    // Pre-compute match scores
+    function computeAllScores() {
+      matchScores = {};
+      allTherapists.forEach(t => {
+        matchScores[t.id] = calculateMatchScore(t);
+      });
+    }
+
+    // ===== SORTING =====
+    function sortTherapists(therapists, sortType) {
+      const sorted = [...therapists];
+      switch (sortType) {
+        case 'best-match':
+          sorted.sort((a, b) => (matchScores[b.id] || 0) - (matchScores[a.id] || 0));
+          break;
+        case 'experience-desc':
+          sorted.sort((a, b) => b.yearsOfExperience - a.yearsOfExperience);
+          break;
+        case 'name-asc':
+          sorted.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        default:
+          // Keep original order
+          break;
+      }
+      return sorted;
+    }
+
+    function applySortAndRender() {
+      currentSort = document.getElementById('sortSelect').value;
+      const sorted = sortTherapists(filteredTherapists, currentSort);
+      renderCards(sorted);
+    }
+
+    // ===== RENDER CARDS =====
+    function renderCards(therapists) {
+      const grid = document.getElementById('cardGrid');
+      const noResults = document.getElementById('noResults');
+
+      if (therapists.length === 0) {
+        grid.style.display = 'none';
+        noResults.style.display = 'block';
+        return;
+      }
+
+      grid.style.display = '';
+      noResults.style.display = 'none';
+
+      const showMatchScore = currentSort === 'best-match';
+
+      grid.innerHTML = therapists.map(t => {
+        const hasFamilyIssues = t.specialties.some(s => s.toLowerCase().includes('family'));
+        const specialtiesHtml = hasFamilyIssues
+          ? '<strong>Family issues</strong>, ' + t.specialties.filter(s => !s.toLowerCase().includes('family')).join(', ')
+          : t.specialties.join(', ');
+
+        const isSelected = compareSet.has(t.id);
+        const score = matchScores[t.id] || 0;
+
+        return `
+          <div class="therapist-card${isSelected ? ' compare-selected' : ''}" data-id="${t.id}">
+            <div class="match-badge${showMatchScore ? ' visible' : ''}" title="Best Match score: ${score}/100">
+              ${icons.star} ${score}% match
+            </div>
+            <div class="card-header">
+              <div class="card-avatar" style="background: ${t.avatarGradient};">${t.initials}</div>
+              <div>
+                <div class="card-name font-serif">${t.name}</div>
+                <div class="card-role">${t.role}</div>
+                <div class="card-location">Virtual &bull; ${t.location}</div>
+              </div>
+            </div>
+            <div class="card-quote">&ldquo;${t.quote}&rdquo;</div>
+            <div class="card-detail">
+              <div class="card-detail-icon">${icons.heart}</div>
+              <div>${specialtiesHtml}</div>
+            </div>
+            <div class="card-detail">
+              <div class="card-detail-icon">${icons.people}</div>
+              <div>${t.style.join(', ')}</div>
+            </div>
+            <div class="card-detail">
+              <div class="card-detail-icon">${icons.check}</div>
+              <div>Accepts ${t.insurance.length} insurance carriers</div>
+            </div>
+            <div class="card-footer">
+              <div>
+                <div class="next-opening">Next opening ${t.nextOpening}</div>
+                ${t.freeConsultation ? '<div class="free-consult">Offers free consultations</div>' : ''}
+              </div>
+              <a href="therapists-provider.html?id=${t.id}" class="btn-view-profile">View profile and book</a>
+            </div>
+            <label class="compare-toggle" onclick="event.stopPropagation()">
+              <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleCompare('${t.id}', this.checked)" />
+              Compare
+            </label>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ===== COMPARE FEATURE =====
+    function toggleCompare(therapistId, checked) {
+      if (checked) {
+        if (compareSet.size >= 3) {
+          // Already have 3 selected, uncheck this one
+          const checkbox = document.querySelector(`.therapist-card[data-id="${therapistId}"] input[type="checkbox"]`);
+          if (checkbox) checkbox.checked = false;
+          return;
+        }
+        compareSet.add(therapistId);
+      } else {
+        compareSet.delete(therapistId);
+      }
+      updateCompareUI();
+    }
+
+    function clearCompare() {
+      compareSet.clear();
+      updateCompareUI();
+      // Uncheck all checkboxes
+      document.querySelectorAll('.compare-toggle input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+      });
+      // Remove selected state from cards
+      document.querySelectorAll('.therapist-card.compare-selected').forEach(card => {
+        card.classList.remove('compare-selected');
+      });
+    }
+
+    function updateCompareUI() {
+      const bar = document.getElementById('compareBar');
+      const stickyBar = document.getElementById('stickyBar');
+      const count = compareSet.size;
+
+      if (count > 0) {
+        bar.classList.add('visible');
+        stickyBar.classList.add('hidden');
+      } else {
+        bar.classList.remove('visible');
+        stickyBar.classList.remove('hidden');
+      }
+
+      // Update count text
+      document.getElementById('compareBarCount').textContent =
+        count === 1 ? '1 therapist selected' : `${count} therapists selected`;
+
+      // Update avatars in bar
+      const avatarsContainer = document.getElementById('compareBarAvatars');
+      avatarsContainer.innerHTML = '';
+      compareSet.forEach(id => {
+        const t = allTherapists.find(th => th.id === id);
+        if (t) {
+          avatarsContainer.innerHTML += `
+            <div class="compare-bar-avatar" style="background: ${t.avatarGradient};">
+              ${t.initials}
+              <div class="remove-btn" onclick="event.stopPropagation(); removeFromCompare('${t.id}');">&times;</div>
+            </div>
+          `;
+        }
+      });
+
+      // Update button state
+      const btn = document.getElementById('compareBtn');
+      if (count >= 2 && count <= 3) {
+        btn.disabled = false;
+        btn.textContent = `Compare (${count})`;
+      } else {
+        btn.disabled = true;
+        btn.textContent = count === 0 ? 'Compare (select 2-3)' : count === 1 ? 'Compare (select 1 more)' : 'Compare (max 3)';
+      }
+
+      // Update card visual states
+      document.querySelectorAll('.therapist-card').forEach(card => {
+        const id = card.getAttribute('data-id');
+        const checkbox = card.querySelector('input[type="checkbox"]');
+        if (compareSet.has(id)) {
+          card.classList.add('compare-selected');
+          if (checkbox) checkbox.checked = true;
+        } else {
+          card.classList.remove('compare-selected');
+          if (checkbox) checkbox.checked = false;
+        }
+      });
+    }
+
+    function removeFromCompare(therapistId) {
+      compareSet.delete(therapistId);
+      updateCompareUI();
+    }
+
+    // ===== COMPARISON MODAL =====
+    function openCompareModal() {
+      if (compareSet.size < 2) return;
+
+      const therapists = [];
+      compareSet.forEach(id => {
+        const t = allTherapists.find(th => th.id === id);
+        if (t) therapists.push(t);
+      });
+
+      const colCount = therapists.length;
+
+      // Build the comparison table
+      let html = '<table class="compare-table">';
+
+      // Header row with therapist info
+      html += '<tr><th></th>';
+      therapists.forEach(t => {
+        html += `
+          <td class="compare-provider-header">
+            <div class="compare-avatar" style="background: ${t.avatarGradient};">${t.initials}</div>
+            <div class="compare-pname font-serif">${t.name}</div>
+            <div class="compare-prole">${t.role}</div>
+          </td>
+        `;
+      });
+      html += '</tr>';
+
+      // Years of experience
+      html += '<tr><th>Experience</th>';
+      therapists.forEach(t => {
+        html += `<td>${t.yearsOfExperience} years</td>`;
+      });
+      html += '</tr>';
+
+      // Specialties
+      html += '<tr><th>Specialties</th>';
+      therapists.forEach(t => {
+        const allSpecs = [...(t.specialties || []), ...(t.moreSpecialties || [])];
+        html += '<td>' + allSpecs.map(s => {
+          const isFamilyRelated = familyKeywords.some(kw => s.toLowerCase().includes(kw));
+          return `<span class="compare-tag${isFamilyRelated ? ' highlight' : ''}">${s}</span>`;
+        }).join('') + '</td>';
+      });
+      html += '</tr>';
+
+      // Therapy methods
+      html += '<tr><th>Therapy Methods</th>';
+      therapists.forEach(t => {
+        html += '<td>' + (t.therapyMethods || []).map(m =>
+          `<span class="compare-tag">${m}</span>`
+        ).join('') + '</td>';
+      });
+      html += '</tr>';
+
+      // Insurance accepted
+      html += '<tr><th>Insurance</th>';
+      therapists.forEach(t => {
+        html += '<td>' + (t.insurance || []).map(ins =>
+          `<span class="compare-tag">${ins}</span>`
+        ).join('') + '</td>';
+      });
+      html += '</tr>';
+
+      // Virtual sessions
+      html += '<tr><th>Virtual Sessions</th>';
+      therapists.forEach(t => {
+        html += '<td>' + (t.virtual
+          ? '<span class="compare-virtual-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg> Available</span>'
+          : '<span style="color: var(--text-secondary);">Not available</span>') + '</td>';
+      });
+      html += '</tr>';
+
+      // Availability
+      html += '<tr><th>Availability</th>';
+      therapists.forEach(t => {
+        const totalSlots = Object.values(t.availableSlots || {}).reduce((sum, s) => sum + s.length, 0);
+        html += `<td>Next: ${t.nextOpening}<br><span style="color:var(--text-secondary);font-size:13px;">${totalSlots} slots this week</span></td>`;
+      });
+      html += '</tr>';
+
+      // Free consultation
+      html += '<tr><th>Free Consult</th>';
+      therapists.forEach(t => {
+        html += '<td>' + (t.freeConsultation
+          ? '<span style="color: var(--green-dark); font-weight: 600;">Yes</span>'
+          : '<span style="color: var(--text-secondary);">No</span>') + '</td>';
+      });
+      html += '</tr>';
+
+      // Care types
+      html += '<tr><th>Care Types</th>';
+      therapists.forEach(t => {
+        html += '<td>' + (t.careTypes || []).map(c => {
+          const isFamilyRelated = c.toLowerCase().includes('family');
+          return `<span class="compare-tag${isFamilyRelated ? ' highlight' : ''}">${c}</span>`;
+        }).join('') + '</td>';
+      });
+      html += '</tr>';
+
+      // Match score (if best match sort is active)
+      html += '<tr><th>Match Score</th>';
+      therapists.forEach(t => {
+        const score = matchScores[t.id] || 0;
+        html += `<td><span style="font-size: 20px; font-weight: 700; color: var(--green-dark);">${score}%</span></td>`;
+      });
+      html += '</tr>';
+
+      html += '</table>';
+
+      document.getElementById('compareTableContainer').innerHTML = html;
+      document.getElementById('compareOverlay').classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCompareModal() {
+      document.getElementById('compareOverlay').classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCompareModal();
+    });
+
+    // ===== FILTER =====
+    function filterTherapists() {
+      const zip = document.getElementById('zipInput').value.trim();
+      const insurance = document.getElementById('insuranceSelect').value;
+
+      filteredTherapists = allTherapists.filter(t => {
+        // Zip code filter: if user entered a zip, only show therapists whose zip starts with same first 3 digits (same area)
+        if (zip.length >= 3) {
+          const zipPrefix = zip.substring(0, 3);
+          const therapistPrefix = t.zipCode.substring(0, 3);
+          // Show all NYC-area zips (100xx, 110xx, 070xx) as matching each other
+          const nyArea = ['100', '101', '102', '103', '104', '110', '111', '112', '113', '070', '071'];
+          const userInNY = nyArea.some(p => zip.startsWith(p));
+          const therapistInNY = nyArea.some(p => t.zipCode.startsWith(p));
+          if (!(userInNY && therapistInNY) && zipPrefix !== therapistPrefix) {
+            return false;
+          }
+        }
+
+        // Insurance filter
+        if (insurance) {
+          const hasInsurance = t.insurance.some(ins =>
+            ins.toLowerCase().includes(insurance.toLowerCase())
+          );
+          if (!hasInsurance) return false;
+        }
+
+        return true;
+      });
+
+      applySortAndRender();
+      updateCount(filteredTherapists.length);
+    }
+
+    function updateCount(count) {
+      const info = document.querySelector('.pagination-info');
+      if (info) {
+        info.innerHTML = `Showing ${count} of ${allTherapists.length} <a href="#">available therapists</a>`;
+      }
+      const stickyP = document.querySelector('.sticky-bar p');
+      if (stickyP) {
+        stickyP.textContent = `Not sure who's the right fit? Filter ${allTherapists.length} therapists with your preferences`;
+      }
+    }
+
+    // Also filter when pressing Enter in zip input
+    document.addEventListener('DOMContentLoaded', () => {
+      const zipInput = document.getElementById('zipInput');
+      if (zipInput) {
+        zipInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') filterTherapists();
+        });
+      }
+    });
+
+    // ===== TAB SWITCHING =====
+    function switchTab(event, tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // ===== INIT =====
+    computeAllScores();
+    renderCards(allTherapists);
+    updateCount(allTherapists.length);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Discover Kyoto's hidden gems — a local's guide to secret temples, backstreet markets, master craftspeople, and cherry blossom spots the crowds don't know about." />
+  <meta name="theme-color" content="#8B4513" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛩️</text></svg>" />
+  <title>Kyoto Hidden Gems | A Local's Guide to the Ancient Capital</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* CSS Variables for vintage color palette */
+    :root {
+      --color-primary: #8B4513;
+      --color-primary-light: #A0522D;
+      --color-primary-dark: #5D2E0C;
+      --color-accent: #2F4F4F;
+      --color-accent-warm: #CD853F;
+      --color-background: #FAF8F5;
+      --color-background-warm: #F5F0E6;
+      --color-background-cream: #FDF8E8;
+      --color-text: #3C3C3C;
+      --color-text-light: #5C5C5C;
+      --color-border: #D4C4A8;
+      --color-border-dark: #B8A88A;
+
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Crimson Text', Georgia, serif;
+      --font-accent: 'Caveat', cursive;
+
+      --shadow-soft: 0 2px 8px rgba(139, 69, 19, 0.1);
+      --shadow-medium: 0 4px 12px rgba(139, 69, 19, 0.15);
+      --shadow-strong: 0 6px 20px rgba(139, 69, 19, 0.2);
+
+      --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--color-background);
+      color: var(--color-text);
+      line-height: 1.6;
+      background-image:
+        linear-gradient(to bottom, rgba(139, 69, 19, 0.02), rgba(139, 69, 19, 0.04)),
+        var(--paper-texture);
+      background-blend-mode: multiply;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(to bottom, var(--color-background-warm), var(--color-background));
+      padding: 1rem 1.5rem;
+      border-bottom: 3px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      background-image:
+        linear-gradient(to bottom, var(--color-background-warm), var(--color-background)),
+        var(--paper-texture);
+      background-blend-mode: overlay;
+    }
+
+    .header::before, .header::after {
+      content: "\2726";
+      position: absolute;
+      font-size: 1rem;
+      color: var(--color-border-dark);
+      opacity: 0.6;
+    }
+    .header::before { top: 0.5rem; left: 1rem; }
+    .header::after { top: 0.5rem; right: 1rem; }
+
+    .header h1 {
+      font-size: 1.75rem;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+      display: inline-block;
+      position: relative;
+    }
+
+    .header h1::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--color-accent-warm), transparent);
+    }
+
+    .header .subtitle {
+      font-family: var(--font-accent);
+      font-size: 1.15rem;
+      color: var(--color-text-light);
+      margin-top: 0.25rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* Map container */
+    .map-container {
+      flex: 1;
+      position: relative;
+      min-height: 500px;
+    }
+
+    .map-container .leaflet-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--color-background-warm);
+    }
+
+    .leaflet-tile-pane {
+      filter: sepia(15%) saturate(90%) brightness(102%);
+    }
+
+    .leaflet-control-zoom {
+      border: 2px solid var(--color-border) !important;
+      border-radius: 4px !important;
+      box-shadow: var(--shadow-soft) !important;
+    }
+    .leaflet-control-zoom a {
+      background-color: var(--color-background) !important;
+      color: var(--color-primary) !important;
+      font-family: var(--font-heading) !important;
+    }
+    .leaflet-control-zoom a:hover {
+      background-color: var(--color-background-warm) !important;
+    }
+
+    .leaflet-control-attribution {
+      background: var(--color-background) !important;
+      font-family: var(--font-body) !important;
+      font-size: 0.7rem !important;
+      color: var(--color-text-light) !important;
+    }
+
+    .leaflet-popup-content-wrapper {
+      background: var(--color-background);
+      border-radius: 4px;
+      box-shadow: var(--shadow-medium);
+      border: 1px solid var(--color-border);
+    }
+    .leaflet-popup-content {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      margin: 12px 16px;
+    }
+    .leaflet-popup-tip {
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+    }
+
+    /* Custom gem markers */
+    .custom-gem-marker { background: transparent; border: none; }
+
+    .gem-marker-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+      transition: transform 0.2s ease;
+    }
+    .gem-marker-container:hover { transform: scale(1.1); }
+
+    .gem-marker-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--marker-color, var(--color-primary));
+      border: 3px solid var(--color-background);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .gem-marker-pin {
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 12px solid var(--marker-color, var(--color-primary));
+      margin-top: -2px;
+    }
+
+    /* Controls */
+    .controls {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .search-bar {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+    .search-bar::before {
+      content: "\1F50D";
+      position: absolute;
+      left: 0.875rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      border: 2px solid var(--color-border);
+      border-radius: 6px;
+      background: var(--color-background-cream);
+      color: var(--color-text);
+      box-shadow: var(--shadow-soft), inset 0 1px 3px rgba(139, 69, 19, 0.05);
+      transition: all 0.2s ease;
+    }
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-medium), inset 0 1px 3px rgba(139, 69, 19, 0.05);
+      background: var(--color-background);
+    }
+    .search-bar input::placeholder {
+      color: var(--color-text-light);
+      font-style: italic;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      background: var(--color-background-cream);
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .filter-btn {
+      padding: 0.5rem 0.875rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover {
+      background: var(--color-background-warm);
+      color: var(--color-primary);
+    }
+    .filter-btn.active {
+      background: var(--color-primary);
+      color: var(--color-background);
+      border-color: var(--color-primary-dark);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Popup card */
+    .popup-card { max-width: 280px; padding: 0.25rem; }
+    .popup-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid var(--color-border);
+      padding-bottom: 0.5rem;
+      position: relative;
+    }
+    .popup-card h3::after {
+      content: "\25C6";
+      position: absolute;
+      bottom: -0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.5rem;
+      color: var(--color-border-dark);
+      background: var(--color-background);
+      padding: 0 0.5rem;
+    }
+    .popup-card .tagline {
+      font-family: var(--font-accent);
+      font-size: 1.1rem;
+      color: var(--color-accent);
+      margin-bottom: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .popup-card .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background: var(--color-background-warm);
+      border-radius: 4px;
+    }
+    .popup-card .gem-score { font-weight: 600; color: var(--color-accent-warm); }
+    .popup-card .read-more {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
+      color: var(--color-background);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(93, 46, 12, 0.2);
+    }
+    .popup-card .read-more:hover {
+      background: linear-gradient(to bottom, var(--color-primary-light), var(--color-primary));
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(93, 46, 12, 0.25);
+    }
+    .popup-card .popup-details {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-top: 0.5rem;
+      border-left: 2px solid var(--color-border);
+      padding-left: 0.75rem;
+    }
+    .popup-card .popup-details .hours { font-style: italic; margin-bottom: 0.25rem; }
+    .popup-card .popup-details .address { margin: 0; }
+
+    /* Detail overlay */
+    .detail-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .detail-overlay.visible { opacity: 1; visibility: visible; }
+
+    /* Detail panel */
+    .detail-panel {
+      position: fixed;
+      top: 0; right: 0;
+      width: 420px;
+      max-width: 100%;
+      height: 100vh;
+      background: var(--color-background);
+      box-shadow: -6px 0 30px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      overflow-y: auto;
+      padding: 2rem;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.03), transparent 20px),
+        var(--paper-texture);
+      background-blend-mode: multiply;
+      border-left: 1px solid var(--color-border);
+    }
+    .detail-panel.open { transform: translateX(0); }
+
+    .detail-panel .close-btn {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: var(--color-background-warm);
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      width: 2.5rem; height: 2.5rem;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--color-text-light);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .detail-panel .close-btn:hover {
+      background: var(--color-primary);
+      color: var(--color-background);
+      border-color: var(--color-primary);
+    }
+
+    .detail-panel h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      padding-right: 3rem;
+      border-bottom: 2px solid var(--color-border);
+      padding-bottom: 0.75rem;
+    }
+
+    .detail-panel .tagline {
+      font-family: var(--font-accent);
+      color: var(--color-accent);
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .detail-panel .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--color-background-warm);
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--color-border);
+    }
+    .detail-panel .detail-meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+    .detail-panel .detail-meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-text-light);
+    }
+    .detail-panel .detail-meta-value { font-weight: 600; color: var(--color-primary); }
+
+    .detail-panel .detail-info {
+      margin-bottom: 1.5rem;
+      padding: 0.75rem 0;
+      border-top: 1px dashed var(--color-border);
+      border-bottom: 1px dashed var(--color-border);
+    }
+    .detail-panel .detail-info p { margin: 0.25rem 0; font-size: 0.95rem; }
+    .detail-panel .detail-info strong { color: var(--color-primary); }
+
+    .detail-panel .review {
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+      text-align: justify;
+      text-indent: 1.5rem;
+    }
+    .detail-panel .review::first-letter {
+      float: left;
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      line-height: 0.8;
+      padding-right: 0.5rem;
+      padding-top: 0.25rem;
+      color: var(--color-primary);
+    }
+
+    .detail-panel .insider-tips {
+      background: var(--color-background-cream);
+      padding: 1.25rem;
+      border-radius: 6px;
+      border-left: 4px solid var(--color-accent-warm);
+      box-shadow: var(--shadow-soft);
+      margin-top: 1rem;
+    }
+    .detail-panel .insider-tips h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      color: var(--color-accent-warm);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .detail-panel .insider-tips h4::before { content: "\2605"; }
+    .detail-panel .insider-tips ul { list-style-type: none; padding-left: 0; }
+    .detail-panel .insider-tips li {
+      padding: 0.4rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      border-bottom: 1px dashed var(--color-border);
+    }
+    .detail-panel .insider-tips li:last-child { border-bottom: none; }
+    .detail-panel .insider-tips li::before {
+      content: "\2192";
+      position: absolute;
+      left: 0;
+      color: var(--color-accent-warm);
+      font-weight: bold;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header { padding: 0.875rem 1rem; }
+      .header h1 { font-size: 1.4rem; }
+      .header h1::after { display: none; }
+      .header::before, .header::after { display: none; }
+      .header .subtitle { font-size: 1rem; }
+      .controls { flex-direction: column; gap: 0.5rem; }
+      .search-bar { width: 100%; }
+      .search-bar input { padding: 0.625rem 1rem 0.625rem 2.25rem; font-size: 0.95rem; }
+      .filter-bar { width: 100%; justify-content: flex-start; padding: 0.375rem; gap: 0.375rem; }
+      .filter-btn { padding: 0.375rem 0.625rem; font-size: 0.8rem; }
+      .detail-panel { width: 100%; padding: 1.5rem; padding-top: 1rem; }
+      .detail-panel h2 { font-size: 1.35rem; padding-right: 2.5rem; }
+      .detail-panel .tagline { font-size: 1.15rem; }
+      .detail-panel .review { text-align: left; text-indent: 0; line-height: 1.75; }
+      .detail-panel .review::first-letter { font-size: 2.75rem; }
+      .popup-card { max-width: 250px; }
+      .popup-card h3 { font-size: 1rem; }
+      .popup-card .tagline { font-size: 1rem; }
+      .popup-card .meta { gap: 0.5rem; font-size: 0.8rem; }
+      .gem-marker-icon { width: 32px; height: 32px; font-size: 14px; }
+    }
+
+    @media (max-width: 480px) {
+      .header { padding: 0.625rem 0.875rem; }
+      .header h1 { font-size: 1.25rem; }
+      .header .subtitle { font-size: 0.95rem; }
+      .controls { top: 0.5rem; left: 0.5rem; right: 0.5rem; }
+      .filter-bar {
+        overflow-x: auto; flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      }
+      .filter-bar::-webkit-scrollbar { display: none; }
+      .filter-btn { white-space: nowrap; flex-shrink: 0; padding: 0.35rem 0.5rem; font-size: 0.75rem; }
+      .detail-panel { padding: 1.25rem; }
+      .detail-panel .close-btn { width: 2rem; height: 2rem; font-size: 1rem; top: 0.75rem; right: 0.75rem; }
+      .detail-panel h2 { font-size: 1.25rem; }
+      .detail-panel .detail-meta { padding: 0.75rem; gap: 0.75rem; }
+      .detail-panel .insider-tips { padding: 1rem; }
+      .map-container { min-height: calc(100vh - 80px); }
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      .header { padding: 0.5rem 1rem; }
+      .header .subtitle { display: none; }
+      .controls { flex-direction: row; align-items: center; }
+      .search-bar { flex: 1; max-width: 300px; }
+      .filter-bar { flex: 0 0 auto; }
+    }
+
+    @media (min-width: 1400px) {
+      .header h1 { font-size: 2rem; }
+      .header .subtitle { font-size: 1.25rem; }
+      .detail-panel { width: 480px; }
+      .popup-card { max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>Kyoto Hidden Gems</h1>
+      <p class="subtitle">A local's guide to the ancient capital &mdash; 5 days in late March, cherry blossom season</p>
+    </header>
+    <main class="map-container">
+      <div class="controls">
+        <div class="search-bar">
+          <input type="text" id="search-input" placeholder="Search hidden gems..." aria-label="Search hidden gems" />
+        </div>
+        <div class="filter-bar" id="filter-bar"></div>
+      </div>
+      <div id="map" class="leaflet-container"></div>
+    </main>
+    <div class="detail-overlay" id="detail-overlay"></div>
+    <div class="detail-panel" id="detail-panel"></div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <script>
+    // ── Places data ──
+    const places = [
+      // ═══════════════════════════════════════
+      //  HIDDEN TEMPLES & SHRINES
+      // ═══════════════════════════════════════
+      {
+        "id": "otagi-nenbutsu-ji",
+        "name": "Otagi Nenbutsu-ji",
+        "category": "temple",
+        "neighborhood": "Arashiyama (far north)",
+        "coordinates": { "lat": 35.0314, "lng": 135.6652 },
+        "gemScore": 10,
+        "priceRange": "\u00A5300",
+        "hours": "8am\u20135pm daily",
+        "editorialReview": "Tucked into the hills twenty minutes past the Arashiyama bamboo crowds, Otagi Nenbutsu-ji is home to 1,200 hand-carved stone rakan statues\u2014each with a wildly different expression, from belly-laughing to contemplative to downright mischievous. The sculptor Kocho Nishimura began the project in 1981 with help from amateur volunteers, and the result feels less like a temple and more like stumbling into a gathering of stone personalities. Because most tourists turn around at the bamboo grove, you may have this place nearly to yourself on a weekday morning. Moss creeps over the statues in late March, adding a layer of green that photographs beautifully.",
+        "insiderTips": ["Walk past Adashino Nenbutsu-ji and keep going uphill\u2014most people stop too early", "Weekday mornings before 10am you may be completely alone here", "Bring a zoom lens\u2014the facial expressions on the statues are incredible up close"],
+        "keywords": ["statues", "rakan", "arashiyama", "quiet", "moss", "sculpture", "hidden"],
+        "whyItsAGem": "1,200 whimsical stone statues on a hillside that 95% of Arashiyama visitors never reach"
+      },
+      {
+        "id": "shisen-do",
+        "name": "Shisen-d\u014d",
+        "category": "temple",
+        "neighborhood": "Ichij\u014d-ji (northeast)",
+        "coordinates": { "lat": 35.0452, "lng": 135.7948 },
+        "gemScore": 9,
+        "priceRange": "\u00A5500",
+        "hours": "9am\u20135pm daily",
+        "editorialReview": "Built in 1641 by the retired samurai and poet Ishikawa Jozan, Shisen-d\u014d is a living poem in garden form. The whitewashed walls frame a manicured dry garden that transitions into a wilder woodland slope, and the only sounds are birdsong and the periodic clack of a shishi-odoshi deer scarer. Unlike the packed gardens of central Kyoto, Shisen-d\u014d sits in the quiet Ichij\u014d-ji neighborhood\u2014a district better known to ramen pilgrims than temple seekers. The tatami viewing room invites you to sit, breathe, and stare at nothing in particular for as long as you want. In late March, the azaleas aren\u2019t yet blooming, but the garden\u2019s composition is so precise that every season looks intentional.",
+        "insiderTips": ["Combine with nearby Enkoji and Manshuin for a half-day northeast temple walk", "The garden is best viewed from the tatami room\u2014take your shoes off and sit", "Bus 5 from Kyoto Station to Ichij\u014dji-sagarimatsu-ch\u014d stop, then 10-minute walk uphill"],
+        "keywords": ["garden", "samurai", "zen", "quiet", "tatami", "poetry", "northeast"],
+        "whyItsAGem": "A retired samurai\u2019s poetry garden where you can sit on tatami and hear nothing but birds"
+      },
+      {
+        "id": "fushimi-inari-summit",
+        "name": "Fushimi Inari Taisha (Summit Loop)",
+        "category": "temple",
+        "neighborhood": "Fushimi",
+        "coordinates": { "lat": 34.9681, "lng": 135.7727 },
+        "gemScore": 9,
+        "priceRange": "Free",
+        "hours": "24 hours (open always)",
+        "editorialReview": "Yes, Fushimi Inari is the most visited site in Kyoto. But here\u2019s the secret: only about 10% of visitors make it past the first viewpoint. The full summit loop takes 2\u20133 hours and passes through increasingly deserted stretches of torii gates, small sub-shrines with offerings of fox statues, and forest paths where you\u2019ll hear nothing but your own footsteps and crows calling overhead. The summit itself is anticlimactic\u2014a small clearing with a few stone markers\u2014but the journey there is one of the most meditative walks in Kyoto. Go at 6am or after 4pm in late March and the lower gates, which are packed by midday, become yours alone.",
+        "insiderTips": ["Start at 5:30\u20136am to have the entire lower tunnel to yourself for photos", "The Yotsutsuji intersection (about 30 min up) is where most people turn back\u2014keep going", "Small teahouses along the trail sell amazake (sweet rice drink) to fuel the climb"],
+        "keywords": ["torii", "hiking", "sunrise", "fox", "inari", "free", "mountain"],
+        "whyItsAGem": "The full mountain loop that 90% of Fushimi Inari visitors never complete"
+      },
+      {
+        "id": "kurama-dera",
+        "name": "Kurama-dera",
+        "category": "temple",
+        "neighborhood": "Kurama (northern mountains)",
+        "coordinates": { "lat": 35.1178, "lng": 135.7706 },
+        "gemScore": 9,
+        "priceRange": "\u00A5300",
+        "hours": "9am\u20134:30pm daily",
+        "editorialReview": "The Eizan Railway from Demachiyanagi Station to Kurama is one of Kyoto\u2019s great hidden train rides\u2014the cars wind through mountain valleys so narrow it feels like you\u2019ve left Japan entirely. Kurama-dera sits at the top of a forested mountain and is said to be the place where the deity Bishamonten descended to Earth. The main hall\u2019s terrace offers sweeping views over cedar-covered ridges, and in late March the cherry trees along the approach road are among the earliest to bloom in the Kyoto area. The real adventure is the forest trail that connects Kurama to Kibune on the other side of the mountain\u2014a rugged 90-minute hike through ancient cryptomeria trees and past tengu (mountain demon) shrines.",
+        "insiderTips": ["Hike over the mountain to Kibune village and eat kawadoko (riverside) lunch there", "Take the Eizan Railway\u2019s Kirara scenic car for open-window mountain views", "The cable car to the midpoint saves 20 minutes but skips the most atmospheric forest section"],
+        "keywords": ["mountain", "hiking", "train", "tengu", "forest", "kibune", "northern"],
+        "whyItsAGem": "A mountain temple reached by scenic railway, with a forest trail to a riverside village on the other side"
+      },
+      {
+        "id": "sekiho-ji",
+        "name": "Sekih\u014d-ji",
+        "category": "temple",
+        "neighborhood": "Yamashina (east)",
+        "coordinates": { "lat": 34.9772, "lng": 135.8213 },
+        "gemScore": 8,
+        "priceRange": "Free",
+        "hours": "9am\u20134pm daily",
+        "editorialReview": "Sekih\u014d-ji is one of Kyoto\u2019s hardest temples to reach by public transit, which is precisely why it remains genuinely unknown to tourists. This Shingon temple clings to a hillside in Yamashina\u2019s eastern outskirts, surrounded by dense forest and protected by a steep approach road. Inside, the Kannon-d\u014d hall has a hushed gravity that the busier temples have lost. The cemetery out back has panoramic views over the Yamashina basin, and in late March wild cherry trees bloom along the hillside with nobody watching. This is the kind of place that temple monks visit on their day off.",
+        "insiderTips": ["Take the Tozai subway to Daigo Station, then it\u2019s a 25-minute walk uphill", "No English signage\u2014use Google Maps directions for the final approach", "Combine with nearby Zuishin-in temple for a full morning away from any tourist"],
+        "keywords": ["remote", "quiet", "mountain", "shingon", "cemetery", "forest", "off-path"],
+        "whyItsAGem": "A mountain temple so remote that even most Kyoto residents have never heard of it"
+      },
+      {
+        "id": "imamiya-shrine",
+        "name": "Imamiya Shrine",
+        "category": "temple",
+        "neighborhood": "Kita-ku (north central)",
+        "coordinates": { "lat": 35.0443, "lng": 135.7427 },
+        "gemScore": 8,
+        "priceRange": "Free",
+        "hours": "Always open (grounds), buildings 9am\u20135pm",
+        "editorialReview": "Imamiya Shrine sits in the quiet northern residential district of Murasakino, far enough from the Golden Pavilion crowds to feel like a neighborhood secret. The shrine itself is elegant in an understated way\u2014no gilding, no tour buses, just clean lines and gravel pathways. But the real reason locals love Imamiya is the pair of ancient aburi mochi shops flanking the approach road: Ichiwa (founded circa 1000 AD, literally a thousand-year-old business) and Kazariya. These charming shops grill tiny rice-flour dumplings over charcoal and serve them with sweet white miso sauce. Watching the smoke curl from the grills while sitting on tatami is one of Kyoto\u2019s most timeless experiences.",
+        "insiderTips": ["Try both Ichiwa and Kazariya\u2014they\u2019ve been rivals for centuries and each has loyal fans", "The Yasurai Festival in April is spectacular, but the shrine is lovely anytime", "Walk here from Daitoku-ji temple complex (10 minutes) for a perfect pairing"],
+        "keywords": ["shrine", "mochi", "charcoal", "traditional", "local", "murasakino", "free"],
+        "whyItsAGem": "A neighborhood shrine with two rival mochi shops that have been grilling dumplings for a thousand years"
+      },
+
+      // ═══════════════════════════════════════
+      //  LOCAL FOOD & MARKETS
+      // ═══════════════════════════════════════
+      {
+        "id": "toji-flea-market",
+        "name": "T\u014d-ji Kobo-san Flea Market",
+        "category": "food",
+        "neighborhood": "Minami-ku (south central)",
+        "coordinates": { "lat": 34.9808, "lng": 135.7477 },
+        "gemScore": 10,
+        "priceRange": "\u00A5\u2013\u00A5\u00A5",
+        "hours": "21st of every month, 5am\u20134pm",
+        "editorialReview": "On the 21st of every month, the grounds of T\u014d-ji temple transform into one of Japan\u2019s greatest flea markets. Over a thousand vendors spread across the temple grounds selling everything from Meiji-era ceramics and vintage kimono to handmade pickles, dried fish, and antique woodblock prints. The atmosphere before 8am is magical\u2014dealers with flashlights picking through boxes, the pagoda silhouetted against dawn light, and the smell of yakitori smoke already drifting from the food stalls. This is where Kyoto\u2019s antique dealers do their own shopping. If your dates align with the 21st, rearrange your entire itinerary around this.",
+        "insiderTips": ["Arrive at 6am for the best antique finds\u2014dealers start packing quality items by 10am", "Bring cash only, in small bills\u2014most vendors don\u2019t take cards", "The food stalls near the south gate have the best mitarashi dango and oden"],
+        "keywords": ["flea market", "antiques", "kimono", "ceramics", "monthly", "vendors", "food stalls"],
+        "whyItsAGem": "A thousand-vendor flea market at a UNESCO temple where antique dealers do their own shopping"
+      },
+      {
+        "id": "demachi-masugata",
+        "name": "Demachi Masugata Sh\u014dtengai",
+        "category": "food",
+        "neighborhood": "Kamigyo-ku (central north)",
+        "coordinates": { "lat": 35.0303, "lng": 135.7690 },
+        "gemScore": 9,
+        "priceRange": "\u00A5",
+        "hours": "Most shops 9am\u20136pm, varies",
+        "editorialReview": "While tourists swarm Nishiki Market for its photogenic skewered snacks, Kyoto residents actually shop at Demachi Masugata\u2014a covered shopping arcade near the delta where the Kamo and Takano rivers meet. This is a real working market: fishmongers shouting prices, tofu shops pressing fresh blocks by hand, pickle vendors with dozens of nukazuke varieties, and the legendary Demachi Futaba mochi shop where the line for their mame-mochi (bean-studded rice cakes) wraps around the corner every morning. The arcade has the kind of lived-in energy that Nishiki lost when it became a tourist attraction. Come here to see how Kyoto feeds itself.",
+        "insiderTips": ["Demachi Futaba opens at 8:30am\u2014get in line by 8:15 or wait 30+ minutes", "The korokke (Japanese croquette) shop halfway down the arcade is an unsung hero", "After shopping, walk to the Kamo River delta\u2014the turtle stepping stones are a local icon"],
+        "keywords": ["market", "shopping arcade", "mochi", "tofu", "pickles", "local", "river"],
+        "whyItsAGem": "The real Kyoto market where residents actually shop, not the one on every tourist list"
+      },
+      {
+        "id": "menbakaichidai",
+        "name": "Menbakaichidai (Fire Ramen)",
+        "category": "food",
+        "neighborhood": "Kamigyo-ku (central)",
+        "coordinates": { "lat": 35.0296, "lng": 135.7555 },
+        "gemScore": 8,
+        "priceRange": "\u00A5\u00A5",
+        "hours": "11:30am\u20132pm, 5pm\u20139pm (closed Wed)",
+        "editorialReview": "At this tiny, steamy ramen shop on a residential side street, the chef pours green onion oil over your bowl of negi ramen and then sets it on fire with a blowtorch. A literal column of flame erupts from your soup while you sit three feet away. It\u2019s theatrical and slightly terrifying and the ramen underneath is genuinely excellent\u2014a rich soy-based broth with thick noodles and mountains of charred green onion. The shop seats maybe ten people, the chef runs the show solo, and the walls are covered in singed celebrity photos. It\u2019s the kind of absurd, only-in-Japan experience that makes a trip memorable. They\u2019ll ask you to wear a paper bib. Do it.",
+        "insiderTips": ["Sit at the counter to get the full fire experience\u2014tables in the back miss the show", "Do not wear flammable scarves or dangling sleeves\u2014they are serious about this", "Arrive right at 11:30 for lunch\u2014the line builds fast and there are only 10 seats"],
+        "keywords": ["ramen", "fire", "noodles", "unique", "theatrical", "lunch", "small"],
+        "whyItsAGem": "A chef who sets your ramen on fire with a blowtorch in a 10-seat shop"
+      },
+      {
+        "id": "musubi-cafe",
+        "name": "Sarasa Nishijin",
+        "category": "food",
+        "neighborhood": "Nishijin (northwest)",
+        "coordinates": { "lat": 35.0348, "lng": 135.7476 },
+        "gemScore": 8,
+        "priceRange": "\u00A5\u00A5",
+        "hours": "12pm\u201311pm (closed Tue)",
+        "editorialReview": "Sarasa Nishijin is a cafe built inside a renovated 1930s public bathhouse, and the original Majolica tile walls\u2014turquoise, coral, and cream in Art Deco patterns\u2014are still intact. The soaring ceiling that once trapped steam now echoes with conversation and acoustic guitar from the speakers. The menu leans international\u2014curries, pasta, craft beer\u2014and none of it is trying to be authentic Kyoto cuisine, which is exactly the point. This is where Kyoto\u2019s art students, musicians, and textile workers from nearby Nishijin come to linger over coffee. The neighborhood itself is worth exploring: old machiya townhouses, weaving workshops, and almost zero tourists.",
+        "insiderTips": ["The lunch curry set is excellent value and comes with a small salad and drink", "Sit in the back room to see the best-preserved tile walls from the original bathhouse", "Evening is more atmospheric\u2014the tiles glow under warm lighting"],
+        "keywords": ["cafe", "bathhouse", "tiles", "art deco", "curry", "beer", "nishijin", "students"],
+        "whyItsAGem": "A cafe inside a 1930s bathhouse with original Art Deco tiles on the walls"
+      },
+      {
+        "id": "hiragana-kan",
+        "name": "Gion Tokuya",
+        "category": "food",
+        "neighborhood": "Gion",
+        "coordinates": { "lat": 35.0042, "lng": 135.7744 },
+        "gemScore": 9,
+        "priceRange": "\u00A5\u00A5",
+        "hours": "12pm\u20136pm (closed irregularly)",
+        "editorialReview": "On a back alley of Gion that most visitors walk right past, Tokuya serves what may be the most beautiful bowl of warabi-mochi in Japan. The translucent jelly-like mochi is made from bracken starch, dusted in kinako (roasted soybean flour), and served with a drizzle of kuromitsu (black sugar syrup) on handmade ceramic plates. The shop is a converted machiya townhouse with just a handful of low tables, and the owner prepares each order by hand. In a district overrun with overpriced matcha parfait shops targeting Instagram tourists, Tokuya is the real thing\u2014a quiet, meticulous Japanese sweet shop where the wagashi is the only thing that matters.",
+        "insiderTips": ["The warabi-mochi set with matcha is the essential order\u2014accept no substitutes", "No reservations, just show up\u2014afternoons on weekdays are quietest", "Cash only, and the entrance is easy to miss\u2014look for the small noren curtain"],
+        "keywords": ["wagashi", "mochi", "sweets", "gion", "matcha", "machiya", "traditional"],
+        "whyItsAGem": "Hand-made warabi-mochi in a hidden Gion townhouse that Instagram hasn\u2019t ruined yet"
+      },
+      {
+        "id": "donguri",
+        "name": "Donguri",
+        "category": "food",
+        "neighborhood": "Shij\u014d-Kawaramachi (central)",
+        "coordinates": { "lat": 35.0032, "lng": 135.7694 },
+        "gemScore": 8,
+        "priceRange": "\u00A5",
+        "hours": "11am\u201311pm daily",
+        "editorialReview": "Okonomiyaki in Kyoto gets overshadowed by Osaka\u2019s and Hiroshima\u2019s versions, but Donguri has been quietly converting skeptics since 1992. This bustling, unpretentious shop on a Shij\u014d side street specializes in Kyoto-style okonomiyaki\u2014thinner and more refined than the Osaka version, with a crispy edge and a custardy center. The bestseller is their buta-tama (pork and egg), but the mochi-cheese version is the sleeper hit that regulars order. Each table has its own teppan griddle keeping your okonomiyaki hot, and the staff will build it for you if you look confused. The vibe is locals-only izakaya energy\u2014loud, steamy, and completely unpretentious.",
+        "insiderTips": ["The mochi-cheese okonomiyaki is not on every menu translation\u2014ask for it by name", "Dinner service after 7pm gets rowdy and fun\u2014go then for the full experience", "They have an English picture menu, so don\u2019t be intimidated by the Japanese-only exterior"],
+        "keywords": ["okonomiyaki", "griddle", "pork", "casual", "dinner", "izakaya", "shijo"],
+        "whyItsAGem": "Kyoto\u2019s okonomiyaki answer to Osaka, perfected over 30 years on a side street locals guard"
+      },
+
+      // ═══════════════════════════════════════
+      //  TRADITIONAL CRAFTS & SHOPS
+      // ═══════════════════════════════════════
+      {
+        "id": "aritsugu",
+        "name": "Aritsugu",
+        "category": "craft",
+        "neighborhood": "Nishiki Market (central)",
+        "coordinates": { "lat": 35.0049, "lng": 135.7647 },
+        "gemScore": 10,
+        "priceRange": "\u00A5\u00A5\u00A5\u00A5",
+        "hours": "9am\u20135:30pm (closed some holidays)",
+        "editorialReview": "Aritsugu has been forging kitchen knives since 1560\u2014they were making blades when Shakespeare was six years old. The shop on Nishiki Market is small and looks almost plain from the outside, but step in and you\u2019ll find yourself in front of a wall of hand-forged carbon steel and stainless steel knives that professional chefs travel from around the world to buy. The staff will engrave your name in Japanese on any blade for free, and they take the time to explain which knife suits your cooking style. A good deba or usuba from Aritsugu is not a souvenir\u2014it\u2019s a lifetime tool. The carbon steel knives require maintenance (they\u2019ll teach you), but the edge they hold is in another class entirely.",
+        "insiderTips": ["Tell them what you cook most\u2014they\u2019ll recommend the right blade, not the most expensive one", "Carbon steel is sharper but requires oiling; stainless is lower maintenance for casual cooks", "They engrave names for free in Japanese\u2014allow 15 minutes while they do it"],
+        "keywords": ["knives", "blades", "kitchen", "hand-forged", "carbon steel", "nishiki", "chef"],
+        "whyItsAGem": "Hand-forged kitchen knives from a 460-year-old bladesmith, engraved with your name for free"
+      },
+      {
+        "id": "ippodo-tea",
+        "name": "Ippodo Tea Co.",
+        "category": "craft",
+        "neighborhood": "Nakagyo-ku (central)",
+        "coordinates": { "lat": 35.0113, "lng": 135.7678 },
+        "gemScore": 9,
+        "priceRange": "\u00A5\u00A5\u2013\u00A5\u00A5\u00A5",
+        "hours": "9am\u20136pm daily (tea room 10am\u20135pm)",
+        "editorialReview": "Ippodo has been selling tea since 1717 and their flagship Kyoto shop feels like a university for the leaf. The retail area stocks every grade of matcha, gyokuro, sencha, and hojicha, all grown by contracted farms in Uji. But the real experience is the attached Kaboku tea room, where staff guide you through preparing your own pot of gyokuro\u2014measuring the leaves, controlling water temperature, timing the steeps\u2014and the difference between this and any matcha latte you\u2019ve had is the difference between a grand cru Burgundy and grape juice. The staff are patient, knowledgeable, and genuinely excited when a visitor discovers what good tea actually tastes like.",
+        "insiderTips": ["Order the gyokuro tasting in the tea room\u2014it\u2019s the revelation most people never have about Japanese tea", "Buy the Ummon-no-mukashi matcha for a mid-range gift that tea nerds will recognize", "The hojicha is roasted on-site and makes an incredible souvenir\u2014light to pack and unique"],
+        "keywords": ["tea", "matcha", "gyokuro", "hojicha", "uji", "tasting", "traditional"],
+        "whyItsAGem": "A 300-year-old tea house where staff teach you to brew gyokuro that will ruin all other tea for you"
+      },
+      {
+        "id": "kaikado",
+        "name": "Kaikado",
+        "category": "craft",
+        "neighborhood": "Shimogyo-ku (central south)",
+        "coordinates": { "lat": 34.9911, "lng": 135.7618 },
+        "gemScore": 9,
+        "priceRange": "\u00A5\u00A5\u00A5\u00A5",
+        "hours": "9am\u20136pm (closed Sun & holidays)",
+        "editorialReview": "Kaikado makes one thing: tea canisters. They\u2019ve been making them since 1875, and they are perfect. Each canister is hand-hammered from sheets of copper, brass, or tin by a small team of artisans, and the lid fits so precisely that it descends slowly on a cushion of trapped air when you place it on the can. That\u2019s not a gimmick\u2014it\u2019s a sign of craftsmanship so exact that the tolerances are measured in fractions of a millimeter. Over decades of use, the copper develops a patina that makes each canister unique. Kaikado also runs a beautiful cafe (Kaikado Caf\u00e9) in a renovated Kyoto streetcar building nearby, where they serve coffee and tea in their own wares.",
+        "insiderTips": ["The copper canister develops the most beautiful patina over years\u2014it\u2019s a lifetime purchase", "Visit Kaikado Caf\u00e9 around the corner on Kawaramachi-dori to see the wares in daily use", "Prices start around \u00A514,000\u2014it\u2019s not cheap, but these last generations"],
+        "keywords": ["tea canister", "copper", "brass", "handmade", "artisan", "patina", "cafe"],
+        "whyItsAGem": "Hand-hammered tea canisters so precisely made the lid floats down on trapped air"
+      },
+      {
+        "id": "sou-sou",
+        "name": "SOU\u00b7SOU",
+        "category": "craft",
+        "neighborhood": "Shij\u014d-Kawaramachi (central)",
+        "coordinates": { "lat": 35.0030, "lng": 135.7665 },
+        "gemScore": 8,
+        "priceRange": "\u00A5\u00A5\u2013\u00A5\u00A5\u00A5",
+        "hours": "11am\u20138pm daily",
+        "editorialReview": "SOU\u00b7SOU is doing something rare: taking traditional Japanese textile patterns\u2014the kind you see on indigo-dyed tenugui towels and Edo-period fabrics\u2014and translating them into modern clothing and accessories that people actually want to wear. Their flagship Kyoto shop on Shin-Kyogoku-dori is spread across several adjoining storefronts, each focused on a different product line: split-toe tabi shoes in bold prints, kimono-cut modern jackets, hand-dyed tenugui in hundreds of seasonal patterns. The tabi shoes are the signature item and surprisingly comfortable for all-day walking. Everything is designed in-house and produced in small batches by Japanese textile workshops. This is not a souvenir shop\u2014it\u2019s a design studio with a retail front.",
+        "insiderTips": ["The tabi shoes are perfect for Kyoto walking\u2014buy a pair on day one and wear them the rest of the trip", "The tenugui towels are the best affordable gift\u2014they have seasonal designs for March", "Ask to see the limited-edition textile patterns\u2014they rotate monthly"],
+        "keywords": ["textiles", "tabi shoes", "tenugui", "modern", "design", "clothing", "patterns"],
+        "whyItsAGem": "A design house turning 400-year-old textile patterns into modern clothing you\u2019ll actually wear home"
+      },
+      {
+        "id": "asahi-do",
+        "name": "Asahi-d\u014d",
+        "category": "craft",
+        "neighborhood": "Kiyomizu-zaka (eastern hills)",
+        "coordinates": { "lat": 34.9960, "lng": 135.7814 },
+        "gemScore": 8,
+        "priceRange": "\u00A5\u00A5\u2013\u00A5\u00A5\u00A5",
+        "hours": "9:30am\u20136pm daily",
+        "editorialReview": "Kiyomizu-zaka is lined with ceramics shops, but most sell mass-produced souvenirs with a factory glaze. Asahi-d\u014d is the exception. This family-run shop specializes in authentic Kiyomizu-yaki pottery\u2014the style that originated in this exact neighborhood\u2014and the owner can tell you which local kiln fired each piece. The selection ranges from everyday rice bowls and yunomi tea cups to one-of-a-kind pieces by young Kyoto ceramicists. What makes Asahi-d\u014d special is the curation: they\u2019ve filtered out the tourist kitsch and kept only pieces with genuine craft. A handmade rice bowl from here costs \u00A52,000\u20133,000 and will outlast anything from a department store.",
+        "insiderTips": ["Ask to see the pieces from younger ceramicists in the back\u2014these are the future masters", "Kiyomizu-yaki rice bowls are light and warm in the hand\u2014perfect for daily use at home", "Visit early morning before the Kiyomizu-dera tourist wave hits the slope"],
+        "keywords": ["ceramics", "pottery", "kiyomizu-yaki", "bowls", "handmade", "kiln", "eastern hills"],
+        "whyItsAGem": "A curated ceramics shop on a tourist street that somehow only stocks the real thing"
+      },
+      {
+        "id": "kungyoku-do",
+        "name": "Kungyoku-d\u014d",
+        "category": "craft",
+        "neighborhood": "Horikawa Nishi-Honganji (central)",
+        "coordinates": { "lat": 34.9912, "lng": 135.7510 },
+        "gemScore": 8,
+        "priceRange": "\u00A5\u00A5",
+        "hours": "9am\u20135:30pm (closed 1st & 3rd Sun)",
+        "editorialReview": "Kungyoku-d\u014d has been blending incense since 1594, when they began supplying Nishi Honganji temple next door. The shop is tiny and austere\u2014wooden cabinets, paper labels, no flashy displays\u2014and walking in, you\u2019re hit with a wave of fragrance that\u2019s complex, woody, and nothing like the cheap incense sticks at tourist shops. Their signature product is a sachets of blended incense called nioi-bukuro, traditionally carried in kimono sleeves. The staff can recommend blends for specific purposes: calming, focusing, or simply making a room smell extraordinary. They also sell kneaded incense (neriko) in tiny ceramic pots that look like jewelry and last for months.",
+        "insiderTips": ["The nioi-bukuro sachets are the perfect gift\u2014beautiful, light, and unique to Kyoto", "Ask for the seasonal blend\u2014spring fragrances use cherry blossom and plum notes", "The neriko kneaded incense in ceramic pots is gorgeous and lasts far longer than sticks"],
+        "keywords": ["incense", "fragrance", "traditional", "sachet", "temple", "neriko", "gift"],
+        "whyItsAGem": "A 430-year-old incense blender next to Nishi Honganji that supplies the temple to this day"
+      },
+
+      // ═══════════════════════════════════════
+      //  DAY TRIPS
+      // ═══════════════════════════════════════
+      {
+        "id": "nara-daytrip",
+        "name": "Nara (Naramachi & Kasuga Primeval Forest)",
+        "category": "daytrip",
+        "neighborhood": "45 min from Kyoto by JR",
+        "coordinates": { "lat": 34.6851, "lng": 135.8048 },
+        "gemScore": 9,
+        "priceRange": "\u00A5\u00A5",
+        "hours": "Full day recommended (depart Kyoto by 8:30am)",
+        "editorialReview": "Everyone visits Nara for the deer. The secret is what\u2019s behind the deer: Kasuga Primeval Forest, a 250-hectare ancient woodland that\u2019s been sacred and untouched for over a thousand years. A trail from behind Kasuga Taisha leads into forest so old and dense it feels prehistoric\u2014massive camphor trees, ferns taller than people, and an eerie quiet that\u2019s jarring after central Nara\u2019s crowds. After the forest, loop back through Naramachi, the old merchant district, where Edo-era townhouses have been converted into tiny cafes, craft shops, and sake tasting rooms. The combination of wild ancient forest and intimate old-town streets is something no other day trip from Kyoto offers.",
+        "insiderTips": ["Take the JR Nara Line from Kyoto Station (45 min, covered by JR Pass)\u2014faster than Kintetsu for this route", "Walk through Kasuga Primeval Forest first while energy is high, then explore Naramachi over lunch", "Naramachi\u2019s Harushika Sake Brewery offers tastings from \u00A5400\u2014excellent and uncrowded"],
+        "keywords": ["nara", "deer", "forest", "primeval", "naramachi", "sake", "ancient"],
+        "whyItsAGem": "Skip the deer selfie line and hike into a 1,000-year-old sacred forest most visitors never enter"
+      },
+      {
+        "id": "uji-daytrip",
+        "name": "Uji (Tea Town & Tale of Genji)",
+        "category": "daytrip",
+        "neighborhood": "25 min from Kyoto by JR",
+        "coordinates": { "lat": 34.8894, "lng": 135.8077 },
+        "gemScore": 9,
+        "priceRange": "\u00A5\u00A5",
+        "hours": "Half day (depart Kyoto by 9am, return by 2pm)",
+        "editorialReview": "Uji is where Japan\u2019s finest matcha comes from, and the town takes this heritage seriously. The Uji-bashi bridge approach is lined with tea shops where you can grind your own matcha on a stone mill, and Nakamura Tokichi\u2019s tea house serves a matcha parfait that justifies the 45-minute wait. But the deeper pleasure of Uji is its literary history: the final chapters of The Tale of Genji\u2014the world\u2019s first novel\u2014are set here, and the quiet river paths feel remarkably unchanged since the 11th century. Byodo-in temple is famous (it\u2019s on the 10-yen coin), but the less-visited Ujigami Shrine across the river is Japan\u2019s oldest surviving shrine building, dating to 1060 AD.",
+        "insiderTips": ["Visit Ujigami Shrine before Byodo-in\u2014it\u2019s Japan\u2019s oldest shrine and has almost no visitors", "At Nakamura Tokichi, the nama-cha soba (matcha noodles) are less famous than the parfait but equally good", "Walk along the east bank of the Uji River for cherry blossoms with almost no crowds in late March"],
+        "keywords": ["tea", "matcha", "uji", "genji", "river", "shrine", "parfait", "literary"],
+        "whyItsAGem": "The birthplace of Japanese matcha culture, with the world\u2019s oldest shrine and almost no crowds"
+      },
+      {
+        "id": "osaka-shinsekai",
+        "name": "Osaka (Shinsekai & Tennoji)",
+        "category": "daytrip",
+        "neighborhood": "30 min from Kyoto by Shinkansen or 50 min by JR",
+        "coordinates": { "lat": 34.6524, "lng": 135.5061 },
+        "gemScore": 8,
+        "priceRange": "\u00A5",
+        "hours": "Afternoon & evening best (depart Kyoto after 1pm)",
+        "editorialReview": "If Kyoto is Japan\u2019s elegant grandmother, Osaka is the loud uncle who tells the best stories. An afternoon in Shinsekai\u2014the retro entertainment district built to resemble early-1900s New York and Paris\u2014is the perfect counterpoint to days of temple contemplation. The area is gloriously tacky: neon signs, mechanical puffer fish over doorways, and kushikatsu (deep-fried skewers) shops where the only rule is never double-dip the communal sauce. Daruma on Jan-Jan Yokocho alley has been frying kushikatsu since 1929. After eating your weight in fried things, walk to nearby Tennoji Park for Osaka\u2019s best cherry blossom viewing in late March\u2014less famous than Osaka Castle but far more relaxed.",
+        "insiderTips": ["Take the JR Special Rapid to Shin-Imamiya Station (50 min, \u00A5570)\u2014cheaper than Shinkansen", "Eat kushikatsu at Daruma or Yaekatsu, not the tourist-targeting places with English touts outside", "Tennoji Park\u2019s cherry blossoms are at their best in the last week of March\u2014bring a blanket for hanami"],
+        "keywords": ["osaka", "kushikatsu", "shinsekai", "retro", "neon", "street food", "cherry blossom"],
+        "whyItsAGem": "Kyoto\u2019s rowdy neighbor: retro neon, deep-fried everything, and cherry blossoms without the crowds"
+      },
+      {
+        "id": "ohara-daytrip",
+        "name": "\u014chara (Mountain Village)",
+        "category": "daytrip",
+        "neighborhood": "1 hour by bus from Kyoto Station",
+        "coordinates": { "lat": 35.1207, "lng": 135.8341 },
+        "gemScore": 8,
+        "priceRange": "\u00A5\u00A5",
+        "hours": "Full morning (depart Kyoto by 8am, return by 1pm)",
+        "editorialReview": "One hour north of Kyoto by local bus, the mountain village of \u014chara feels like stepping back several centuries. Sanzen-in temple has one of Kyoto prefecture\u2019s most serene moss gardens\u2014a carpet of green punctuated by tiny stone Jizo statues wearing hand-knitted caps\u2014and in late March, the plum blossoms along the approach road are often at full bloom. The village itself is a cluster of farmhouses, miso shops, and shiba-zuke pickle makers (shiba-zuke, the purple pickle, was invented here). Jakko-in, a small nunnery on the opposite hillside, has roots in one of Japan\u2019s most tragic historical stories and receives a fraction of Sanzen-in\u2019s visitors. The bus ride alone, through narrowing mountain valleys, feels like leaving modern Japan behind.",
+        "insiderTips": ["Take Kyoto Bus 17 from Kyoto Station\u2014it\u2019s a local bus, not a tourist coach, and the ride is half the experience", "Visit Jakko-in first (10-minute walk past Sanzen-in) while energy is fresh\u2014it closes early", "Buy shiba-zuke pickles direct from the farm stands along the main road\u2014far fresher than Kyoto shop versions"],
+        "keywords": ["ohara", "mountain", "moss", "sanzenin", "pickles", "rural", "bus", "plum blossom"],
+        "whyItsAGem": "A mountain temple village one hour from Kyoto Station that feels 400 years from modern Japan"
+      },
+
+      // ═══════════════════════════════════════
+      //  CHERRY BLOSSOM SPOTS
+      // ═══════════════════════════════════════
+      {
+        "id": "philosopher-path",
+        "name": "Philosopher\u2019s Path (Tetsugaku-no-michi)",
+        "category": "sakura",
+        "neighborhood": "Higashiyama (eastern hills)",
+        "coordinates": { "lat": 35.0210, "lng": 135.7944 },
+        "gemScore": 9,
+        "priceRange": "Free",
+        "hours": "Always open",
+        "crowdLevel": "Medium-High",
+        "bestTime": "Before 7:30am or after 5pm",
+        "editorialReview": "The canal-side path named for philosopher Nishida Kitaro is Kyoto\u2019s most famous cherry blossom walk for good reason: for two kilometers, Yoshino cherry trees form a continuous pink canopy over the water, their petals drifting down onto the canal like snow. By 10am in late March, it becomes a slow-moving crowd. The trick is timing: arrive at sunrise and you\u2019ll share the path with joggers and elderly photographers, not tour groups. The southern end near Eikando temple is the most spectacular stretch. In the late afternoon, when the sun drops behind the eastern hills and the light turns golden through the petals, it\u2019s equally beautiful and far less packed.",
+        "insiderTips": ["Walk south-to-north starting at Eikan-d\u014d by 7am for the best light and fewest people", "The tiny side-street cafes along the path open early\u2014grab coffee and a pastry en route", "Late afternoon light (4\u20135:30pm) through the blossoms is photographically superior to morning"],
+        "keywords": ["cherry blossom", "canal", "walking", "photography", "sunrise", "free", "petals"],
+        "whyItsAGem": "Kyoto\u2019s iconic cherry blossom tunnel\u2014transcendent at dawn, before the crowds arrive by 10am"
+      },
+      {
+        "id": "haradani-garden",
+        "name": "Haradani-en Garden",
+        "category": "sakura",
+        "neighborhood": "Kinkaku-ji area (northwest hills)",
+        "coordinates": { "lat": 35.0477, "lng": 135.7266 },
+        "gemScore": 10,
+        "priceRange": "\u00A51,500",
+        "hours": "9am\u20135pm (late March\u2013mid April only)",
+        "crowdLevel": "Low",
+        "bestTime": "Mid-morning (10am\u201312pm) for light through petals",
+        "editorialReview": "Haradani-en is Kyoto\u2019s best-kept cherry blossom secret, and locals fight to keep it that way. This privately owned hillside garden in the mountains behind Kinkaku-ji opens only during cherry blossom season and contains over 400 trees of 20 different varieties\u2014weeping cherries, double-petal yaezakura, and early-blooming varieties that ensure something is always at peak. Because it\u2019s uphill, hard to reach by public transit, and charges a higher-than-average admission, it filters out casual visitors. The result is a garden of staggering beauty with space to breathe. The weeping cherries cascading down the terraced hillside look like pink waterfalls. If you see one cherry blossom spot in Kyoto, make it this one.",
+        "insiderTips": ["Take a taxi from Kinkaku-ji (\u00A5800\u20131,000)\u2014the uphill walk is steep and not well-signed", "Late March timing is critical: check Kyoto cherry blossom forecast sites before booking your visit", "Bring a bento\u2014there are benches with panoramic views and no food vendors inside"],
+        "keywords": ["cherry blossom", "weeping cherry", "private garden", "hillside", "secret", "panoramic"],
+        "whyItsAGem": "A secret hillside garden with 400 cherry trees that only opens during blossom season"
+      },
+      {
+        "id": "takase-canal",
+        "name": "Takase-gawa Canal (Kiyamachi-d\u014dri)",
+        "category": "sakura",
+        "neighborhood": "Central Kyoto (Kiyamachi)",
+        "coordinates": { "lat": 35.0045, "lng": 135.7706 },
+        "gemScore": 8,
+        "priceRange": "Free",
+        "hours": "Always open (illuminated at night)",
+        "crowdLevel": "Medium (night), Low (morning)",
+        "bestTime": "After dark (7\u201310pm) for night illumination",
+        "editorialReview": "While tourists flock to Maruyama Park for nighttime cherry blossoms, Kyoto residents stroll Kiyamachi-d\u014dri along the narrow Takase-gawa canal instead. The cherry trees here arch low over the water, and in late March the branches drip with blossoms so close you can touch them. At night, the restaurant and bar lights along the street illuminate the petals from below, creating a pink glow that\u2019s completely different from the floodlit spectacle at larger parks. The canal is only a few blocks from the Gion entertainment district, so you can combine evening blossom viewing with dinner. On warm nights, the entire strip feels like an outdoor cocktail party.",
+        "insiderTips": ["Walk the stretch between Shij\u014d and Goj\u014d for the densest canopy of blossoms", "Many Kiyamachi bars have terrace seating overlooking the canal\u2014grab a drink and watch the petals fall", "Morning is nearly empty and the light reflecting off the water makes for beautiful photos"],
+        "keywords": ["cherry blossom", "canal", "nighttime", "illumination", "bars", "free", "central"],
+        "whyItsAGem": "A canal-side cherry blossom walk through Kyoto\u2019s bar district, magical after dark"
+      },
+      {
+        "id": "daigo-ji",
+        "name": "Daigo-ji (Toyotomi Hideyoshi\u2019s Cherry Viewing)",
+        "category": "sakura",
+        "neighborhood": "Daigo (southeast)",
+        "coordinates": { "lat": 34.9512, "lng": 135.8214 },
+        "gemScore": 9,
+        "priceRange": "\u00A51,500",
+        "hours": "9am\u20135pm daily (extended during blossom season)",
+        "crowdLevel": "Medium",
+        "bestTime": "Early morning (9\u201310:30am) before tour buses",
+        "editorialReview": "In 1598, the warlord Toyotomi Hideyoshi organized the most extravagant cherry blossom party in Japanese history at Daigo-ji, transplanting 700 trees from across the country to create his personal hanami paradise. The trees\u2019 descendants still bloom here every March, and the temple\u2019s Sanboin garden\u2014designed under Hideyoshi\u2019s direct supervision\u2014is a masterpiece of cherry-tree framing. The five-story pagoda rising above cascading pink branches is one of Kyoto\u2019s most photographed springtime images. Daigo-ji is slightly outside central Kyoto, which thins the crowds compared to Maruyama Park, and the upper temple grounds (Kami-Daigo) involve a mountain hike that further filters visitors.",
+        "insiderTips": ["Arrive at 9am sharp when the gates open\u2014tour buses begin arriving by 10:30", "The Sanboin garden is ticketed separately and worth every yen\u2014don\u2019t skip it", "If you\u2019re fit, hike to Kami-Daigo (upper temple)\u2014the cherry trees along the mountain path are magnificent and deserted"],
+        "keywords": ["cherry blossom", "hideyoshi", "pagoda", "garden", "historic", "mountain", "temple"],
+        "whyItsAGem": "A warlord\u2019s 400-year-old cherry blossom garden with a pagoda rising through pink branches"
+      },
+      {
+        "id": "kamogawa-blossom",
+        "name": "Kamo River (Shij\u014d to Kitaoji stretch)",
+        "category": "sakura",
+        "neighborhood": "Central Kyoto (riverbanks)",
+        "coordinates": { "lat": 35.0142, "lng": 135.7710 },
+        "gemScore": 8,
+        "priceRange": "Free",
+        "hours": "Always open",
+        "crowdLevel": "Low-Medium",
+        "bestTime": "Late afternoon (4\u20136pm) for golden light",
+        "editorialReview": "The Kamo River is Kyoto\u2019s living room\u2014the place where university students study, couples sit at exactly equal intervals along the bank (a genuine sociological phenomenon), and joggers trace the same paths they\u2019ve run for decades. In late March, the cherry trees lining both banks from Shij\u014d bridge northward create a continuous pink corridor that stretches for kilometers, and because the space is so open, it never feels crowded the way enclosed gardens do. The best stretch is between Marutamachi and Kitaoji, where the trees are mature and the bank is wide enough to spread a picnic blanket. This is where Kyoto residents actually do hanami\u2014with convenience-store bento, cans of beer, and no admission ticket required.",
+        "insiderTips": ["Buy hanami supplies at the Lawson or 7-Eleven near Demachiyanagi Station and picnic on the bank", "The stretch near Kamo-\u014dhashi bridge (Marutamachi area) has the widest bank and oldest trees", "Sunset on the river, with the western mountains turning purple behind cherry trees, is Kyoto\u2019s most underrated view"],
+        "keywords": ["cherry blossom", "river", "hanami", "picnic", "free", "sunset", "local", "walking"],
+        "whyItsAGem": "Kyoto\u2019s backyard hanami\u2014cherry blossoms, a riverbank picnic, and no admission fee"
+      }
+    ];
+
+    // ── Category config ──
+    const CATEGORY_COLORS = {
+      temple: '#8B4513',
+      food: '#CD853F',
+      craft: '#2F4F4F',
+      daytrip: '#6B8E23',
+      sakura: '#C71585'
+    };
+    const CATEGORY_ICONS = {
+      temple: '\u26E9\uFE0F',
+      food: '\uD83C\uDF5C',
+      craft: '\uD83C\uDFFA',
+      daytrip: '\uD83D\uDE82',
+      sakura: '\uD83C\uDF38'
+    };
+    const CATEGORY_LABELS = {
+      temple: 'Temple & Shrine',
+      food: 'Food & Market',
+      craft: 'Craft & Shop',
+      daytrip: 'Day Trip',
+      sakura: 'Cherry Blossom'
+    };
+    const CATEGORIES = [
+      { id: 'all', label: 'All Gems' },
+      { id: 'temple', label: 'Temples & Shrines' },
+      { id: 'food', label: 'Food & Markets' },
+      { id: 'craft', label: 'Crafts & Shops' },
+      { id: 'daytrip', label: 'Day Trips' },
+      { id: 'sakura', label: 'Cherry Blossoms' }
+    ];
+
+    // ── State ──
+    let searchQuery = '';
+    let activeCategory = 'all';
+    let markers = [];
+    let map;
+
+    // ── Map setup ──
+    const MAP_CONFIG = {
+      center: [35.0116, 135.7681],
+      defaultZoom: 13,
+      minZoom: 10,
+      maxZoom: 18,
+      bounds: { north: 35.15, south: 34.90, east: 135.90, west: 135.65 }
+    };
+    const maxBounds = [
+      [MAP_CONFIG.bounds.south - 0.05, MAP_CONFIG.bounds.west - 0.05],
+      [MAP_CONFIG.bounds.north + 0.05, MAP_CONFIG.bounds.east + 0.05]
+    ];
+
+    function initMap() {
+      map = L.map('map', {
+        center: MAP_CONFIG.center,
+        zoom: MAP_CONFIG.defaultZoom,
+        minZoom: MAP_CONFIG.minZoom,
+        maxZoom: MAP_CONFIG.maxZoom,
+        maxBounds: maxBounds,
+        maxBoundsViscosity: 0.8,
+        scrollWheelZoom: true
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      }).addTo(map);
+
+      renderMarkers(places);
+    }
+
+    // ── Marker helpers ──
+    function createCustomIcon(category) {
+      const color = CATEGORY_COLORS[category] || CATEGORY_COLORS.temple;
+      const icon = CATEGORY_ICONS[category] || '\uD83D\uDCCD';
+      return L.divIcon({
+        className: 'custom-gem-marker',
+        html: `<div class="gem-marker-container" style="--marker-color: ${color};"><div class="gem-marker-icon">${icon}</div><div class="gem-marker-pin"></div></div>`,
+        iconSize: [40, 50],
+        iconAnchor: [20, 50],
+        popupAnchor: [0, -45]
+      });
+    }
+
+    function popupHTML(place) {
+      let extraMeta = '';
+      if (place.crowdLevel) {
+        extraMeta = `<span class="crowd">Crowds: ${esc(place.crowdLevel)}</span>`;
+      }
+      return `<div class="popup-card">
+        <h3>${esc(place.name)}</h3>
+        <p class="tagline">${esc(place.whyItsAGem)}</p>
+        <div class="meta">
+          <span class="gem-score">Gem Score: ${place.gemScore}/10</span>
+          <span class="price">${esc(place.priceRange)}</span>
+          <span class="category">${CATEGORY_LABELS[place.category] || place.category}</span>
+          ${extraMeta}
+        </div>
+        <div class="popup-details">
+          <p class="hours">${esc(place.hours)}</p>
+          <p class="address">${esc(place.neighborhood)}</p>
+        </div>
+        <button class="read-more" data-place-id="${place.id}">Read full review \u2192</button>
+      </div>`;
+    }
+
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    function renderMarkers(filteredPlaces) {
+      markers.forEach(m => map.removeLayer(m));
+      markers = [];
+
+      filteredPlaces.forEach(place => {
+        const icon = createCustomIcon(place.category);
+        const marker = L.marker([place.coordinates.lat, place.coordinates.lng], { icon })
+          .addTo(map);
+        marker.bindPopup(popupHTML(place), { maxWidth: 300 });
+        marker.on('popupopen', () => {
+          setTimeout(() => {
+            const btn = document.querySelector(`.read-more[data-place-id="${place.id}"]`);
+            if (btn) btn.addEventListener('click', (e) => { e.preventDefault(); openDetailPanel(place); });
+          }, 0);
+        });
+        markers.push(marker);
+      });
+    }
+
+    // ── Filtering ──
+    function filterPlaces() {
+      const query = searchQuery.toLowerCase().trim();
+      return places.filter(place => {
+        const matchesCategory = activeCategory === 'all' || place.category === activeCategory;
+        if (!query) return matchesCategory;
+        const matchesSearch =
+          place.name.toLowerCase().includes(query) ||
+          place.editorialReview.toLowerCase().includes(query) ||
+          place.whyItsAGem.toLowerCase().includes(query) ||
+          place.neighborhood.toLowerCase().includes(query) ||
+          place.keywords.some(k => k.toLowerCase().includes(query));
+        return matchesCategory && matchesSearch;
+      });
+    }
+
+    function applyFilters() {
+      renderMarkers(filterPlaces());
+    }
+
+    // ── Filter bar ──
+    function initFilterBar() {
+      const bar = document.getElementById('filter-bar');
+      CATEGORIES.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn' + (cat.id === activeCategory ? ' active' : '');
+        btn.textContent = cat.label;
+        btn.setAttribute('aria-pressed', cat.id === activeCategory);
+        btn.addEventListener('click', () => {
+          activeCategory = cat.id;
+          bar.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-pressed', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed', 'true');
+          applyFilters();
+        });
+        bar.appendChild(btn);
+      });
+    }
+
+    // ── Search ──
+    function initSearch() {
+      const input = document.getElementById('search-input');
+      input.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        applyFilters();
+      });
+    }
+
+    // ── Detail panel ──
+    function openDetailPanel(place) {
+      const panel = document.getElementById('detail-panel');
+      const overlay = document.getElementById('detail-overlay');
+
+      map.closePopup();
+
+      let tipsHTML = '';
+      if (place.insiderTips && place.insiderTips.length > 0) {
+        tipsHTML = `<div class="insider-tips">
+          <h4>Insider Tips</h4>
+          <ul>${place.insiderTips.map(tip => `<li>${esc(tip)}</li>`).join('')}</ul>
+        </div>`;
+      }
+
+      let crowdHTML = '';
+      if (place.crowdLevel) {
+        crowdHTML = `<div class="detail-meta-item">
+          <span class="detail-meta-label">Crowds</span>
+          <span class="detail-meta-value">${esc(place.crowdLevel)}</span>
+        </div>`;
+      }
+
+      let bestTimeHTML = '';
+      if (place.bestTime) {
+        bestTimeHTML = `<div class="detail-meta-item">
+          <span class="detail-meta-label">Best Time</span>
+          <span class="detail-meta-value">${esc(place.bestTime)}</span>
+        </div>`;
+      }
+
+      panel.innerHTML = `
+        <button class="close-btn" aria-label="Close detail panel">&times;</button>
+        <h2>${esc(place.name)}</h2>
+        <p class="tagline">${esc(place.whyItsAGem)}</p>
+        <div class="detail-meta">
+          <div class="detail-meta-item">
+            <span class="detail-meta-label">Gem Score</span>
+            <span class="detail-meta-value">${place.gemScore}/10</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="detail-meta-label">Price</span>
+            <span class="detail-meta-value">${esc(place.priceRange)}</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="detail-meta-label">Category</span>
+            <span class="detail-meta-value">${CATEGORY_LABELS[place.category] || place.category}</span>
+          </div>
+          ${crowdHTML}
+          ${bestTimeHTML}
+        </div>
+        <div class="detail-info">
+          <p class="hours"><strong>Hours:</strong> ${esc(place.hours)}</p>
+          <p class="address"><strong>Neighborhood:</strong> ${esc(place.neighborhood)}</p>
+        </div>
+        <p class="review">${esc(place.editorialReview)}</p>
+        ${tipsHTML}
+      `;
+
+      panel.classList.add('open');
+      overlay.classList.add('visible');
+
+      panel.querySelector('.close-btn').addEventListener('click', closeDetailPanel);
+    }
+
+    function closeDetailPanel() {
+      document.getElementById('detail-panel').classList.remove('open');
+      document.getElementById('detail-overlay').classList.remove('visible');
+    }
+
+    // ── Init ──
+    document.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      initFilterBar();
+      initSearch();
+      document.getElementById('detail-overlay').addEventListener('click', closeDetailPanel);
+    });
+  </script>
+</body>
+</html>

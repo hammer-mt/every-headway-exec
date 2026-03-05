@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Every — NPS Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e4e4e7;
+    --muted: #9ca3af;
+    --promoter: #22c55e;
+    --passive: #f59e0b;
+    --detractor: #ef4444;
+    --accent: #818cf8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: .25rem; }
+  .subtitle { color: var(--muted); font-size: .95rem; margin-bottom: 2rem; }
+  .grid { display: grid; gap: 1.25rem; margin-bottom: 1.25rem; }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .card h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: .75rem; font-weight: 600; }
+  .big-number { font-size: 2.75rem; font-weight: 800; line-height: 1; }
+  .big-number.promoter { color: var(--promoter); }
+  .big-number.passive { color: var(--passive); }
+  .big-number.detractor { color: var(--detractor); }
+  .big-number.accent { color: var(--accent); }
+  .label { font-size: .85rem; color: var(--muted); margin-top: .25rem; }
+  .bar-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; font-size: .85rem; }
+  .bar-label { width: 20px; text-align: right; color: var(--muted); flex-shrink: 0; }
+  .bar-track { flex: 1; background: #252836; border-radius: 4px; height: 24px; position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width .6s ease; display: flex; align-items: center; padding-left: 8px; font-size: .75rem; font-weight: 600; color: #fff; }
+  .bar-count { width: 28px; text-align: right; color: var(--muted); flex-shrink: 0; }
+  .nps-gauge { text-align: center; padding: 2rem 1.5rem; }
+  .nps-gauge .big-number { font-size: 4.5rem; }
+  .nps-scale { display: flex; gap: 2px; margin-top: .5rem; }
+  .nps-scale span { flex: 1; height: 6px; border-radius: 3px; }
+  .chart-wrap { position: relative; height: 220px; }
+  .verbatim-list { max-height: 400px; overflow-y: auto; }
+  .verbatim-item { padding: .75rem 0; border-bottom: 1px solid var(--border); display: flex; gap: .75rem; align-items: flex-start; }
+  .verbatim-item:last-child { border-bottom: none; }
+  .verbatim-score {
+    width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .85rem; flex-shrink: 0;
+  }
+  .verbatim-score.p { background: rgba(34,197,94,.15); color: var(--promoter); }
+  .verbatim-score.ps { background: rgba(245,158,11,.15); color: var(--passive); }
+  .verbatim-score.d { background: rgba(239,68,68,.15); color: var(--detractor); }
+  .verbatim-text { font-size: .85rem; color: var(--text); line-height: 1.5; }
+  .filter-bar { display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .filter-btn {
+    padding: .4rem .9rem; border-radius: 8px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); cursor: pointer; font-size: .8rem; font-weight: 500;
+    transition: all .2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .search-input {
+    flex: 1; min-width: 180px; padding: .4rem .75rem; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: .8rem; outline: none;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  @media (max-width: 900px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Every — NPS Dashboard</h1>
+<p class="subtitle">Survey responses: subscriber sentiment analysis</p>
+
+<div class="grid grid-4" id="kpi-cards"></div>
+
+<div class="grid grid-3">
+  <div class="card nps-gauge" id="nps-gauge"></div>
+  <div class="card">
+    <h3>Score Distribution</h3>
+    <div id="score-bars"></div>
+  </div>
+  <div class="card">
+    <h3>Segment Breakdown</h3>
+    <div class="chart-wrap"><canvas id="donutChart"></canvas></div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:1.25rem">
+  <h3>Verbatim Responses</h3>
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="promoter">Promoters</button>
+    <button class="filter-btn" data-filter="passive">Passives</button>
+    <button class="filter-btn" data-filter="detractor">Detractors</button>
+    <input type="text" class="search-input" placeholder="Search responses…" id="searchInput">
+  </div>
+  <div class="verbatim-list" id="verbatimList"></div>
+</div>
+
+<script>
+const raw = `NPS Score,How would you describe Every?
+9,media co meets blog meets startup studio
+10,The best resource for having any hope of actually using AI in your daily work
+6,Nerdy
+10,Tech/AI insight and news
+10,Media that also incubate apps
+8,Deep articles about important subjects and sophisticated apps
+10,boutique coders
+3,"It was... a collection of the best writers in tech & business as one bundle. Now.. I think it's ""a collection of the best on AI?"""
+4,"I like the blog, but I find the products very confusing. And I have been underwhelmed with customer service"
+10,Tech Hub Newsletter for practical applications.
+8,Very cool ai awareness site
+10,The easiest way to stay up to date on AI things without being overwhelmed. plus you get some helpful apps.
+8,Really sharp writing and a useful set of tools
+9,They run an AI newsletter and use AI to build their own products
+10,Accessible insights on cutting edge AL + useful tools.
+8,News for LLM users
+7,An AI content and product studio ? Smart useful ai stuff.
+9,Great. Have recommended it to two other people.
+6,Magazine an products about ai
+8,Useful tools with good AI hot takes
+10,Ai studio with newsletter and useful tools with the subscription
+9,A cool AI lab company that writes about what it does.
+8,AI oriented editorials + software
+10,"Great insights, building cool stuff, very approachable, humble (willing to be honest about failures or blindspots) good thinkers, fun, smart"
+6,Interesting combination of AI apps and content
+10,an innvative company that produces great content and has great products
+8,"Your AI source of useful news, insights, commentary and killer useful apps all in one."
+8,A bunch of really smart people who sit inside the world of tech and VC culture but who do good things.
+7,No idea honestly
+8,Great subscription with in-depth interesting content.
+7,A modern media company
+10,"If you want to take AI seriously, and get better a and read about working with it, go here"
+10,I've spent a lot of time talking about Every with founders - media/venture studio with a community
+0,"Good content, but they will abuse the trust and relationship and fleece you for more money."
+8,Newsletter and early AI products
+8,Ai newsletters + cute software products
+8,Media Company meets Product Building Studio
+8,A really innovative portfolio company who produces a ton of content and tools.
+9,High signal resource on ai and tech
+9,Good value. Good articles and software
+10,"Super smart and useful content on AI innovation, great community and subscriber benefits"
+7,AI trends
+9,"A leading edge thinkers paper and bundles with some great tools."
+8,One of the best ai information sources out there to get the big picture on ai in your day to day business
+10,Delights me
+10,The place to learn how to use AI
+10,Tech articles written by authors who provided insights beyond just the surface level call outs.
+8,"It's the best and most practical set of guides for using AI."
+10,AI newsletter/guide and tools to help keep on top of latest and greatest.
+10,Insights from the frontier of AI IRL from people who build a lot and reflect even more
+7,"An AI think-tank covering the non-technical side of things"
+5,Cool people doing cool things that I would like to have the time to learn more about
+10,Cutting edge practitioners of ai-assisted coding tools
+8,Learn about ai and new models
+8,good product
+8,Premium newsletter bundle with products I should be using.
+7,Cutting edge and insightful but not easy reading
+8,An AI writing and product studio
+7,An AI-first software and consulting house.
+10,A must-read for AI and Tech entusiasts
+2,"Company that does interesting newsletter, with bunch of AI apps (which I don't use for security reason)."
+0,too much
+9,Interesting company to watch and study in terms of how it builds products
+10,AI newsletter + monologue
+7,An AI newsletter with some interesting experimental products
+9,"*The* AI newsletter you need to read"
+10,"that's a hard one - its a next gen media company/incubator, run by really cool people with an abundance mindset"
+7,A publication to learn about the AI and how to use it effectively.
+9,Extremely knowledgeable in the AI content space and beyond
+8,An AI focused web publication that also builds apps.
+9,New generation media company
+8,Thought leaders on AI and technology
+8,AI Product studio that writes practical essays
+10,Thoughtful and practical writing on AI
+8,"A newsletter that digs deeper to look at AI from a philosophical angle"
+9,Good bundle of AI expertise and products
+8,A thoughtful and balanced way to stay on the AI front lines without getting overwhelmed.
+10,Highly recommended
+10,An essential resource to learn about applied AI
+10,"A team that loves tech and AI and lets their curiosity determine how that manifests"
+10,"Every is my main resource for understanding actual AI developments—without the usual hype."
+8,A thoughtful ecosystem of writing and apps
+10,A place to learn about how ai is actually used
+6,Interesting (but not all essays)
+10,The best most bleeding edge ai newsletter
+8,Sharpness meter
+9,"THE place to date, engaged, and educated about the practical uses of AI, plus useful apps"
+7,Good content
+10,smart publisher of new ways to work
+8,"It's mostly a blog from AI thought leaders, but they also have a suite of AI-powered products."
+7,Great AI newsletter and information source
+6,I don't know
+7,Where you hear about AI stuff before the masses
+8,AI work company
+8,Interesting hybrid company
+10,smartest people i've found talking about how to actually leverage ai
+9,A must have if you're a developer in 2025.
+7,"Set of newsletters about tech, AI, and startup culture, who also make their own AI tools"
+8,High quality tech & ai newsletter from really good writers combined with software bundle
+10,"top 3 newsletter, super team"
+8,"Forward looking, thoughtful content"
+8,It's this eclectic forward-looking newsletter that I pay a decent amount for but somehow it's worth it!
+9,an AI native company that is building AI tools and publishing AI thought leadership at the edge
+9,People building AI with AI and helping others do the same.
+10,Combo AI newsletter and cutting edge tools to put AI into daily use
+8,A newsletter that helps you stay on the cutting edge of AI tools
+10,Cutting edge no fluff AI newsletter
+10,"Useful AI news, knowledge, and products"
+10,"AI startup incubator for writing, products, and consulting"
+10,"Rather than trying to catch up on every piece of AI news, I find it far more efficient to learn from the things you share."
+9,"A curated collection of thought leaders in technology, with some really cool software"
+7,Favorite thought pieces on AI.
+10,The most balanced AI resource for AI philosophy and application.
+7,It WAS a great resource for how people were using the AI for life and biz
+8,A helpful AI newsletter with a few apps bundled with it
+10,"A no nonsense, no slop, company with products that deliver real AI assisted value"
+10,Ai gurus
+9,Newsletter for startups
+9,A great way to see what can be done with AI
+0,"Good until a point. While the marketing talks about the tools I can use, I did not find out until after I subscribed that the majority are for Mac users."
+7,An AI forward media and product company
+10,The best tech newsletter
+10,I would call it a masterfully done AI-generated but human-in-the-loop perfected highly stylized newsletter.
+8,Deeper insight into the reality of AI
+8,Blacksmiths hammering AI into useful tools
+10,"a company that started out as a newsletter collective but has pivoted to being an AI product development house"
+8,One of the most amazing AI first media companies on the planet.
+8,Where you can obtain the Frontier information of AI?
+10,Bleeding edge of vibe coding writing
+8,Very informative and well researched
+7,A site that provides deep insights into Agentic coding and workflows.
+10,Bleeding edge of AI
+9,"an integrated media, product, and consulting/teaching firm"
+8,An example of what future teams are going to look like.
+10,"if you have any intent on leveling up, subscribe. Frankly, I tell them it's a steal!"
+9,"At first a newsletter about AI, but now more a platform about AI with some useful tools"
+3,"I would about 2 years ago, but not anymore. I find Every less interesting after it switched over to AI"
+10,Every is a place where you can use tools for everything and gain knowledge about everything
+10,Best ai/tech newsletter in the world.
+9,"Big brother in this AI driven world. Unofficial mentor and go to space for high calibre AI information."
+10,A product studio combined with an online magazine and it's all about cutting edge AI
+10,A playbook for how to work AI-first
+10,"automations to speed up email management, desktop cleaner, and social media content creator"
+10,"Best source of AI related, not just news but more philosophical topics"
+7,They build apps and write about it?
+10,Boosts productivity and creativity
+5,Kinda weird intersection of nerdy AI shit and crafty business thinking
+8,Daily AI Newsletter + AI software bundle wrapped in a monthly subscription service
+4,A sub to a bundle of apps
+9,A small suite of AI apps that instantly help you to be more productive.
+5,a well-written AI newsletter
+9,A really cool business model for people who like in depth content
+9,subscription that gives u newsletters & apps
+8,they build AI products and have a good overview and opinions on all matters related to AI
+10,Good writing plus personal insights into AI
+9,A non-ego oriented publishing and software startup
+10,Innovative media / software / consulting company: the future of business !
+10,One of the best sources for how to think about and use AI
+10,The best AI-newsletter in the world
+3,Learning about and Building AI in Public
+6,A tech newsletter that also makes their own tools and apps
+10,My go to source for AI news
+9,"Good, actionable, timely reads on AI"
+7,"An ideas company with premium media, training and scrappy software products arms"
+10,A newsletter and software subscription
+10,"Every is the rare publication that sits comfortably between worlds"
+8,"This great company with amazing writing, cool products, and really beneficial workshops"
+9,Valued content
+5,Product company that explains how they build their products
+9,valued content
+10,A relevant collaborative Ai product and news source
+10,Exceptional journalism and relevance to the emerging field of AI
+9,Modern and fresh ideas to AI where they borrow things from journalism
+10,My go-to source of AI info
+9,Every is your insider pass into the rooms where it happens
+8,journalistic startup that builds software targeted for journalists
+7,Forward thinking AI newsletter that has applications to those who are interested in productivity.
+10,Best AI analysis
+9,Great combo of info and tools
+10,Leading edge; on point; interesting
+10,Suite of applications that can power whatever you need to do.
+9,A suite of products focused on QoL through AI that seeks to augment what we as humans are trying to accomplish.
+9,"Super smart people navigating this tech/human moment with insight, creativity, and humility."
+10,"Subscription would be worth it for the writing alone, incredible benefit for writing + Cora + Monologue"
+7,Pretty relevant perspectives on AI usage
+7,Ai native dev shop that also offers consulting on ai development
+10,Company that creates AI tools that also writes about the process
+9,The most useful AI subscription to learn how to use AI for productivity
+9,A suite of tools and news that make your life easier
+9,It's a subscription that lets you access a suite of great AI product + great content
+9,"Doing the grunt work of keeping you up to speed on what's relevant & useful, building unique products"
+7,An AI product lab
+7,Tech/AI magazine slash software incubating studio
+7,An AI focused newsletter with a collection of cool apps
+10,A collective of technologists`;
+
+// Parse CSV
+const rows = [];
+const lines = raw.split('\n').slice(1);
+for (const line of lines) {
+  const match = line.match(/^(\d+),(.+)$/);
+  if (match) {
+    rows.push({ score: parseInt(match[1]), text: match[2].replace(/^"|"$/g, '').replace(/""/g, '"') });
+  }
+}
+
+const total = rows.length;
+const scores = rows.map(r => r.score);
+const avg = (scores.reduce((a, b) => a + b, 0) / total).toFixed(1);
+const promoters = rows.filter(r => r.score >= 9);
+const passives = rows.filter(r => r.score >= 7 && r.score <= 8);
+const detractors = rows.filter(r => r.score <= 6);
+const nps = Math.round((promoters.length / total - detractors.length / total) * 100);
+
+// Distribution
+const dist = Array(11).fill(0);
+scores.forEach(s => dist[s]++);
+const maxCount = Math.max(...dist);
+
+// KPI Cards
+document.getElementById('kpi-cards').innerHTML = `
+  <div class="card">
+    <h3>NPS Score</h3>
+    <div class="big-number accent">${nps >= 0 ? '+' : ''}${nps}</div>
+    <div class="label">${total} responses</div>
+  </div>
+  <div class="card">
+    <h3>Promoters (9–10)</h3>
+    <div class="big-number promoter">${(promoters.length / total * 100).toFixed(1)}%</div>
+    <div class="label">${promoters.length} respondents</div>
+  </div>
+  <div class="card">
+    <h3>Passives (7–8)</h3>
+    <div class="big-number passive">${(passives.length / total * 100).toFixed(1)}%</div>
+    <div class="label">${passives.length} respondents</div>
+  </div>
+  <div class="card">
+    <h3>Detractors (0–6)</h3>
+    <div class="big-number detractor">${(detractors.length / total * 100).toFixed(1)}%</div>
+    <div class="label">${detractors.length} respondents</div>
+  </div>
+`;
+
+// NPS Gauge
+const gaugeEl = document.getElementById('nps-gauge');
+gaugeEl.innerHTML = `
+  <h3>Net Promoter Score</h3>
+  <div class="big-number accent" style="margin: .5rem 0">${nps >= 0 ? '+' : ''}${nps}</div>
+  <div class="label">Average score: ${avg} / 10</div>
+  <div class="nps-scale" style="margin-top:1rem">
+    ${Array.from({length: 11}, (_, i) => {
+      const c = i <= 6 ? 'var(--detractor)' : i <= 8 ? 'var(--passive)' : 'var(--promoter)';
+      return `<span style="background:${c};opacity:${dist[i] ? 1 : 0.2}"></span>`;
+    }).join('')}
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-top:.35rem">
+    <span>0</span><span>6</span><span>8</span><span>10</span>
+  </div>
+`;
+
+// Score bars
+const barsEl = document.getElementById('score-bars');
+for (let i = 10; i >= 0; i--) {
+  const pct = (dist[i] / maxCount * 100);
+  const color = i <= 6 ? 'var(--detractor)' : i <= 8 ? 'var(--passive)' : 'var(--promoter)';
+  barsEl.innerHTML += `
+    <div class="bar-row">
+      <span class="bar-label">${i}</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${pct}%;background:${color}">${dist[i] > 0 ? dist[i] : ''}</div>
+      </div>
+      <span class="bar-count">${dist[i]}</span>
+    </div>`;
+}
+
+// Donut
+new Chart(document.getElementById('donutChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Promoters', 'Passives', 'Detractors'],
+    datasets: [{
+      data: [promoters.length, passives.length, detractors.length],
+      backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'],
+      borderColor: '#1a1d27',
+      borderWidth: 3,
+    }]
+  },
+  options: {
+    cutout: '65%',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { color: '#9ca3af', padding: 16, font: { size: 12 } } }
+    }
+  }
+});
+
+// Verbatims
+const listEl = document.getElementById('verbatimList');
+let activeFilter = 'all';
+let searchTerm = '';
+
+function classify(score) {
+  if (score >= 9) return 'promoter';
+  if (score >= 7) return 'passive';
+  return 'detractor';
+}
+
+function render() {
+  const filtered = rows.filter(r => {
+    const cat = classify(r.score);
+    if (activeFilter !== 'all' && cat !== activeFilter) return false;
+    if (searchTerm && !r.text.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+    return true;
+  }).sort((a, b) => b.score - a.score);
+
+  listEl.innerHTML = filtered.map(r => {
+    const cls = r.score >= 9 ? 'p' : r.score >= 7 ? 'ps' : 'd';
+    return `<div class="verbatim-item">
+      <div class="verbatim-score ${cls}">${r.score}</div>
+      <div class="verbatim-text">${r.text}</div>
+    </div>`;
+  }).join('');
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
